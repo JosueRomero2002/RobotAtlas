@@ -1,0 +1,5 @@
+ia-clases/*
+atlas\node_modules\
+atlas/dist
+atlas/dist/main.lynx.bundle
+atlas/dist/.rspeedy/main/background.js
