@@ -1,4 +1,5 @@
-import { useState, useCallback } from '@lynx-js/react'
+import { useState, useCallback, useEffect } from '@lynx-js/react'
+import robotAPI from '../services/RobotAPI'
 
 export function ConnectionsScreen() {
   const [connectionStatus, setConnectionStatus] = useState({
@@ -10,12 +11,12 @@ export function ConnectionsScreen() {
 
   const [serverConfig, setServerConfig] = useState({
     mainServer: {
-      url: '192.168.1.100:8080',
+      url: 'localhost:8080',
       status: 'disconnected',
       lastPing: null
     },
     robotServer: {
-      url: '192.168.1.101:3000',
+      url: 'localhost:8080',
       status: 'disconnected',
       lastPing: null
     },
@@ -33,7 +34,59 @@ export function ConnectionsScreen() {
 
   const [isConnecting, setIsConnecting] = useState(false)
 
-  const handleConnect = useCallback((serverType) => {
+  // Check robot connection status
+  useEffect(() => {
+    'background only'
+    const checkConnections = async () => {
+      try {
+        // Check robot server connection
+        const robotConnected = await robotAPI.testConnection()
+        
+        if (robotConnected) {
+          // Get detailed connection status from robot
+          const result = await robotAPI.getConnectionStatus()
+          if (result.success) {
+            setConnectionStatus(result.data)
+            
+            // Update server configs
+            setServerConfig(prev => ({
+              ...prev,
+              robotServer: {
+                ...prev.robotServer,
+                status: 'connected',
+                lastPing: new Date().toLocaleTimeString()
+              },
+              mainServer: {
+                ...prev.mainServer,
+                status: result.data.mainServer === 'connected' ? 'connected' : 'disconnected',
+                lastPing: result.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
+              },
+              camera: {
+                ...prev.camera,
+                status: result.data.camera === 'connected' ? 'connected' : 'disconnected',
+                lastPing: result.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
+              }
+            }))
+          }
+        } else {
+          setConnectionStatus(prev => ({
+            ...prev,
+            robotServer: 'disconnected'
+          }))
+        }
+      } catch (error) {
+        console.error('Error checking connections:', error)
+      }
+    }
+    
+    checkConnections()
+    
+    // Check every 5 seconds
+    const interval = setInterval(checkConnections, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const handleConnect = useCallback(async (serverType) => {
     'background only'
     setIsConnecting(true)
     console.log(`Conectando a ${serverType}...`)
@@ -76,19 +129,32 @@ export function ConnectionsScreen() {
     console.log(`${serverType} desconectado`)
   }, [])
 
-  const handleTestConnection = useCallback((serverType) => {
+  const handleTestConnection = useCallback(async (serverType) => {
     'background only'
     console.log(`Probando conexión a ${serverType}...`)
     
-    // Simular test de conexión
-    setTimeout(() => {
-      const isOnline = Math.random() > 0.3 // 70% de probabilidad de éxito
-      if (isOnline) {
-        console.log(`${serverType} está disponible`)
+    try {
+      if (serverType === 'robotServer' || serverType === 'mainServer') {
+        const isOnline = await robotAPI.testConnection()
+        if (isOnline) {
+          console.log(`${serverType} está disponible`)
+        } else {
+          console.log(`${serverType} no está disponible`)
+        }
       } else {
-        console.log(`${serverType} no está disponible`)
+        // For other servers, simulate test
+        setTimeout(() => {
+          const isOnline = Math.random() > 0.3
+          if (isOnline) {
+            console.log(`${serverType} está disponible`)
+          } else {
+            console.log(`${serverType} no está disponible`)
+          }
+        }, 1000)
       }
-    }, 1000)
+    } catch (error) {
+      console.error(`Error testing ${serverType}:`, error)
+    }
   }, [])
 
   const ConnectionCard = ({ title, serverType, config, status }) => (

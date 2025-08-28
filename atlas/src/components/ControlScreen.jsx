@@ -1,4 +1,5 @@
-import { useState, useCallback } from '@lynx-js/react'
+import { useState, useCallback, useEffect } from '@lynx-js/react'
+import robotAPI from '../services/RobotAPI'
 
 export function ControlScreen() {
   const [activeTab, setActiveTab] = useState('status')
@@ -15,44 +16,135 @@ export function ControlScreen() {
   const [batteryLevel, setBatteryLevel] = useState(87)
   const [temperature, setTemperature] = useState(42.5)
   const [connectionStatus, setConnectionStatus] = useState('connected')
+  const [isConnected, setIsConnected] = useState(false)
 
-  const handleMovement = useCallback((part, axis, value) => {
+  // Connect to robot and fetch initial data
+  useEffect(() => {
     'background only'
-    setCurrentPosition(prev => ({
-      ...prev,
-      [part]: {
-        ...prev[part],
-        [axis]: value
+    const connectToRobot = async () => {
+      try {
+        const connected = await robotAPI.testConnection()
+        setIsConnected(connected)
+        
+        if (connected) {
+          // Fetch initial robot status
+          const statusResult = await robotAPI.getRobotStatus()
+          if (statusResult.success) {
+            const status = statusResult.data
+            setRobotStatus(status.status)
+            setBatteryLevel(status.battery)
+            setTemperature(status.temperature)
+            setConnectionStatus(status.connection)
+          }
+          
+          // Fetch initial position
+          const positionResult = await robotAPI.getRobotPosition()
+          if (positionResult.success) {
+            setCurrentPosition(positionResult.data)
+          }
+        }
+      } catch (error) {
+        console.error('Failed to connect to robot:', error)
+        setIsConnected(false)
       }
-    }))
-    console.log(`Moving ${part} ${axis} to ${value}`)
+    }
+    
+    connectToRobot()
+    
+    // Set up periodic status updates
+    const statusInterval = setInterval(connectToRobot, 2000) // Update every 2 seconds
+    
+    return () => clearInterval(statusInterval)
   }, [])
 
-  const handleHandGesture = useCallback((hand, finger, value) => {
+  const handleMovement = useCallback(async (part, axis, value) => {
     'background only'
-    setCurrentPosition(prev => ({
-      ...prev,
-      [hand]: {
-        ...prev[hand],
-        [finger]: value
+    if (!isConnected) {
+      console.log('Robot not connected')
+      return
+    }
+    
+    try {
+      let moveResult
+      
+      if (part === 'head') {
+        const newPosition = { ...currentPosition.head, [axis]: value }
+        moveResult = await robotAPI.moveHead(newPosition.x, newPosition.y, newPosition.z)
+      } else if (part === 'leftArm' || part === 'rightArm') {
+        const newPosition = { ...currentPosition[part], [axis]: value }
+        moveResult = await robotAPI.moveArm(part, newPosition.shoulder, newPosition.elbow, newPosition.wrist)
       }
-    }))
-    console.log(`Moving ${hand} ${finger} to ${value}`)
-  }, [])
+      
+      if (moveResult && moveResult.success) {
+        setCurrentPosition(prev => ({
+          ...prev,
+          [part]: {
+            ...prev[part],
+            [axis]: value
+          }
+        }))
+        console.log(`Successfully moved ${part} ${axis} to ${value}`)
+      } else {
+        console.error('Failed to move robot:', moveResult?.error)
+      }
+    } catch (error) {
+      console.error('Error moving robot:', error)
+    }
+  }, [isConnected, currentPosition])
+
+  const handleHandGesture = useCallback(async (hand, finger, value) => {
+    'background only'
+    if (!isConnected) {
+      console.log('Robot not connected')
+      return
+    }
+    
+    try {
+      const newFingers = { ...currentPosition[hand], [finger]: value }
+      const moveResult = await robotAPI.moveHand(hand, newFingers)
+      
+      if (moveResult.success) {
+        setCurrentPosition(prev => ({
+          ...prev,
+          [hand]: {
+            ...prev[hand],
+            [finger]: value
+          }
+        }))
+        console.log(`Successfully moved ${hand} ${finger} to ${value}`)
+      } else {
+        console.error('Failed to move hand:', moveResult.error)
+      }
+    } catch (error) {
+      console.error('Error moving hand:', error)
+    }
+  }, [isConnected, currentPosition])
 
   const toggleRobotStatus = useCallback(() => {
     'background only'
     setRobotStatus(prev => prev === 'idle' ? 'active' : 'idle')
   }, [])
 
-  const executePreset = useCallback((preset) => {
+  const executePreset = useCallback(async (preset) => {
     'background only'
-    console.log(`Executing preset: ${preset}`)
-    // Simular ejecución de preset
-    setTimeout(() => {
-      console.log(`Preset "${preset}" ejecutado exitosamente`)
-    }, 1000)
-  }, [])
+    if (!isConnected) {
+      console.log('Robot not connected')
+      return
+    }
+    
+    try {
+      console.log(`Executing preset: ${preset}`)
+      const result = await robotAPI.executePreset(preset)
+      
+      if (result.success) {
+        console.log(`Preset "${preset}" executed successfully`)
+      } else {
+        console.error('Failed to execute preset:', result.error)
+      }
+    } catch (error) {
+      console.error('Error executing preset:', error)
+    }
+  }, [isConnected])
 
   const ArrowControl = ({ label, value, min, max, onChange, unit = "°" }) => {
     const increment = () => {
@@ -134,9 +226,15 @@ export function ControlScreen() {
               />
               <StatusIndicator 
                 label="Conexión"
-                value={connectionStatus === 'connected' ? 'Conectado' : 'Desconectado'}
-                status={connectionStatus === 'connected' ? 'good' : 'error'}
+                value={isConnected ? 'Conectado' : 'Desconectado'}
+                status={isConnected ? 'good' : 'error'}
                 icon="📡"
+              />
+              <StatusIndicator 
+                label="API Robot"
+                value={isConnected ? 'Online' : 'Offline'}
+                status={isConnected ? 'good' : 'error'}
+                icon="🤖"
               />
             </view>
 
@@ -147,7 +245,22 @@ export function ControlScreen() {
                   <view className="button-icon">{robotStatus === 'active' ? '⏸️' : '▶️'}</view>
                   <text className="button-text">{robotStatus === 'active' ? 'Pausar' : 'Activar'}</text>
                 </view>
-                <view className="control-button emergency" bindtap={() => console.log('¡Parada de emergencia activada!')}>
+                <view className="control-button emergency" bindtap={async () => {
+                  if (isConnected) {
+                    try {
+                      const result = await robotAPI.emergencyStop()
+                      if (result.success) {
+                        console.log('Emergency stop activated!')
+                      } else {
+                        console.error('Emergency stop failed:', result.error)
+                      }
+                    } catch (error) {
+                      console.error('Emergency stop error:', error)
+                    }
+                  } else {
+                    console.log('Robot not connected - cannot execute emergency stop')
+                  }
+                }}>
                   <view className="button-icon">🛑</view>
                   <text className="button-text">EMERGENCIA</text>
                 </view>

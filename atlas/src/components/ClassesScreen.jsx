@@ -1,10 +1,11 @@
-import { useState, useCallback } from '@lynx-js/react'
+import { useState, useCallback, useEffect } from '@lynx-js/react'
+import robotAPI from '../services/RobotAPI'
 
 export function ClassesScreen() {
   const [selectedClass, setSelectedClass] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
-
-  const [classes] = useState([
+  const [isConnected, setIsConnected] = useState(false)
+  const [classes, setClasses] = useState([
     {
       id: 1,
       title: 'Introducción a la Robótica',
@@ -82,25 +83,81 @@ export function ClassesScreen() {
     }
   ])
 
-  const handleStartClass = useCallback((classId) => {
+  // Load classes from robot API
+  useEffect(() => {
     'background only'
-    setIsPlaying(true)
-    setSelectedClass(classId)
-    console.log(`Iniciando clase ${classId}`)
+    const loadClassesFromAPI = async () => {
+      try {
+        const connected = await robotAPI.testConnection()
+        setIsConnected(connected)
+        
+        if (connected) {
+          const result = await robotAPI.getAvailableClasses()
+          if (result.success && result.data.classes) {
+            setClasses(result.data.classes)
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load classes from robot:', error)
+        setIsConnected(false)
+      }
+    }
     
-    // Simular duración de la clase
-    setTimeout(() => {
-      setIsPlaying(false)
-      console.log(`Clase ${classId} completada`)
-    }, 5000) // 5 segundos para demo
+    loadClassesFromAPI()
+    
+    // Refresh classes every 30 seconds
+    const interval = setInterval(loadClassesFromAPI, 30000)
+    return () => clearInterval(interval)
   }, [])
 
-  const handleStopClass = useCallback(() => {
+  const handleStartClass = useCallback(async (classId) => {
     'background only'
-    setIsPlaying(false)
-    setSelectedClass(null)
-    console.log('Clase detenida')
-  }, [])
+    if (!isConnected) {
+      console.log('Robot not connected')
+      return
+    }
+    
+    try {
+      setIsPlaying(true)
+      setSelectedClass(classId)
+      console.log(`Iniciando clase ${classId}`)
+      
+      const result = await robotAPI.startClass(classId)
+      if (result.success) {
+        console.log(`Clase ${classId} iniciada exitosamente`)
+        // The class will run its programmed movements automatically
+      } else {
+        console.error('Failed to start class:', result.error)
+        setIsPlaying(false)
+        setSelectedClass(null)
+      }
+    } catch (error) {
+      console.error('Error starting class:', error)
+      setIsPlaying(false)
+      setSelectedClass(null)
+    }
+  }, [isConnected])
+
+  const handleStopClass = useCallback(async () => {
+    'background only'
+    if (!isConnected) {
+      console.log('Robot not connected')
+      return
+    }
+    
+    try {
+      const result = await robotAPI.stopClass()
+      if (result.success) {
+        setIsPlaying(false)
+        setSelectedClass(null)
+        console.log('Clase detenida exitosamente')
+      } else {
+        console.error('Failed to stop class:', result.error)
+      }
+    } catch (error) {
+      console.error('Error stopping class:', error)
+    }
+  }, [isConnected])
 
   const getStatusColor = (status) => {
     switch (status) {
