@@ -33,6 +33,23 @@ export function ConnectionsScreen() {
   })
 
   const [isConnecting, setIsConnecting] = useState(false)
+  const [currentRobotConfig, setCurrentRobotConfig] = useState({})
+
+  // Load current robot configuration
+  useEffect(() => {
+    const config = robotAPI.getServerConfig()
+    setCurrentRobotConfig(config)
+    
+    // Update robot server config with current settings
+    setServerConfig(prev => ({
+      ...prev,
+      robotServer: {
+        ...prev.robotServer,
+        url: `${config.host}:${config.port}`,
+        status: 'disconnected'
+      }
+    }))
+  }, [])
 
   // Check robot connection status
   useEffect(() => {
@@ -40,13 +57,13 @@ export function ConnectionsScreen() {
     const checkConnections = async () => {
       try {
         // Check robot server connection
-        const robotConnected = await robotAPI.testConnection()
+        const result = await robotAPI.testConnection()
         
-        if (robotConnected) {
+        if (result.success) {
           // Get detailed connection status from robot
-          const result = await robotAPI.getConnectionStatus()
-          if (result.success) {
-            setConnectionStatus(result.data)
+          const statusResult = await robotAPI.getConnectionStatus()
+          if (statusResult.success) {
+            setConnectionStatus(statusResult.data)
             
             // Update server configs
             setServerConfig(prev => ({
@@ -58,13 +75,13 @@ export function ConnectionsScreen() {
               },
               mainServer: {
                 ...prev.mainServer,
-                status: result.data.mainServer === 'connected' ? 'connected' : 'disconnected',
-                lastPing: result.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
+                status: statusResult.data.mainServer === 'connected' ? 'connected' : 'disconnected',
+                lastPing: statusResult.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
               },
               camera: {
                 ...prev.camera,
-                status: result.data.camera === 'connected' ? 'connected' : 'disconnected',
-                lastPing: result.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
+                status: statusResult.data.camera === 'connected' ? 'connected' : 'disconnected',
+                lastPing: statusResult.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
               }
             }))
           }
@@ -73,9 +90,22 @@ export function ConnectionsScreen() {
             ...prev,
             robotServer: 'disconnected'
           }))
+          
+          setServerConfig(prev => ({
+            ...prev,
+            robotServer: {
+              ...prev.robotServer,
+              status: 'disconnected',
+              lastPing: null
+            }
+          }))
         }
       } catch (error) {
         console.error('Error checking connections:', error)
+        setConnectionStatus(prev => ({
+          ...prev,
+          robotServer: 'disconnected'
+        }))
       }
     }
     
@@ -215,6 +245,38 @@ export function ConnectionsScreen() {
       <view className="connections-content">
         <text className="connections-title">Conexiones del Robot</text>
         <text className="connections-subtitle">Configuración de Servidores</text>
+
+        {/* Robot Server Configuration */}
+        <view className="robot-config-section">
+          <view className="config-header">
+            <text className="config-title">🤖 Robot Server Configuration</text>
+            <text className="config-subtitle">Current settings for robot_gui.py connection</text>
+          </view>
+          
+          <view className="config-details">
+            <view className="config-item">
+              <text className="config-label">Host:</text>
+              <text className="config-value">{currentRobotConfig.host || 'localhost'}</text>
+            </view>
+            <view className="config-item">
+              <text className="config-label">Port:</text>
+              <text className="config-value">{currentRobotConfig.port || '8080'}</text>
+            </view>
+            <view className="config-item">
+              <text className="config-label">URL:</text>
+              <text className="config-value url">{currentRobotConfig.baseURL || 'http://localhost:8080/api'}</text>
+            </view>
+          </view>
+          
+          <view className="config-actions">
+            <view className="config-button primary" bindtap={() => window.location.hash = '#config'}>
+              <text className="button-text">🔧 Configure Server</text>
+            </view>
+            <view className="config-button secondary" bindtap={() => handleTestConnection('robotServer')}>
+              <text className="button-text">🔍 Test Connection</text>
+            </view>
+          </view>
+        </view>
 
         {/* Overall Status */}
         <view className="overall-status">

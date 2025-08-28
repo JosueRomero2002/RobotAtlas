@@ -6233,8 +6233,8 @@ function createSocketURL(parsedURL, token) {
 
 
 }),
-"(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=169.254.151.37&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-var __resourceQuery = "?hostname=169.254.151.37&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1";
+"(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=172.16.240.200&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+var __resourceQuery = "?hostname=172.16.240.200&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1";
 __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -10660,7 +10660,10 @@ __webpack_require__.d(__webpack_exports__, {
 /**
  * Robot API Service
  * Handles communication with the robot_gui.py server
- */ const API_BASE_URL = 'http://localhost:8080/api';
+ */ // Default configuration
+const DEFAULT_HOST = 'localhost';
+const DEFAULT_PORT = '8080';
+const DEFAULT_BASE_URL = `http://${DEFAULT_HOST}:${DEFAULT_PORT}/api`;
 class RobotAPI {
     // Helper method for making HTTP requests
     async makeRequest(endpoint, options = {}) {
@@ -10687,6 +10690,70 @@ class RobotAPI {
             return {
                 success: false,
                 error: error.message
+            };
+        }
+    }
+    // CONFIGURATION METHODS
+    /**
+   * Get current server configuration
+   * @returns {Object} Current host and port
+   */ getServerConfig() {
+        return {
+            host: this.host,
+            port: this.port,
+            baseURL: this.baseURL
+        };
+    }
+    /**
+   * Set server configuration
+   * @param {string} host - Server host/IP
+   * @param {string} port - Server port
+   * @returns {boolean} True if configuration was updated
+   */ setServerConfig(host, port) {
+        try {
+            // Validate inputs
+            if (!host || !port) throw new Error('Host and port are required');
+            // Update configuration
+            this.host = host.trim();
+            this.port = port.trim();
+            this.baseURL = `http://${this.host}:${this.port}/api`;
+            // Save to localStorage
+            localStorage.setItem('robotAPI_host', this.host);
+            localStorage.setItem('robotAPI_port', this.port);
+            console.log(`Robot API configuration updated: ${this.baseURL}`);
+            return true;
+        } catch (error) {
+            console.error('Error setting server config:', error);
+            return false;
+        }
+    }
+    /**
+   * Reset to default configuration
+   */ resetToDefault() {
+        this.host = DEFAULT_HOST;
+        this.port = DEFAULT_PORT;
+        this.baseURL = DEFAULT_BASE_URL;
+        // Clear localStorage
+        localStorage.removeItem('robotAPI_host');
+        localStorage.removeItem('robotAPI_port');
+        console.log('Robot API configuration reset to default');
+    }
+    /**
+   * Test connection with current configuration
+   * @returns {Promise<Object>} Connection test result
+   */ async testConnection() {
+        try {
+            const result = await this.getRobotStatus();
+            return {
+                success: result.success,
+                message: result.success ? 'Connection successful' : result.error,
+                config: this.getServerConfig()
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message,
+                config: this.getServerConfig()
             };
         }
     }
@@ -10829,13 +10896,6 @@ class RobotAPI {
     }
     // UTILITY METHODS
     /**
-   * Test connection to robot server
-   * @returns {Promise<boolean>} True if connected, false otherwise
-   */ async testConnection() {
-        const result = await this.getRobotStatus();
-        return result.success;
-    }
-    /**
    * Get robot server URL
    * @returns {string} The base URL for the robot API
    */ getServerURL() {
@@ -10848,7 +10908,10 @@ class RobotAPI {
         this.baseURL = url;
     }
     constructor(){
-        this.baseURL = API_BASE_URL;
+        // Load saved configuration or use defaults
+        this.host = localStorage.getItem('robotAPI_host') || DEFAULT_HOST;
+        this.port = localStorage.getItem('robotAPI_port') || DEFAULT_PORT;
+        this.baseURL = `http://${this.host}:${this.port}/api`;
     }
 }
 // Create singleton instance
@@ -10870,7 +10933,8 @@ __webpack_require__.d(__webpack_exports__, {
 /* ESM import */var _components_ClassesScreen__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("(react:background)/./src/components/ClassesScreen.jsx");
 /* ESM import */var _components_ConnectionsScreen__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("(react:background)/./src/components/ConnectionsScreen.jsx");
 /* ESM import */var _components_ControlScreen__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("(react:background)/./src/components/ControlScreen.jsx");
-/* ESM import */var _App_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("(react:background)/./src/App.css");
+/* ESM import */var _components_ServerConfigScreen__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("(react:background)/./src/components/ServerConfigScreen.jsx");
+/* ESM import */var _App_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("(react:background)/./src/App.css");
 /* module decorator */ module = __webpack_require__.hmd(module);
 /* provided dependency */ var __prefresh_utils__ = __webpack_require__("(react:background)/./node_modules/@lynx-js/react-refresh-webpack-plugin/runtime/refresh.cjs");
 
@@ -10882,7 +10946,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 
 
-const __snapshot_c0e9e_9aa9b_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_9aa9b_2", function() {
+
+const __snapshot_c0e9e_09a20_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_09a20_2", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateScrollView(pageId);
     __SetClasses(el, "MainContent");
@@ -10891,7 +10956,7 @@ const __snapshot_c0e9e_9aa9b_2 = /*#__PURE__*/ (__webpack_require__("(react:back
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_c0e9e_9aa9b_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_9aa9b_1", function() {
+const __snapshot_c0e9e_09a20_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_09a20_1", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateView(pageId);
@@ -10936,48 +11001,54 @@ function App(props) {
             case 'home':
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_HomeScreen__WEBPACK_IMPORTED_MODULE_3__.HomeScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 26,
+                    lineNumber: 27,
                     columnNumber: 16
                 }, this);
             case 'dashboard':
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_DashboardScreen__WEBPACK_IMPORTED_MODULE_4__.DashboardScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 28,
+                    lineNumber: 29,
                     columnNumber: 16
                 }, this);
             case 'classes':
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ClassesScreen__WEBPACK_IMPORTED_MODULE_5__.ClassesScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 30,
+                    lineNumber: 31,
                     columnNumber: 16
                 }, this);
             case 'connections':
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ConnectionsScreen__WEBPACK_IMPORTED_MODULE_6__.ConnectionsScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 32,
+                    lineNumber: 33,
                     columnNumber: 16
                 }, this);
             case 'control':
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ControlScreen__WEBPACK_IMPORTED_MODULE_7__.ControlScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 34,
+                    lineNumber: 35,
+                    columnNumber: 16
+                }, this);
+            case 'config':
+                return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ServerConfigScreen__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+                    fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
+                    lineNumber: 37,
                     columnNumber: 16
                 }, this);
             default:
                 return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_HomeScreen__WEBPACK_IMPORTED_MODULE_3__.HomeScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 36,
+                    lineNumber: 39,
                     columnNumber: 16
                 }, this);
         }
     };
-    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_9aa9b_1, {
+    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_09a20_1, {
         children: [
-            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_9aa9b_2, {
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_09a20_2, {
                 children: renderScreen()
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                lineNumber: 44,
+                lineNumber: 47,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
@@ -10986,14 +11057,14 @@ function App(props) {
                     onRouteChange: handleRouteChange
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 47,
+                    lineNumber: 50,
                     columnNumber: 9
                 }, this)
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-        lineNumber: 41,
+        lineNumber: 44,
         columnNumber: 5
     }, this);
 }
@@ -11998,7 +12069,7 @@ __webpack_require__.d(__webpack_exports__, {
 
 
 
-const __snapshot_02a8a_1ba5b_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_2", function() {
+const __snapshot_02a8a_953af_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_2", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "connection-icon");
@@ -12006,7 +12077,7 @@ const __snapshot_02a8a_1ba5b_2 = /*#__PURE__*/ (__webpack_require__("(react:back
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_3 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_3", function() {
+const __snapshot_02a8a_953af_3 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_3", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "connection-title");
@@ -12014,7 +12085,7 @@ const __snapshot_02a8a_1ba5b_3 = /*#__PURE__*/ (__webpack_require__("(react:back
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_4 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_4", function() {
+const __snapshot_02a8a_953af_4 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_4", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "connection-url");
@@ -12022,7 +12093,7 @@ const __snapshot_02a8a_1ba5b_4 = /*#__PURE__*/ (__webpack_require__("(react:back
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_5 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_5", function() {
+const __snapshot_02a8a_953af_5 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_5", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "connection-ping");
@@ -12041,7 +12112,7 @@ const __snapshot_02a8a_1ba5b_5 = /*#__PURE__*/ (__webpack_require__("(react:back
         2
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_6 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_6", function() {
+const __snapshot_02a8a_953af_6 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_6", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "action-button disconnect");
@@ -12058,7 +12129,7 @@ const __snapshot_02a8a_1ba5b_6 = /*#__PURE__*/ (__webpack_require__("(react:back
 }, [
     (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 0, "bindEvent", "tap", '')
 ], null, undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_7 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_7", function() {
+const __snapshot_02a8a_953af_7 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_7", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "action-button connect");
@@ -12077,7 +12148,7 @@ const __snapshot_02a8a_1ba5b_7 = /*#__PURE__*/ (__webpack_require__("(react:back
         1
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_1", function() {
+const __snapshot_02a8a_953af_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_1", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateView(pageId);
@@ -12148,7 +12219,7 @@ const __snapshot_02a8a_1ba5b_1 = /*#__PURE__*/ (__webpack_require__("(react:back
         8
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_9 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_9", function() {
+const __snapshot_02a8a_953af_9 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_9", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "status-icon");
@@ -12156,7 +12227,7 @@ const __snapshot_02a8a_1ba5b_9 = /*#__PURE__*/ (__webpack_require__("(react:back
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_10 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_10", function() {
+const __snapshot_02a8a_953af_10 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_10", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "status-label");
@@ -12164,7 +12235,7 @@ const __snapshot_02a8a_1ba5b_10 = /*#__PURE__*/ (__webpack_require__("(react:bac
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_11 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_11", function() {
+const __snapshot_02a8a_953af_11 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_11", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "status-value");
@@ -12172,7 +12243,7 @@ const __snapshot_02a8a_1ba5b_11 = /*#__PURE__*/ (__webpack_require__("(react:bac
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_8 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_8", function() {
+const __snapshot_02a8a_953af_8 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_8", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "status-indicator");
@@ -12206,7 +12277,31 @@ const __snapshot_02a8a_1ba5b_8 = /*#__PURE__*/ (__webpack_require__("(react:back
         4
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_13 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_13", function() {
+const __snapshot_02a8a_953af_13 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_13", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateText(pageId);
+    __SetClasses(el, "config-value");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_02a8a_953af_14 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_14", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateText(pageId);
+    __SetClasses(el, "config-value");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_02a8a_953af_15 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_15", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateText(pageId);
+    __SetClasses(el, "config-value url");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_02a8a_953af_16 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_16", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "status-grid");
@@ -12214,7 +12309,7 @@ const __snapshot_02a8a_1ba5b_13 = /*#__PURE__*/ (__webpack_require__("(react:bac
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_14 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_14", function() {
+const __snapshot_02a8a_953af_17 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_17", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "connections-grid");
@@ -12222,7 +12317,7 @@ const __snapshot_02a8a_1ba5b_14 = /*#__PURE__*/ (__webpack_require__("(react:bac
         el
     ];
 }, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_02a8a_1ba5b_12 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_1ba5b_12", function() {
+const __snapshot_02a8a_953af_12 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_02a8a_953af_12", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -12240,111 +12335,179 @@ const __snapshot_02a8a_1ba5b_12 = /*#__PURE__*/ (__webpack_require__("(react:bac
     const el5 = __CreateRawText("Configuraci\xf3n de Servidores");
     __AppendElement(el4, el5);
     const el6 = __CreateView(pageId);
-    __SetClasses(el6, "overall-status");
+    __SetClasses(el6, "robot-config-section");
     __AppendElement(el1, el6);
-    const el7 = __CreateText(pageId);
-    __SetClasses(el7, "status-title");
+    const el7 = __CreateView(pageId);
+    __SetClasses(el7, "config-header");
     __AppendElement(el6, el7);
-    const el8 = __CreateRawText("Estado General");
+    const el8 = __CreateText(pageId);
+    __SetClasses(el8, "config-title");
     __AppendElement(el7, el8);
-    const el9 = __CreateWrapperElement(pageId);
-    __AppendElement(el6, el9);
-    const el10 = __CreateView(pageId);
-    __SetClasses(el10, "connections-section");
-    __AppendElement(el1, el10);
-    const el11 = __CreateText(pageId);
-    __SetClasses(el11, "section-title");
+    const el9 = __CreateRawText("\u{1F916} Robot Server Configuration");
+    __AppendElement(el8, el9);
+    const el10 = __CreateText(pageId);
+    __SetClasses(el10, "config-subtitle");
+    __AppendElement(el7, el10);
+    const el11 = __CreateRawText("Current settings for robot_gui.py connection");
     __AppendElement(el10, el11);
-    const el12 = __CreateRawText("Servidores");
-    __AppendElement(el11, el12);
-    const el13 = __CreateWrapperElement(pageId);
-    __AppendElement(el10, el13);
-    const el14 = __CreateView(pageId);
-    __SetClasses(el14, "connections-section");
-    __AppendElement(el1, el14);
-    const el15 = __CreateText(pageId);
-    __SetClasses(el15, "section-title");
+    const el12 = __CreateView(pageId);
+    __SetClasses(el12, "config-details");
+    __AppendElement(el6, el12);
+    const el13 = __CreateView(pageId);
+    __SetClasses(el13, "config-item");
+    __AppendElement(el12, el13);
+    const el14 = __CreateText(pageId);
+    __SetClasses(el14, "config-label");
+    __AppendElement(el13, el14);
+    const el15 = __CreateRawText("Host:");
     __AppendElement(el14, el15);
-    const el16 = __CreateRawText("Registro de Conexiones");
-    __AppendElement(el15, el16);
+    const el16 = __CreateWrapperElement(pageId);
+    __AppendElement(el13, el16);
     const el17 = __CreateView(pageId);
-    __SetClasses(el17, "connection-log");
-    __AppendElement(el14, el17);
+    __SetClasses(el17, "config-item");
+    __AppendElement(el12, el17);
     const el18 = __CreateText(pageId);
-    __SetClasses(el18, "log-entry");
+    __SetClasses(el18, "config-label");
     __AppendElement(el17, el18);
-    const el19 = __CreateRawText("\u{1F7E2} Servidor Principal conectado - 14:30:25");
+    const el19 = __CreateRawText("Port:");
     __AppendElement(el18, el19);
-    const el20 = __CreateText(pageId);
-    __SetClasses(el20, "log-entry");
+    const el20 = __CreateWrapperElement(pageId);
     __AppendElement(el17, el20);
-    const el21 = __CreateRawText("\u{1F534} Servidor del Robot desconectado - 14:29:18");
-    __AppendElement(el20, el21);
+    const el21 = __CreateView(pageId);
+    __SetClasses(el21, "config-item");
+    __AppendElement(el12, el21);
     const el22 = __CreateText(pageId);
-    __SetClasses(el22, "log-entry");
-    __AppendElement(el17, el22);
-    const el23 = __CreateRawText("\u{1F7E1} Intentando conectar a Base de Datos - 14:28:45");
+    __SetClasses(el22, "config-label");
+    __AppendElement(el21, el22);
+    const el23 = __CreateRawText("URL:");
     __AppendElement(el22, el23);
-    const el24 = __CreateText(pageId);
-    __SetClasses(el24, "log-entry");
-    __AppendElement(el17, el24);
-    const el25 = __CreateRawText("\u{1F7E2} C\xe1mara conectada - 14:27:32");
-    __AppendElement(el24, el25);
-    const el26 = __CreateText(pageId);
-    __SetClasses(el26, "log-entry");
-    __AppendElement(el17, el26);
-    const el27 = __CreateRawText("\u{1F534} Servidor Principal desconectado - 14:26:15");
+    const el24 = __CreateWrapperElement(pageId);
+    __AppendElement(el21, el24);
+    const el25 = __CreateView(pageId);
+    __SetClasses(el25, "config-actions");
+    __AppendElement(el6, el25);
+    const el26 = __CreateView(pageId);
+    __SetClasses(el26, "config-button primary");
+    __AppendElement(el25, el26);
+    const el27 = __CreateText(pageId);
+    __SetClasses(el27, "button-text");
     __AppendElement(el26, el27);
-    const el28 = __CreateView(pageId);
-    __SetClasses(el28, "connections-section");
-    __AppendElement(el1, el28);
-    const el29 = __CreateText(pageId);
-    __SetClasses(el29, "section-title");
-    __AppendElement(el28, el29);
-    const el30 = __CreateRawText("Acciones R\xe1pidas");
+    const el28 = __CreateRawText("\u{1F527} Configure Server");
+    __AppendElement(el27, el28);
+    const el29 = __CreateView(pageId);
+    __SetClasses(el29, "config-button secondary");
+    __AppendElement(el25, el29);
+    const el30 = __CreateText(pageId);
+    __SetClasses(el30, "button-text");
     __AppendElement(el29, el30);
-    const el31 = __CreateView(pageId);
-    __SetClasses(el31, "quick-actions");
-    __AppendElement(el28, el31);
+    const el31 = __CreateRawText("\u{1F50D} Test Connection");
+    __AppendElement(el30, el31);
     const el32 = __CreateView(pageId);
-    __SetClasses(el32, "quick-action");
-    __AppendElement(el31, el32);
-    const el33 = __CreateView(pageId);
-    __SetClasses(el33, "action-icon");
+    __SetClasses(el32, "overall-status");
+    __AppendElement(el1, el32);
+    const el33 = __CreateText(pageId);
+    __SetClasses(el33, "status-title");
     __AppendElement(el32, el33);
-    const el34 = __CreateRawText("\u{1F517}");
+    const el34 = __CreateRawText("Estado General");
     __AppendElement(el33, el34);
-    const el35 = __CreateText(pageId);
-    __SetClasses(el35, "action-label");
+    const el35 = __CreateWrapperElement(pageId);
     __AppendElement(el32, el35);
-    const el36 = __CreateRawText("Conectar Todo");
-    __AppendElement(el35, el36);
-    const el37 = __CreateView(pageId);
-    __SetClasses(el37, "quick-action");
-    __AppendElement(el31, el37);
-    const el38 = __CreateView(pageId);
-    __SetClasses(el38, "action-icon");
+    const el36 = __CreateView(pageId);
+    __SetClasses(el36, "connections-section");
+    __AppendElement(el1, el36);
+    const el37 = __CreateText(pageId);
+    __SetClasses(el37, "section-title");
+    __AppendElement(el36, el37);
+    const el38 = __CreateRawText("Servidores");
     __AppendElement(el37, el38);
-    const el39 = __CreateRawText("\u{1F50C}");
-    __AppendElement(el38, el39);
-    const el40 = __CreateText(pageId);
-    __SetClasses(el40, "action-label");
-    __AppendElement(el37, el40);
-    const el41 = __CreateRawText("Desconectar Todo");
+    const el39 = __CreateWrapperElement(pageId);
+    __AppendElement(el36, el39);
+    const el40 = __CreateView(pageId);
+    __SetClasses(el40, "connections-section");
+    __AppendElement(el1, el40);
+    const el41 = __CreateText(pageId);
+    __SetClasses(el41, "section-title");
     __AppendElement(el40, el41);
-    const el42 = __CreateView(pageId);
-    __SetClasses(el42, "quick-action");
-    __AppendElement(el31, el42);
+    const el42 = __CreateRawText("Registro de Conexiones");
+    __AppendElement(el41, el42);
     const el43 = __CreateView(pageId);
-    __SetClasses(el43, "action-icon");
-    __AppendElement(el42, el43);
-    const el44 = __CreateRawText("\u{1F50D}");
+    __SetClasses(el43, "connection-log");
+    __AppendElement(el40, el43);
+    const el44 = __CreateText(pageId);
+    __SetClasses(el44, "log-entry");
     __AppendElement(el43, el44);
-    const el45 = __CreateText(pageId);
-    __SetClasses(el45, "action-label");
-    __AppendElement(el42, el45);
-    const el46 = __CreateRawText("Probar Todo");
-    __AppendElement(el45, el46);
+    const el45 = __CreateRawText("\u{1F7E2} Servidor Principal conectado - 14:30:25");
+    __AppendElement(el44, el45);
+    const el46 = __CreateText(pageId);
+    __SetClasses(el46, "log-entry");
+    __AppendElement(el43, el46);
+    const el47 = __CreateRawText("\u{1F534} Servidor del Robot desconectado - 14:29:18");
+    __AppendElement(el46, el47);
+    const el48 = __CreateText(pageId);
+    __SetClasses(el48, "log-entry");
+    __AppendElement(el43, el48);
+    const el49 = __CreateRawText("\u{1F7E1} Intentando conectar a Base de Datos - 14:28:45");
+    __AppendElement(el48, el49);
+    const el50 = __CreateText(pageId);
+    __SetClasses(el50, "log-entry");
+    __AppendElement(el43, el50);
+    const el51 = __CreateRawText("\u{1F7E2} C\xe1mara conectada - 14:27:32");
+    __AppendElement(el50, el51);
+    const el52 = __CreateText(pageId);
+    __SetClasses(el52, "log-entry");
+    __AppendElement(el43, el52);
+    const el53 = __CreateRawText("\u{1F534} Servidor Principal desconectado - 14:26:15");
+    __AppendElement(el52, el53);
+    const el54 = __CreateView(pageId);
+    __SetClasses(el54, "connections-section");
+    __AppendElement(el1, el54);
+    const el55 = __CreateText(pageId);
+    __SetClasses(el55, "section-title");
+    __AppendElement(el54, el55);
+    const el56 = __CreateRawText("Acciones R\xe1pidas");
+    __AppendElement(el55, el56);
+    const el57 = __CreateView(pageId);
+    __SetClasses(el57, "quick-actions");
+    __AppendElement(el54, el57);
+    const el58 = __CreateView(pageId);
+    __SetClasses(el58, "quick-action");
+    __AppendElement(el57, el58);
+    const el59 = __CreateView(pageId);
+    __SetClasses(el59, "action-icon");
+    __AppendElement(el58, el59);
+    const el60 = __CreateRawText("\u{1F517}");
+    __AppendElement(el59, el60);
+    const el61 = __CreateText(pageId);
+    __SetClasses(el61, "action-label");
+    __AppendElement(el58, el61);
+    const el62 = __CreateRawText("Conectar Todo");
+    __AppendElement(el61, el62);
+    const el63 = __CreateView(pageId);
+    __SetClasses(el63, "quick-action");
+    __AppendElement(el57, el63);
+    const el64 = __CreateView(pageId);
+    __SetClasses(el64, "action-icon");
+    __AppendElement(el63, el64);
+    const el65 = __CreateRawText("\u{1F50C}");
+    __AppendElement(el64, el65);
+    const el66 = __CreateText(pageId);
+    __SetClasses(el66, "action-label");
+    __AppendElement(el63, el66);
+    const el67 = __CreateRawText("Desconectar Todo");
+    __AppendElement(el66, el67);
+    const el68 = __CreateView(pageId);
+    __SetClasses(el68, "quick-action");
+    __AppendElement(el57, el68);
+    const el69 = __CreateView(pageId);
+    __SetClasses(el69, "action-icon");
+    __AppendElement(el68, el69);
+    const el70 = __CreateRawText("\u{1F50D}");
+    __AppendElement(el69, el70);
+    const el71 = __CreateText(pageId);
+    __SetClasses(el71, "action-label");
+    __AppendElement(el68, el71);
+    const el72 = __CreateRawText("Probar Todo");
+    __AppendElement(el71, el72);
     return [
         el,
         el1,
@@ -12392,20 +12555,60 @@ const __snapshot_02a8a_1ba5b_12 = /*#__PURE__*/ (__webpack_require__("(react:bac
         el43,
         el44,
         el45,
-        el46
+        el46,
+        el47,
+        el48,
+        el49,
+        el50,
+        el51,
+        el52,
+        el53,
+        el54,
+        el55,
+        el56,
+        el57,
+        el58,
+        el59,
+        el60,
+        el61,
+        el62,
+        el63,
+        el64,
+        el65,
+        el66,
+        el67,
+        el68,
+        el69,
+        el70,
+        el71,
+        el72
     ];
 }, [
-    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 32, "bindEvent", "tap", ''),
-    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 37, "bindEvent", "tap", ''),
-    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 42, "bindEvent", "tap", '')
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 26, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 29, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 58, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 63, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 68, "bindEvent", "tap", '')
 ], [
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        9
+        16
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        13
+        20
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        24
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        35
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        39
     ]
 ], undefined, globDynamicComponentEntry, null);
 function ConnectionsScreen() {
@@ -12438,18 +12641,33 @@ function ConnectionsScreen() {
         }
     });
     const [isConnecting, setIsConnecting] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [currentRobotConfig, setCurrentRobotConfig] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+    // Load current robot configuration
+    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        const config = _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getServerConfig();
+        setCurrentRobotConfig(config);
+        // Update robot server config with current settings
+        setServerConfig((prev)=>({
+                ...prev,
+                robotServer: {
+                    ...prev.robotServer,
+                    url: `${config.host}:${config.port}`,
+                    status: 'disconnected'
+                }
+            }));
+    }, []);
     // Check robot connection status
     (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         'background only';
         const checkConnections = async ()=>{
             try {
                 // Check robot server connection
-                const robotConnected = await _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].testConnection();
-                if (robotConnected) {
+                const result = await _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].testConnection();
+                if (result.success) {
                     // Get detailed connection status from robot
-                    const result = await _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getConnectionStatus();
-                    if (result.success) {
-                        setConnectionStatus(result.data);
+                    const statusResult = await _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getConnectionStatus();
+                    if (statusResult.success) {
+                        setConnectionStatus(statusResult.data);
                         // Update server configs
                         setServerConfig((prev)=>({
                                 ...prev,
@@ -12460,22 +12678,36 @@ function ConnectionsScreen() {
                                 },
                                 mainServer: {
                                     ...prev.mainServer,
-                                    status: result.data.mainServer === 'connected' ? 'connected' : 'disconnected',
-                                    lastPing: result.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
+                                    status: statusResult.data.mainServer === 'connected' ? 'connected' : 'disconnected',
+                                    lastPing: statusResult.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
                                 },
                                 camera: {
                                     ...prev.camera,
-                                    status: result.data.camera === 'connected' ? 'connected' : 'disconnected',
-                                    lastPing: result.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
+                                    status: statusResult.data.camera === 'connected' ? 'connected' : 'disconnected',
+                                    lastPing: statusResult.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
                                 }
                             }));
                     }
-                } else setConnectionStatus((prev)=>({
+                } else {
+                    setConnectionStatus((prev)=>({
+                            ...prev,
+                            robotServer: 'disconnected'
+                        }));
+                    setServerConfig((prev)=>({
+                            ...prev,
+                            robotServer: {
+                                ...prev.robotServer,
+                                status: 'disconnected',
+                                lastPing: null
+                            }
+                        }));
+                }
+            } catch (error) {
+                console.error('Error checking connections:', error);
+                setConnectionStatus((prev)=>({
                         ...prev,
                         robotServer: 'disconnected'
                     }));
-            } catch (error) {
-                console.error('Error checking connections:', error);
             }
         };
         checkConnections();
@@ -12539,95 +12771,95 @@ function ConnectionsScreen() {
             console.error(`Error testing ${serverType}:`, error);
         }
     }, []);
-    const ConnectionCard = ({ title, serverType, config, status })=>/*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_1, {
+    const ConnectionCard = ({ title, serverType, config, status })=>/*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_1, {
             values: [
                 `connection-card ${status}`,
                 ()=>handleTestConnection(serverType)
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_2, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_2, {
                     children: status === 'connected' ? "\u{1F7E2}" : status === 'connecting' ? "\u{1F7E1}" : "\u{1F534}"
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 163,
+                    lineNumber: 193,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_3, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_3, {
                     children: title
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 167,
+                    lineNumber: 197,
                     columnNumber: 11
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_4, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_4, {
                     children: config.url
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 168,
+                    lineNumber: 198,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                    children: config.lastPing && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_5, {
+                    children: config.lastPing && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_5, {
                         children: config.lastPing
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 170,
+                        lineNumber: 200,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, void 0, this),
                 /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                    children: status === 'connected' ? /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_6, {
+                    children: status === 'connected' ? /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_6, {
                         values: [
                             ()=>handleDisconnect(serverType)
                         ]
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 177,
+                        lineNumber: 207,
                         columnNumber: 11
-                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_7, {
+                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_7, {
                         values: [
                             ()=>handleConnect(serverType)
                         ],
                         children: isConnecting ? 'Conectando...' : 'Conectar'
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 181,
+                        lineNumber: 211,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, void 0, this)
             ]
         }, void 0, true, {
             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-            lineNumber: 161,
+            lineNumber: 191,
             columnNumber: 5
         }, this);
-    const StatusIndicator = ({ label, value, icon })=>/*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_8, {
+    const StatusIndicator = ({ label, value, icon })=>/*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_8, {
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_9, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_9, {
                     children: icon
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 196,
+                    lineNumber: 226,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_10, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_10, {
                     children: label
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 198,
+                    lineNumber: 228,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_11, {
+                /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_11, {
                     children: value
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                    lineNumber: 199,
+                    lineNumber: 229,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-            lineNumber: 195,
+            lineNumber: 225,
             columnNumber: 5
         }, this);
     const getOverallStatus = ()=>{
@@ -12637,8 +12869,10 @@ function ConnectionsScreen() {
         if (connectedCount > 0) return 'Parcialmente Conectado';
         return 'Desconectado';
     };
-    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_12, {
+    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_12, {
         values: [
+            ()=>window.location.hash = '#config',
+            ()=>handleTestConnection('robotServer'),
             ()=>{
                 Object.keys(connectionStatus).forEach((server)=>{
                     if (connectionStatus[server] === 'disconnected') handleConnect(server);
@@ -12656,7 +12890,28 @@ function ConnectionsScreen() {
             }
         ],
         children: [
-            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_13, {
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_13, {
+                children: currentRobotConfig.host || 'localhost'
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
+                lineNumber: 259,
+                columnNumber: 15
+            }, this),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_14, {
+                children: currentRobotConfig.port || '8080'
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
+                lineNumber: 263,
+                columnNumber: 15
+            }, this),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_15, {
+                children: currentRobotConfig.baseURL || 'http://localhost:8080/api'
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
+                lineNumber: 267,
+                columnNumber: 15
+            }, this),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_16, {
                 children: [
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(StatusIndicator, {
                         label: "Estado",
@@ -12664,7 +12919,7 @@ function ConnectionsScreen() {
                         icon: "\u{1F4E1}"
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 223,
+                        lineNumber: 285,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(StatusIndicator, {
@@ -12673,16 +12928,16 @@ function ConnectionsScreen() {
                         icon: "\u{1F5A5}\uFE0F"
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 228,
+                        lineNumber: 290,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                lineNumber: 222,
+                lineNumber: 284,
                 columnNumber: 11
             }, this),
-            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_1ba5b_14, {
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_02a8a_953af_17, {
                 children: [
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ConnectionCard, {
                         title: "Servidor Principal",
@@ -12691,7 +12946,7 @@ function ConnectionsScreen() {
                         status: connectionStatus.mainServer
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 241,
+                        lineNumber: 303,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ConnectionCard, {
@@ -12701,7 +12956,7 @@ function ConnectionsScreen() {
                         status: connectionStatus.robotServer
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 248,
+                        lineNumber: 310,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ConnectionCard, {
@@ -12711,7 +12966,7 @@ function ConnectionsScreen() {
                         status: connectionStatus.database
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 255,
+                        lineNumber: 317,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ConnectionCard, {
@@ -12721,19 +12976,19 @@ function ConnectionsScreen() {
                         status: connectionStatus.camera
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                        lineNumber: 262,
+                        lineNumber: 324,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-                lineNumber: 240,
+                lineNumber: 302,
                 columnNumber: 11
             }, this)
         ]
     }, void 0, true, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ConnectionsScreen.jsx",
-        lineNumber: 214,
+        lineNumber: 244,
         columnNumber: 5
     }, this);
 }
@@ -15101,7 +15356,7 @@ __webpack_require__.d(__webpack_exports__, {
 /* provided dependency */ var __prefresh_utils__ = __webpack_require__("(react:background)/./node_modules/@lynx-js/react-refresh-webpack-plugin/runtime/refresh.cjs");
 
 
-const __snapshot_d1eb1_b7bd8_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_d1eb1_b7bd8_1", function() {
+const __snapshot_d1eb1_23fcf_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_d1eb1_23fcf_1", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "footer-nav");
@@ -15124,21 +15379,21 @@ const __snapshot_d1eb1_b7bd8_1 = /*#__PURE__*/ (__webpack_require__("(react:back
     const el8 = __CreateText(pageId);
     __SetClasses(el8, "nav-icon");
     __AppendElement(el7, el8);
-    const el9 = __CreateRawText("\u2605");
+    const el9 = __CreateRawText("\u25CF");
     __AppendElement(el8, el9);
     const el10 = __CreateView(pageId);
     __AppendElement(el, el10);
     const el11 = __CreateText(pageId);
     __SetClasses(el11, "nav-icon");
     __AppendElement(el10, el11);
-    const el12 = __CreateRawText("\u2699");
+    const el12 = __CreateRawText("\u2605");
     __AppendElement(el11, el12);
     const el13 = __CreateView(pageId);
     __AppendElement(el, el13);
     const el14 = __CreateText(pageId);
     __SetClasses(el14, "nav-icon");
     __AppendElement(el13, el14);
-    const el15 = __CreateRawText("\u25CF");
+    const el15 = __CreateRawText("\u{1F527}");
     __AppendElement(el14, el15);
     return [
         el,
@@ -15186,18 +15441,18 @@ function Navbar({ activeRoute, onRouteChange }) {
     }, [
         onRouteChange
     ]);
-    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_d1eb1_b7bd8_1, {
+    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_d1eb1_23fcf_1, {
         values: [
             `footer-nav-item ${activeRoute === 'home' ? 'active' : ''}`,
             ()=>handleRouteChange('home'),
             `footer-nav-item ${activeRoute === 'dashboard' ? 'active' : ''}`,
             ()=>handleRouteChange('dashboard'),
+            `footer-nav-item ${activeRoute === 'control' ? 'active' : ''}`,
+            ()=>handleRouteChange('control'),
             `footer-nav-item ${activeRoute === 'classes' ? 'active' : ''}`,
             ()=>handleRouteChange('classes'),
-            `footer-nav-item ${activeRoute === 'connections' ? 'active' : ''}`,
-            ()=>handleRouteChange('connections'),
-            `footer-nav-item ${activeRoute === 'control' ? 'active' : ''}`,
-            ()=>handleRouteChange('control')
+            `footer-nav-item ${activeRoute === 'config' ? 'active' : ''}`,
+            ()=>handleRouteChange('config')
         ]
     }, void 0, false, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\Navbar.jsx",
@@ -15205,6 +15460,699 @@ function Navbar({ activeRoute, onRouteChange }) {
         columnNumber: 5
     }, this);
 }
+
+
+// @ts-nocheck
+const isPrefreshComponent = __prefresh_utils__.shouldBind(module);
+
+const moduleHot = module.hot;
+
+if (moduleHot) {
+  const currentExports = __prefresh_utils__.getExports(module);
+  const previousHotModuleExports = moduleHot.data
+    && moduleHot.data.moduleExports;
+
+  __prefresh_utils__.registerExports(currentExports, module.id);
+
+  if (isPrefreshComponent) {
+    if (previousHotModuleExports) {
+      try {
+        __prefresh_utils__.flush();
+        if (
+          typeof __prefresh_errors__ !== 'undefined'
+          && __prefresh_errors__
+          && __prefresh_errors__.clearRuntimeErrors
+        ) {
+          __prefresh_errors__.clearRuntimeErrors();
+        }
+      } catch (e) {
+        // Only available in newer webpack versions.
+        if (moduleHot.invalidate) {
+          moduleHot.invalidate();
+        } else {
+          globalThis.location.reload();
+        }
+      }
+    }
+
+    moduleHot.dispose(data => {
+      data.moduleExports = __prefresh_utils__.getExports(module);
+    });
+
+    moduleHot.accept(function errorRecovery() {
+      if (
+        typeof __prefresh_errors__ !== 'undefined'
+        && __prefresh_errors__
+        && __prefresh_errors__.handleRuntimeError
+      ) {
+        __prefresh_errors__.handleRuntimeError(error);
+      }
+
+      __webpack_require__.c[module.id].hot.accept(errorRecovery);
+    });
+  }
+}
+
+
+}),
+"(react:background)/./src/components/ServerConfigScreen.jsx": (function (module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+});
+/* ESM import */var _lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/jsx-dev-runtime/index.js");
+/* ESM import */var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/index.js");
+/* ESM import */var _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:background)/./src/services/RobotAPI.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* provided dependency */ var __prefresh_utils__ = __webpack_require__("(react:background)/./node_modules/@lynx-js/react-refresh-webpack-plugin/runtime/refresh.cjs");
+
+
+
+const __snapshot_b2169_c8027_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_2", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("button", pageId);
+    __SetClasses(el, "px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed");
+    return [
+        el
+    ];
+}, [
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[0], "onClick", ctx.__values[0]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[0], "disabled", ctx.__values[1]);
+    }
+], (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_3 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_3", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("p", pageId);
+    __SetClasses(el, "text-lg font-mono text-gray-800");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_4 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_4", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("p", pageId);
+    __SetClasses(el, "text-lg font-mono text-gray-800");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_5 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_5", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("p", pageId);
+    __SetClasses(el, "text-sm font-mono text-gray-800 break-all");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_6 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_6", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("span", pageId);
+    __SetClasses(el, "text-2xl");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_7 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_7", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("p", pageId);
+    return [
+        el
+    ];
+}, [
+    function(ctx) {
+        if (ctx.__elements) __SetClasses(ctx.__elements[0], ctx.__values[0] || '');
+    }
+], (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_8 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_8", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("p", pageId);
+    __SetClasses(el, "text-sm text-gray-500");
+    return [
+        el
+    ];
+}, null, (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
+const __snapshot_b2169_c8027_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b2169_c8027_1", function() {
+    const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
+    const el = __CreateElement("div", pageId);
+    __SetClasses(el, "min-h-screen bg-gray-100 py-8");
+    const el1 = __CreateElement("div", pageId);
+    __SetClasses(el1, "max-w-2xl mx-auto px-4");
+    __AppendElement(el, el1);
+    const el2 = __CreateElement("div", pageId);
+    __SetClasses(el2, "bg-white rounded-lg shadow-md p-6 mb-6");
+    __AppendElement(el1, el2);
+    const el3 = __CreateElement("h1", pageId);
+    __SetClasses(el3, "text-3xl font-bold text-gray-800 mb-2");
+    __AppendElement(el2, el3);
+    const el4 = __CreateRawText("\u{1F527} Server Configuration");
+    __AppendElement(el3, el4);
+    const el5 = __CreateElement("p", pageId);
+    __SetClasses(el5, "text-gray-600");
+    __AppendElement(el2, el5);
+    const el6 = __CreateRawText("Configure the IP address and port to connect to your robot server");
+    __AppendElement(el5, el6);
+    const el7 = __CreateElement("div", pageId);
+    __SetClasses(el7, "bg-white rounded-lg shadow-md p-6 mb-6");
+    __AppendElement(el1, el7);
+    const el8 = __CreateElement("h2", pageId);
+    __SetClasses(el8, "text-xl font-semibold text-gray-800 mb-4");
+    __AppendElement(el7, el8);
+    const el9 = __CreateRawText("Server Settings");
+    __AppendElement(el8, el9);
+    const el10 = __CreateElement("div", pageId);
+    __SetClasses(el10, "space-y-4");
+    __AppendElement(el7, el10);
+    const el11 = __CreateElement("div", pageId);
+    __AppendElement(el10, el11);
+    const el12 = __CreateElement("label", pageId);
+    __SetAttribute(el12, "htmlFor", "host");
+    __SetClasses(el12, "block text-sm font-medium text-gray-700 mb-2");
+    __AppendElement(el11, el12);
+    const el13 = __CreateRawText("Server IP Address / Hostname");
+    __AppendElement(el12, el13);
+    const el14 = __CreateElement("input", pageId);
+    __SetAttribute(el14, "type", "text");
+    __SetID(el14, "host");
+    __SetAttribute(el14, "placeholder", "e.g., 192.168.1.100 or localhost");
+    __SetClasses(el14, "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent");
+    __AppendElement(el11, el14);
+    const el15 = __CreateElement("p", pageId);
+    __SetClasses(el15, "text-sm text-gray-500 mt-1");
+    __AppendElement(el11, el15);
+    const el16 = __CreateRawText("Enter the IP address of the computer running robot_gui.py");
+    __AppendElement(el15, el16);
+    const el17 = __CreateElement("div", pageId);
+    __AppendElement(el10, el17);
+    const el18 = __CreateElement("label", pageId);
+    __SetAttribute(el18, "htmlFor", "port");
+    __SetClasses(el18, "block text-sm font-medium text-gray-700 mb-2");
+    __AppendElement(el17, el18);
+    const el19 = __CreateRawText("Port Number");
+    __AppendElement(el18, el19);
+    const el20 = __CreateElement("input", pageId);
+    __SetAttribute(el20, "type", "text");
+    __SetID(el20, "port");
+    __SetAttribute(el20, "placeholder", "e.g., 8080");
+    __SetClasses(el20, "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent");
+    __AppendElement(el17, el20);
+    const el21 = __CreateElement("p", pageId);
+    __SetClasses(el21, "text-sm text-gray-500 mt-1");
+    __AppendElement(el17, el21);
+    const el22 = __CreateRawText("Default port is 8080. Make sure this matches the port in robot_gui.py");
+    __AppendElement(el21, el22);
+    const el23 = __CreateElement("div", pageId);
+    __SetClasses(el23, "flex flex-wrap gap-3 pt-4");
+    __AppendElement(el10, el23);
+    const el24 = __CreateElement("button", pageId);
+    __SetClasses(el24, "px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed");
+    __AppendElement(el23, el24);
+    const el25 = __CreateRawText("\u{1F4BE} Save Configuration");
+    __AppendElement(el24, el25);
+    const el26 = __CreateWrapperElement(pageId);
+    __AppendElement(el23, el26);
+    const el27 = __CreateElement("button", pageId);
+    __SetClasses(el27, "px-6 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed");
+    __AppendElement(el23, el27);
+    const el28 = __CreateRawText("\u{1F504} Reset to Default");
+    __AppendElement(el27, el28);
+    const el29 = __CreateElement("div", pageId);
+    __SetClasses(el29, "bg-white rounded-lg shadow-md p-6 mb-6");
+    __AppendElement(el1, el29);
+    const el30 = __CreateElement("h2", pageId);
+    __SetClasses(el30, "text-xl font-semibold text-gray-800 mb-4");
+    __AppendElement(el29, el30);
+    const el31 = __CreateRawText("Current Configuration");
+    __AppendElement(el30, el31);
+    const el32 = __CreateElement("div", pageId);
+    __SetClasses(el32, "bg-gray-50 rounded-md p-4");
+    __AppendElement(el29, el32);
+    const el33 = __CreateElement("div", pageId);
+    __SetClasses(el33, "grid grid-cols-1 md:grid-cols-2 gap-4");
+    __AppendElement(el32, el33);
+    const el34 = __CreateElement("div", pageId);
+    __AppendElement(el33, el34);
+    const el35 = __CreateElement("span", pageId);
+    __SetClasses(el35, "text-sm font-medium text-gray-500");
+    __AppendElement(el34, el35);
+    const el36 = __CreateRawText("Host:");
+    __AppendElement(el35, el36);
+    const el37 = __CreateWrapperElement(pageId);
+    __AppendElement(el34, el37);
+    const el38 = __CreateElement("div", pageId);
+    __AppendElement(el33, el38);
+    const el39 = __CreateElement("span", pageId);
+    __SetClasses(el39, "text-sm font-medium text-gray-500");
+    __AppendElement(el38, el39);
+    const el40 = __CreateRawText("Port:");
+    __AppendElement(el39, el40);
+    const el41 = __CreateWrapperElement(pageId);
+    __AppendElement(el38, el41);
+    const el42 = __CreateElement("div", pageId);
+    __SetClasses(el42, "mt-3 pt-3 border-t border-gray-200");
+    __AppendElement(el32, el42);
+    const el43 = __CreateElement("span", pageId);
+    __SetClasses(el43, "text-sm font-medium text-gray-500");
+    __AppendElement(el42, el43);
+    const el44 = __CreateRawText("Full URL:");
+    __AppendElement(el43, el44);
+    const el45 = __CreateWrapperElement(pageId);
+    __AppendElement(el42, el45);
+    const el46 = __CreateElement("div", pageId);
+    __SetClasses(el46, "bg-white rounded-lg shadow-md p-6 mb-6");
+    __AppendElement(el1, el46);
+    const el47 = __CreateElement("h2", pageId);
+    __SetClasses(el47, "text-xl font-semibold text-gray-800 mb-4");
+    __AppendElement(el46, el47);
+    const el48 = __CreateRawText("Connection Status");
+    __AppendElement(el47, el48);
+    const el49 = __CreateElement("div", pageId);
+    __SetClasses(el49, "flex items-center space-x-3");
+    __AppendElement(el46, el49);
+    const el50 = __CreateWrapperElement(pageId);
+    __AppendElement(el49, el50);
+    const el51 = __CreateElement("div", pageId);
+    __AppendElement(el49, el51);
+    const el52 = __CreateWrapperElement(pageId);
+    __AppendElement(el51, el52);
+    const el53 = __CreateWrapperElement(pageId);
+    __AppendElement(el51, el53);
+    const el54 = __CreateElement("div", pageId);
+    __SetClasses(el54, "bg-blue-50 rounded-lg p-6");
+    __AppendElement(el1, el54);
+    const el55 = __CreateElement("h2", pageId);
+    __SetClasses(el55, "text-xl font-semibold text-blue-800 mb-4");
+    __AppendElement(el54, el55);
+    const el56 = __CreateRawText("\u{1F4A1} How to Connect");
+    __AppendElement(el55, el56);
+    const el57 = __CreateElement("div", pageId);
+    __SetClasses(el57, "space-y-3 text-blue-700");
+    __AppendElement(el54, el57);
+    const el58 = __CreateElement("div", pageId);
+    __SetClasses(el58, "flex items-start space-x-2");
+    __AppendElement(el57, el58);
+    const el59 = __CreateElement("span", pageId);
+    __SetClasses(el59, "text-blue-600 font-bold");
+    __AppendElement(el58, el59);
+    const el60 = __CreateRawText("1.");
+    __AppendElement(el59, el60);
+    const el61 = __CreateElement("p", pageId);
+    __AppendElement(el58, el61);
+    const el62 = __CreateRawText("Make sure ");
+    __AppendElement(el61, el62);
+    const el63 = __CreateElement("code", pageId);
+    __SetClasses(el63, "bg-blue-100 px-1 rounded");
+    __AppendElement(el61, el63);
+    const el64 = __CreateRawText("robot_gui.py");
+    __AppendElement(el63, el64);
+    const el65 = __CreateRawText(" is running on your computer");
+    __AppendElement(el61, el65);
+    const el66 = __CreateElement("div", pageId);
+    __SetClasses(el66, "flex items-start space-x-2");
+    __AppendElement(el57, el66);
+    const el67 = __CreateElement("span", pageId);
+    __SetClasses(el67, "text-blue-600 font-bold");
+    __AppendElement(el66, el67);
+    const el68 = __CreateRawText("2.");
+    __AppendElement(el67, el68);
+    const el69 = __CreateElement("p", pageId);
+    __AppendElement(el66, el69);
+    const el70 = __CreateRawText("Find your computer's IP address (use ");
+    __AppendElement(el69, el70);
+    const el71 = __CreateElement("code", pageId);
+    __SetClasses(el71, "bg-blue-100 px-1 rounded");
+    __AppendElement(el69, el71);
+    const el72 = __CreateRawText("ipconfig");
+    __AppendElement(el71, el72);
+    const el73 = __CreateRawText(" on Windows or ");
+    __AppendElement(el69, el73);
+    const el74 = __CreateElement("code", pageId);
+    __SetClasses(el74, "bg-blue-100 px-1 rounded");
+    __AppendElement(el69, el74);
+    const el75 = __CreateRawText("ifconfig");
+    __AppendElement(el74, el75);
+    const el76 = __CreateRawText(" on Mac/Linux)");
+    __AppendElement(el69, el76);
+    const el77 = __CreateElement("div", pageId);
+    __SetClasses(el77, "flex items-start space-x-2");
+    __AppendElement(el57, el77);
+    const el78 = __CreateElement("span", pageId);
+    __SetClasses(el78, "text-blue-600 font-bold");
+    __AppendElement(el77, el78);
+    const el79 = __CreateRawText("3.");
+    __AppendElement(el78, el79);
+    const el80 = __CreateElement("p", pageId);
+    __AppendElement(el77, el80);
+    const el81 = __CreateRawText("Enter the IP address above (e.g., ");
+    __AppendElement(el80, el81);
+    const el82 = __CreateElement("code", pageId);
+    __SetClasses(el82, "bg-blue-100 px-1 rounded");
+    __AppendElement(el80, el82);
+    const el83 = __CreateRawText("192.168.1.100");
+    __AppendElement(el82, el83);
+    const el84 = __CreateRawText(")");
+    __AppendElement(el80, el84);
+    const el85 = __CreateElement("div", pageId);
+    __SetClasses(el85, "flex items-start space-x-2");
+    __AppendElement(el57, el85);
+    const el86 = __CreateElement("span", pageId);
+    __SetClasses(el86, "text-blue-600 font-bold");
+    __AppendElement(el85, el86);
+    const el87 = __CreateRawText("4.");
+    __AppendElement(el86, el87);
+    const el88 = __CreateElement("p", pageId);
+    __AppendElement(el85, el88);
+    const el89 = __CreateRawText("Make sure both devices are on the same WiFi network");
+    __AppendElement(el88, el89);
+    const el90 = __CreateElement("div", pageId);
+    __SetClasses(el90, "flex items-start space-x-2");
+    __AppendElement(el57, el90);
+    const el91 = __CreateElement("span", pageId);
+    __SetClasses(el91, "text-blue-600 font-bold");
+    __AppendElement(el90, el91);
+    const el92 = __CreateRawText("5.");
+    __AppendElement(el91, el92);
+    const el93 = __CreateElement("p", pageId);
+    __AppendElement(el90, el93);
+    const el94 = __CreateRawText('Click "Test Connection" to verify the setup');
+    __AppendElement(el93, el94);
+    const el95 = __CreateElement("div", pageId);
+    __SetClasses(el95, "mt-4 p-3 bg-yellow-100 rounded-md");
+    __AppendElement(el54, el95);
+    const el96 = __CreateElement("p", pageId);
+    __SetClasses(el96, "text-yellow-800 text-sm");
+    __AppendElement(el95, el96);
+    const el97 = __CreateElement("strong", pageId);
+    __AppendElement(el96, el97);
+    const el98 = __CreateRawText("Note:");
+    __AppendElement(el97, el98);
+    const el99 = __CreateRawText(" If you're testing on the same computer, use ");
+    __AppendElement(el96, el99);
+    const el100 = __CreateElement("code", pageId);
+    __SetClasses(el100, "bg-yellow-200 px-1 rounded");
+    __AppendElement(el96, el100);
+    const el101 = __CreateRawText("localhost");
+    __AppendElement(el100, el101);
+    const el102 = __CreateRawText(" as the host.");
+    __AppendElement(el96, el102);
+    return [
+        el,
+        el1,
+        el2,
+        el3,
+        el4,
+        el5,
+        el6,
+        el7,
+        el8,
+        el9,
+        el10,
+        el11,
+        el12,
+        el13,
+        el14,
+        el15,
+        el16,
+        el17,
+        el18,
+        el19,
+        el20,
+        el21,
+        el22,
+        el23,
+        el24,
+        el25,
+        el26,
+        el27,
+        el28,
+        el29,
+        el30,
+        el31,
+        el32,
+        el33,
+        el34,
+        el35,
+        el36,
+        el37,
+        el38,
+        el39,
+        el40,
+        el41,
+        el42,
+        el43,
+        el44,
+        el45,
+        el46,
+        el47,
+        el48,
+        el49,
+        el50,
+        el51,
+        el52,
+        el53,
+        el54,
+        el55,
+        el56,
+        el57,
+        el58,
+        el59,
+        el60,
+        el61,
+        el62,
+        el63,
+        el64,
+        el65,
+        el66,
+        el67,
+        el68,
+        el69,
+        el70,
+        el71,
+        el72,
+        el73,
+        el74,
+        el75,
+        el76,
+        el77,
+        el78,
+        el79,
+        el80,
+        el81,
+        el82,
+        el83,
+        el84,
+        el85,
+        el86,
+        el87,
+        el88,
+        el89,
+        el90,
+        el91,
+        el92,
+        el93,
+        el94,
+        el95,
+        el96,
+        el97,
+        el98,
+        el99,
+        el100,
+        el101,
+        el102
+    ];
+}, [
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[14], "value", ctx.__values[0]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[14], "onChange", ctx.__values[1]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[20], "value", ctx.__values[2]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[20], "onChange", ctx.__values[3]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[24], "onClick", ctx.__values[4]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[24], "disabled", ctx.__values[5]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[27], "onClick", ctx.__values[6]);
+    },
+    function(ctx) {
+        if (ctx.__elements) __SetAttribute(ctx.__elements[27], "disabled", ctx.__values[7]);
+    }
+], [
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        26
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        37
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        41
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        45
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        50
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        52
+    ],
+    [
+        (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        53
+    ]
+], undefined, globDynamicComponentEntry, null);
+const ServerConfigScreen = ()=>{
+    const [host, setHost] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [port, setPort] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [isConnected, setIsConnected] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [connectionStatus, setConnectionStatus] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [isTesting, setIsTesting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [currentConfig, setCurrentConfig] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({});
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        // Load current configuration
+        const config = _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getServerConfig();
+        setCurrentConfig(config);
+        setHost(config.host);
+        setPort(config.port);
+        // Test initial connection
+        testConnection();
+    }, []);
+    const testConnection = async ()=>{
+        setIsTesting(true);
+        setConnectionStatus('Testing connection...');
+        try {
+            const result = await _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].testConnection();
+            setIsConnected(result.success);
+            setConnectionStatus(result.message);
+        } catch (error) {
+            setIsConnected(false);
+            setConnectionStatus('Connection test failed');
+        } finally{
+            setIsTesting(false);
+        }
+    };
+    const saveConfiguration = async ()=>{
+        if (!host.trim() || !port.trim()) {
+            setConnectionStatus('Host and port are required');
+            return;
+        }
+        const success = _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].setServerConfig(host, port);
+        if (success) {
+            setCurrentConfig(_services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getServerConfig());
+            setConnectionStatus('Configuration saved successfully');
+            // Test new configuration
+            await testConnection();
+        } else setConnectionStatus('Failed to save configuration');
+    };
+    const resetToDefault = ()=>{
+        _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].resetToDefault();
+        const config = _services_RobotAPI__WEBPACK_IMPORTED_MODULE_2__["default"].getServerConfig();
+        setCurrentConfig(config);
+        setHost(config.host);
+        setPort(config.port);
+        setConnectionStatus('Reset to default configuration');
+        testConnection();
+    };
+    const getConnectionStatusColor = ()=>{
+        if (isTesting) return 'text-yellow-500';
+        return isConnected ? 'text-green-500' : 'text-red-500';
+    };
+    const getConnectionStatusIcon = ()=>{
+        if (isTesting) return "\u23F3";
+        return isConnected ? "\u{1F7E2}" : "\u{1F534}";
+    };
+    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_1, {
+        values: [
+            host,
+            (e)=>setHost(e.target.value),
+            port,
+            (e)=>setPort(e.target.value),
+            saveConfiguration,
+            isTesting,
+            resetToDefault,
+            isTesting
+        ],
+        children: [
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_2, {
+                values: [
+                    testConnection,
+                    isTesting
+                ],
+                children: isTesting ? "\u23F3 Testing..." : "\u{1F50D} Test Connection"
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 143,
+                columnNumber: 15
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_3, {
+                children: currentConfig.host
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 172,
+                columnNumber: 17
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_4, {
+                children: currentConfig.port
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 176,
+                columnNumber: 17
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_5, {
+                children: currentConfig.baseURL
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 181,
+                columnNumber: 15
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_6, {
+                children: getConnectionStatusIcon()
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 193,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_7, {
+                values: [
+                    `text-lg font-medium ${getConnectionStatusColor()}`
+                ],
+                children: connectionStatus || 'Not tested'
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 195,
+                columnNumber: 15
+            }, undefined),
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b2169_c8027_8, {
+                children: isConnected ? 'Ready to control the robot' : 'Cannot connect to robot server'
+            }, void 0, false, {
+                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+                lineNumber: 198,
+                columnNumber: 15
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ServerConfigScreen.jsx",
+        lineNumber: 78,
+        columnNumber: 5
+    }, undefined);
+};
+/* ESM default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ServerConfigScreen);
 
 
 // @ts-nocheck
@@ -15340,7 +16288,7 @@ __webpack_require__.r(__webpack_exports__);
   if (true) {
     (function() {
       var localsJsonString = undefined;
-      // 1756423365155
+      // 1756425269246
       var cssReload = __webpack_require__("(react:background)/./node_modules/@lynx-js/css-extract-webpack-plugin/runtime/hotModuleReplacement.cjs")(module.id, {}, "");
       // only invalidate when locals change
       if (
@@ -15455,7 +16403,7 @@ __webpack_require__.hu = (chunkId) => ('' + chunkId + '.' + __webpack_require__.
 })();
 // webpack/runtime/get_full_hash
 (() => {
-__webpack_require__.h = () => ("5695f2be9cd356a3")
+__webpack_require__.h = () => ("bcfe96394ba30ab5")
 })();
 // webpack/runtime/get_main_filename/update manifest
 (() => {
@@ -15935,7 +16883,7 @@ __webpack_require__.r = (exports) => {
 })();
 // webpack/runtime/public_path
 (() => {
-__webpack_require__.p = "http://169.254.151.37:3000/";
+__webpack_require__.p = "http://172.16.240.200:3000/";
 })();
 // webpack/runtime/Lynx async chunks
 (() => {
@@ -16418,7 +17366,7 @@ var installedChunks = __webpack_require__.hmrS_require = __webpack_require__.hmr
 // startup
 // Load entry module and return exports
 __webpack_require__("(react:background)/./node_modules/@lynx-js/react/refresh/dist/index.js");
-__webpack_require__("(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=169.254.151.37&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1");
+__webpack_require__("(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=172.16.240.200&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1");
 __webpack_require__("(react:background)/./node_modules/@rspack/core/hot/dev-server.js");
 var __webpack_exports__ = __webpack_require__("(react:background)/./src/index.jsx");
 
@@ -16436,4 +17384,4 @@ var __webpack_exports__ = __webpack_require__("(react:background)/./src/index.js
   };
 })();
 
-//# sourceMappingURL=http://169.254.151.37:3000/.rspeedy/main/background.js.map
+//# sourceMappingURL=http://172.16.240.200:3000/.rspeedy/main/background.js.map

@@ -3,11 +3,17 @@
  * Handles communication with the robot_gui.py server
  */
 
-const API_BASE_URL = 'http://localhost:8080/api';
+// Default configuration
+const DEFAULT_HOST = 'localhost';
+const DEFAULT_PORT = '8080';
+const DEFAULT_BASE_URL = `http://${DEFAULT_HOST}:${DEFAULT_PORT}/api`;
 
 class RobotAPI {
   constructor() {
-    this.baseURL = API_BASE_URL;
+    // Load saved configuration or use defaults
+    this.host = localStorage.getItem('robotAPI_host') || DEFAULT_HOST;
+    this.port = localStorage.getItem('robotAPI_port') || DEFAULT_PORT;
+    this.baseURL = `http://${this.host}:${this.port}/api`;
   }
 
   // Helper method for making HTTP requests
@@ -34,6 +40,86 @@ class RobotAPI {
     } catch (error) {
       console.error('API Request failed:', error);
       return { success: false, error: error.message };
+    }
+  }
+
+  // CONFIGURATION METHODS
+
+  /**
+   * Get current server configuration
+   * @returns {Object} Current host and port
+   */
+  getServerConfig() {
+    return {
+      host: this.host,
+      port: this.port,
+      baseURL: this.baseURL
+    };
+  }
+
+  /**
+   * Set server configuration
+   * @param {string} host - Server host/IP
+   * @param {string} port - Server port
+   * @returns {boolean} True if configuration was updated
+   */
+  setServerConfig(host, port) {
+    try {
+      // Validate inputs
+      if (!host || !port) {
+        throw new Error('Host and port are required');
+      }
+
+      // Update configuration
+      this.host = host.trim();
+      this.port = port.trim();
+      this.baseURL = `http://${this.host}:${this.port}/api`;
+
+      // Save to localStorage
+      localStorage.setItem('robotAPI_host', this.host);
+      localStorage.setItem('robotAPI_port', this.port);
+
+      console.log(`Robot API configuration updated: ${this.baseURL}`);
+      return true;
+    } catch (error) {
+      console.error('Error setting server config:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Reset to default configuration
+   */
+  resetToDefault() {
+    this.host = DEFAULT_HOST;
+    this.port = DEFAULT_PORT;
+    this.baseURL = DEFAULT_BASE_URL;
+
+    // Clear localStorage
+    localStorage.removeItem('robotAPI_host');
+    localStorage.removeItem('robotAPI_port');
+
+    console.log('Robot API configuration reset to default');
+  }
+
+  /**
+   * Test connection with current configuration
+   * @returns {Promise<Object>} Connection test result
+   */
+  async testConnection() {
+    try {
+      const result = await this.getRobotStatus();
+      return {
+        success: result.success,
+        message: result.success ? 'Connection successful' : result.error,
+        config: this.getServerConfig()
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+        config: this.getServerConfig()
+      };
     }
   }
 
@@ -200,15 +286,6 @@ class RobotAPI {
   }
 
   // UTILITY METHODS
-
-  /**
-   * Test connection to robot server
-   * @returns {Promise<boolean>} True if connected, false otherwise
-   */
-  async testConnection() {
-    const result = await this.getRobotStatus();
-    return result.success;
-  }
 
   /**
    * Get robot server URL

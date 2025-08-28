@@ -22,6 +22,13 @@ export function Navbar({ activeRoute, onRouteChange }) {
       </view>
       
       <view 
+        className={`footer-nav-item ${activeRoute === 'control' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('control')}
+      >
+        <text className="nav-icon">●</text>
+      </view>
+      
+      <view 
         className={`footer-nav-item ${activeRoute === 'classes' ? 'active' : ''}`}
         bindtap={() => handleRouteChange('classes')}
       >
@@ -29,17 +36,10 @@ export function Navbar({ activeRoute, onRouteChange }) {
       </view>
       
       <view 
-        className={`footer-nav-item ${activeRoute === 'connections' ? 'active' : ''}`}
-        bindtap={() => handleRouteChange('connections')}
+        className={`footer-nav-item ${activeRoute === 'config' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('config')}
       >
-        <text className="nav-icon">⚙</text>
-      </view>
-      
-      <view 
-        className={`footer-nav-item ${activeRoute === 'control' ? 'active' : ''}`}
-        bindtap={() => handleRouteChange('control')}
-      >
-        <text className="nav-icon">●</text>
+        <text className="nav-icon">🔧</text>
       </view>
     </view>
   )

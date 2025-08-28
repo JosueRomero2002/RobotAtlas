@@ -5,6 +5,7 @@ import { DashboardScreen } from './components/DashboardScreen'
 import { ClassesScreen } from './components/ClassesScreen'
 import { ConnectionsScreen } from './components/ConnectionsScreen'
 import { ControlScreen } from './components/ControlScreen'
+import ServerConfigScreen from './components/ServerConfigScreen'
 
 import './App.css'
 
@@ -32,6 +33,8 @@ export function App(props) {
         return <ConnectionsScreen />
       case 'control':
         return <ControlScreen />
+      case 'config':
+        return <ServerConfigScreen />
       default:
         return <HomeScreen />
     }
