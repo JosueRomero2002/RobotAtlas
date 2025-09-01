@@ -5,7 +5,9 @@ import { DashboardScreen } from './components/DashboardScreen'
 import { ClassesScreen } from './components/ClassesScreen'
 import { ConnectionsScreen } from './components/ConnectionsScreen'
 import { ControlScreen } from './components/ControlScreen'
-import ServerConfigScreen from './components/ServerConfigScreen'
+import { RobotControlScreen } from './components/RobotControlScreen'
+import { ManualConfigScreen } from './components/ManualConfigScreen'
+import { ConfigDebugScreen } from './components/ConfigDebugScreen'
 
 import './App.css'
 
@@ -33,8 +35,12 @@ export function App(props) {
         return <ConnectionsScreen />
       case 'control':
         return <ControlScreen />
-      case 'config':
-        return <ServerConfigScreen />
+      case 'robotcontrol':
+        return <RobotControlScreen />
+      case 'manualconfig':
+        return <ManualConfigScreen />
+      case 'debug':
+        return <ConfigDebugScreen />
       default:
         return <HomeScreen />
     }

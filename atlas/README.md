@@ -16,11 +16,11 @@ npm run dev
 
 ### 3. Configure Server Connection
 1. Open the app in LynxExplorer
-2. Tap the **🔧** (wrench) icon in the bottom navigation
-3. Enter your computer's IP address (e.g., `192.168.1.100`)
-4. Enter the port (default: `8080`)
-5. Tap **💾 Save Configuration**
-6. Tap **🔍 Test Connection**
+2. **EASIEST**: Tap the **🚀** (rocket) icon for Quick Setup
+3. **OR** Tap the **🔧** (wrench) icon for detailed configuration
+4. **OR** Tap the **⚡** (lightning) icon for advanced testing
+5. Enter your computer's IP address (e.g., `192.168.100.6`)
+6. The app will save configuration and test connection automatically
 
 ### 4. Start the Robot Server
 ```bash
@@ -61,7 +61,7 @@ python robot_gui.py
 The app supports connecting to the robot server from any device on the same network:
 
 - **Same Computer**: Use `localhost` as the host
-- **Local Network**: Use your computer's IP address (e.g., `192.168.1.100`)
+- **Local Network**: Use your computer's IP address (e.g., `192.168.100.6`)
 - **Custom Ports**: Configure any port that matches the robot server
 
 ### Finding Your IP Address
@@ -86,7 +86,12 @@ Look for your local IP address (usually starts with `192.168.x.x`)
 - **☰ Dashboard**: System status and statistics
 - **● Control**: Manual robot control interface
 - **★ Classes**: Educational robot classes
-- **🔧 Config**: Server configuration and settings
+- **⚙ Connections**: Connection status and monitoring
+- **🔧 Config**: Detailed server configuration
+- **🚀 Quick Setup**: Easy one-step configuration
+- **⚡ ConfigTest**: Advanced testing and debugging
+- **🧪 Test**: General functionality testing
+- **📱 Simple**: Minimal test interface
 
 ## 🛠️ Development
 

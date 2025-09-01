@@ -3,21 +3,44 @@
  * Handles communication with the robot_gui.py server
  */
 
-// Default configuration
-const DEFAULT_HOST = 'localhost';
-const DEFAULT_PORT = '8080';
-const DEFAULT_BASE_URL = `http://${DEFAULT_HOST}:${DEFAULT_PORT}/api`;
+import configManager from './ConfigManager.js';
 
 class RobotAPI {
   constructor() {
-    // Load saved configuration or use defaults
-    this.host = localStorage.getItem('robotAPI_host') || DEFAULT_HOST;
-    this.port = localStorage.getItem('robotAPI_port') || DEFAULT_PORT;
-    this.baseURL = `http://${this.host}:${this.port}/api`;
+    // Load configuration from ConfigManager
+    this.updateBaseURL();
+    
+    // Listen for configuration changes
+    this.configChangeListener = configManager.addEventListener('configurationChanged', (data) => {
+      console.log('RobotAPI: Configuration changed, updating base URL');
+      this.updateBaseURL();
+    });
+    
+    // Listen for configuration refresh
+    this.configRefreshListener = configManager.addEventListener('configurationRefreshed', (data) => {
+      console.log('RobotAPI: Configuration refreshed, updating base URL');
+      this.updateBaseURL();
+    });
+    
+    console.log('RobotAPI initialized with base URL:', this.baseURL);
+  }
+
+  /**
+   * Update base URL from current configuration
+   */
+  updateBaseURL() {
+    const config = configManager.getServerConfig();
+    this.host = config.host;
+    this.port = config.port;
+    this.baseURL = config.baseURL;
+    console.log('RobotAPI: Base URL updated to:', this.baseURL);
   }
 
   // Helper method for making HTTP requests
   async makeRequest(endpoint, options = {}) {
+    // Update base URL in case configuration changed
+    this.updateBaseURL();
+    
     const url = `${this.baseURL}${endpoint}`;
     
     const defaultOptions = {
@@ -29,16 +52,25 @@ class RobotAPI {
     const requestOptions = { ...defaultOptions, ...options };
 
     try {
+      // Update connection status to connecting
+      configManager.updateConnectionStatus('connecting');
+      
       const response = await fetch(url, requestOptions);
       
       if (!response.ok) {
+        configManager.updateConnectionStatus('error');
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
+      
+      // Update connection status to connected
+      configManager.updateConnectionStatus('connected');
+      
       return { success: true, data };
     } catch (error) {
       console.error('API Request failed:', error);
+      configManager.updateConnectionStatus('error');
       return { success: false, error: error.message };
     }
   }
@@ -47,14 +79,10 @@ class RobotAPI {
 
   /**
    * Get current server configuration
-   * @returns {Object} Current host and port
+   * @returns {Object} Current host, port, and baseURL
    */
   getServerConfig() {
-    return {
-      host: this.host,
-      port: this.port,
-      baseURL: this.baseURL
-    };
+    return configManager.getServerConfig();
   }
 
   /**
@@ -65,22 +93,25 @@ class RobotAPI {
    */
   setServerConfig(host, port) {
     try {
-      // Validate inputs
-      if (!host || !port) {
-        throw new Error('Host and port are required');
+      console.log('setServerConfig called with:', { 
+        host, 
+        port, 
+        hostType: typeof host, 
+        portType: typeof port,
+        hostLength: host ? host.length : 0,
+        portLength: port ? port.length : 0
+      });
+      
+      const success = configManager.setServerConfig(host, port);
+      
+      if (success) {
+        // Update local base URL
+        this.updateBaseURL();
+        console.log(`Robot API configuration updated: ${this.baseURL}`);
+        console.log('Current config after update:', this.getServerConfig());
       }
-
-      // Update configuration
-      this.host = host.trim();
-      this.port = port.trim();
-      this.baseURL = `http://${this.host}:${this.port}/api`;
-
-      // Save to localStorage
-      localStorage.setItem('robotAPI_host', this.host);
-      localStorage.setItem('robotAPI_port', this.port);
-
-      console.log(`Robot API configuration updated: ${this.baseURL}`);
-      return true;
+      
+      return success;
     } catch (error) {
       console.error('Error setting server config:', error);
       return false;
@@ -91,14 +122,8 @@ class RobotAPI {
    * Reset to default configuration
    */
   resetToDefault() {
-    this.host = DEFAULT_HOST;
-    this.port = DEFAULT_PORT;
-    this.baseURL = DEFAULT_BASE_URL;
-
-    // Clear localStorage
-    localStorage.removeItem('robotAPI_host');
-    localStorage.removeItem('robotAPI_port');
-
+    configManager.resetToDefaults();
+    this.updateBaseURL();
     console.log('Robot API configuration reset to default');
   }
 
@@ -108,19 +133,90 @@ class RobotAPI {
    */
   async testConnection() {
     try {
-      const result = await this.getRobotStatus();
-      return {
-        success: result.success,
-        message: result.success ? 'Connection successful' : result.error,
-        config: this.getServerConfig()
-      };
+      console.log('Testing connection to:', this.baseURL);
+      
+      // Make a real request to test the connection
+      const response = await this.makeRequest('/status');
+      
+      if (response.success) {
+        console.log('Connection test successful');
+        return {
+          success: true,
+          message: 'Connection successful',
+          config: this.getServerConfig(),
+          serverData: response.data
+        };
+      } else {
+        console.log('Connection test failed:', response.error);
+        return {
+          success: false,
+          message: `Connection failed: ${response.error}`,
+          config: this.getServerConfig()
+        };
+      }
     } catch (error) {
+      console.log('Connection test error:', error);
       return {
         success: false,
-        message: error.message,
+        message: `Connection error: ${error.message}`,
         config: this.getServerConfig()
       };
     }
+  }
+
+  /**
+   * Simple ping test for quick connection verification
+   * @returns {Promise<Object>} Simple connection test result
+   */
+  async pingServer() {
+    try {
+      this.updateBaseURL();
+      const url = `${this.baseURL}/status`;
+      console.log('Pinging server:', url);
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (response.ok) {
+        configManager.updateConnectionStatus('connected');
+        return { success: true, status: response.status, message: 'Server is reachable' };
+      } else {
+        configManager.updateConnectionStatus('error');
+        return { success: false, status: response.status, message: `Server returned ${response.status}` };
+      }
+    } catch (error) {
+      configManager.updateConnectionStatus('error');
+      if (error.name === 'AbortError') {
+        return { success: false, message: 'Connection timeout' };
+      }
+      return { success: false, message: error.message };
+    }
+  }
+
+  /**
+   * Get connection status
+   * @returns {Object} Connection status information
+   */
+  getConnectionStatus() {
+    return configManager.getConnectionStatus();
+  }
+
+  /**
+   * Get configuration statistics
+   * @returns {Object} Configuration statistics
+   */
+  getConfigStats() {
+    return configManager.getConfigStats();
   }
 
   // GET METHODS - Retrieve data from robot
@@ -193,13 +289,13 @@ class RobotAPI {
 
   /**
    * Start a robot class
-   * @param {number} classId - ID of the class to start
+   * @param {string} className - Name of the class to execute
    * @returns {Promise<Object>} Success status and message
    */
-  async startClass(classId) {
-    return this.makeRequest('/class/start', {
+  async startClass(className) {
+    return this.makeRequest('/class/execute', {
       method: 'POST',
-      body: JSON.stringify({ classId }),
+      body: JSON.stringify({ class_name: className }),
     });
   }
 
@@ -212,6 +308,28 @@ class RobotAPI {
       method: 'POST',
       body: JSON.stringify({}),
     });
+  }
+
+  /**
+   * Get current class progress
+   * @returns {Promise<Object>} Class progress information
+   */
+  async getClassProgress() {
+    return this.makeRequest('/api/class/progress');
+  }
+
+  /**
+   * Get class details by name
+   * @param {string} className - Name of the class to get details for
+   * @returns {Promise<Object>} Class details
+   */
+  async getClassDetails(className) {
+    const result = await this.getAvailableClasses();
+    if (result.success && result.data.classes) {
+      const classDetails = result.data.classes.find(cls => cls.name === className);
+      return { success: true, data: classDetails };
+    }
+    return { success: false, error: 'Class not found' };
   }
 
   /**
@@ -264,11 +382,14 @@ class RobotAPI {
    * @returns {Promise<Object>} Success status and message
    */
   async moveArm(arm, shoulder = 0, elbow = 0, wrist = 0) {
-    return this.moveRobot({
-      part: arm,
-      shoulder,
-      elbow,
-      wrist
+    return this.makeRequest('/robot/move', {
+      method: 'POST',
+      body: JSON.stringify({
+        part: arm,
+        shoulder,
+        elbow,
+        wrist
+      }),
     });
   }
 
@@ -279,9 +400,12 @@ class RobotAPI {
    * @returns {Promise<Object>} Success status and message
    */
   async moveHand(hand, fingers) {
-    return this.moveRobot({
-      part: hand,
-      ...fingers
+    return this.makeRequest('/robot/move', {
+      method: 'POST',
+      body: JSON.stringify({
+        part: hand,
+        ...fingers
+      }),
     });
   }
 
@@ -292,6 +416,7 @@ class RobotAPI {
    * @returns {string} The base URL for the robot API
    */
   getServerURL() {
+    this.updateBaseURL();
     return this.baseURL;
   }
 
@@ -301,6 +426,196 @@ class RobotAPI {
    */
   setServerURL(url) {
     this.baseURL = url;
+  }
+
+  /**
+   * Export current configuration
+   * @returns {string} JSON string of current configuration
+   */
+  exportConfiguration() {
+    return configManager.exportConfiguration();
+  }
+
+  /**
+   * Import configuration from JSON
+   * @param {string} jsonConfig - JSON string of configuration
+   * @returns {boolean} Success status
+   */
+  importConfiguration(jsonConfig) {
+    const success = configManager.importConfiguration(jsonConfig);
+    if (success) {
+      this.updateBaseURL();
+    }
+    return success;
+  }
+
+  // ROBOT MOVEMENT METHODS
+
+  /**
+   * Execute a preset movement
+   * @param {string} presetName - Name of the preset to execute
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async executePreset(presetName) {
+    return await this.makeRequest('/api/preset/execute', {
+      method: 'POST',
+      body: JSON.stringify({ preset: presetName })
+    });
+  }
+
+  /**
+   * Move robot parts with specific actions
+   * @param {Object} movementData - Movement data including action, part, angles, etc.
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async moveRobot(movementData) {
+    return await this.makeRequest('/api/robot/move', {
+      method: 'POST',
+      body: JSON.stringify(movementData)
+    });
+  }
+
+  /**
+   * Make robot speak text
+   * @param {string} text - Text for robot to speak
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async speakText(text) {
+    return await this.makeRequest('/api/robot/speak', {
+      method: 'POST',
+      body: JSON.stringify({ text: text })
+    });
+  }
+
+  /**
+   * Get robot status
+   * @returns {Promise<Object>} Robot status information
+   */
+  async getRobotStatus() {
+    return await this.makeRequest('/api/status');
+  }
+
+  /**
+   * Get robot position information
+   * @returns {Promise<Object>} Robot position data
+   */
+  async getRobotPosition() {
+    return await this.makeRequest('/api/position');
+  }
+
+  /**
+   * Get available movement presets
+   * @returns {Promise<Object>} Available presets
+   */
+  async getMovementPresets() {
+    return await this.makeRequest('/api/presets');
+  }
+
+  /**
+   * Emergency stop for robot
+   * @returns {Promise<Object>} Result of emergency stop
+   */
+  async emergencyStop() {
+    return await this.makeRequest('/api/robot/emergency', {
+      method: 'POST',
+      body: JSON.stringify({ action: 'emergency_stop' })
+    });
+  }
+
+  // SPECIFIC MOVEMENT SHORTCUTS
+
+  /**
+   * Move robot to rest position
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async moveToRestPosition() {
+    return await this.moveRobot({
+      action: 'rest_position',
+      name: 'Posición de Descanso'
+    });
+  }
+
+  /**
+   * Move robot to safe position
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async moveToSafePosition() {
+    return await this.moveRobot({
+      action: 'safe_position',
+      name: 'Posición Segura'
+    });
+  }
+
+  /**
+   * Move arms to rest position
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async moveArmsToRest() {
+    return await this.moveRobot({
+      action: 'arms_rest',
+      part: 'arms',
+      name: 'Brazos Descanso'
+    });
+  }
+
+  /**
+   * Move arms to hug position
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async moveArmsToHug() {
+    return await this.moveRobot({
+      action: 'arms_hug',
+      part: 'arms', 
+      name: 'Abrazo'
+    });
+  }
+
+  /**
+   * Center neck position
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async centerNeck() {
+    return await this.moveRobot({
+      action: 'neck_center',
+      part: 'neck',
+      name: 'Cuello Centro'
+    });
+  }
+
+  /**
+   * Neck "yes" gesture
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async neckYes() {
+    return await this.moveRobot({
+      action: 'neck_yes',
+      part: 'neck',
+      name: 'Asentir'
+    });
+  }
+
+  /**
+   * Neck "no" gesture
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async neckNo() {
+    return await this.moveRobot({
+      action: 'neck_no',
+      part: 'neck',
+      name: 'Negar'
+    });
+  }
+
+  /**
+   * Random neck movement
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async neckRandom() {
+    return await this.moveRobot({
+      action: 'neck_random',
+      part: 'neck',
+      name: 'Cuello Aleatorio'
+    });
   }
 }
 

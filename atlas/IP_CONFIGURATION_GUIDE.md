@@ -22,7 +22,7 @@ ip addr
 ```
 Look for "inet" followed by your IP address
 
-**Example:** `192.168.1.100`
+**Example:** `192.168.100.6`
 
 ### 2. Configure the Mobile App
 
@@ -54,7 +54,7 @@ The server will start automatically on the configured port.
 
 **Server IP Address / Hostname:**
 - For same computer testing: `localhost`
-- For network access: Your computer's IP (e.g., `192.168.1.100`)
+- For network access: Your computer's IP (e.g., `192.168.100.6`)
 - For hostname: Your computer's hostname (e.g., `mycomputer.local`)
 
 **Port Number:**
@@ -165,16 +165,16 @@ URL: http://localhost:8080/api
 
 ### Local Network Access
 ```
-Host: 192.168.1.100
+Host: 192.168.100.6
 Port: 8080
-URL: http://192.168.1.100:8080/api
+URL: http://192.168.100.6:8080/api
 ```
 
 ### Custom Port
 ```
-Host: 192.168.1.100
+Host: 192.168.100.6
 Port: 9000
-URL: http://192.168.1.100:9000/api
+URL: http://192.168.100.6:9000/api
 ```
 
 ## 🛠️ Troubleshooting Guide

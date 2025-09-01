@@ -29,6 +29,13 @@ export function Navbar({ activeRoute, onRouteChange }) {
       </view>
       
       <view 
+        className={`footer-nav-item ${activeRoute === 'robotcontrol' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('robotcontrol')}
+      >
+        <text className="nav-icon">🤖</text>
+      </view>
+      
+      <view 
         className={`footer-nav-item ${activeRoute === 'classes' ? 'active' : ''}`}
         bindtap={() => handleRouteChange('classes')}
       >
@@ -36,10 +43,24 @@ export function Navbar({ activeRoute, onRouteChange }) {
       </view>
       
       <view 
-        className={`footer-nav-item ${activeRoute === 'config' ? 'active' : ''}`}
-        bindtap={() => handleRouteChange('config')}
+        className={`footer-nav-item ${activeRoute === 'connections' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('connections')}
       >
-        <text className="nav-icon">🔧</text>
+        <text className="nav-icon">⚙</text>
+      </view>
+      
+      <view 
+        className={`footer-nav-item ${activeRoute === 'manualconfig' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('manualconfig')}
+      >
+        <text className="nav-icon">🛠️</text>
+      </view>
+      
+      <view 
+        className={`footer-nav-item ${activeRoute === 'debug' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('debug')}
+      >
+        <text className="nav-icon">🐛</text>
       </view>
     </view>
   )

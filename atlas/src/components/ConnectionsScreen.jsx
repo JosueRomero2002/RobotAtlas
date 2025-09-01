@@ -54,37 +54,25 @@ export function ConnectionsScreen() {
   // Check robot connection status
   useEffect(() => {
     'background only'
-    const checkConnections = async () => {
+    const checkConnections = () => {
       try {
         // Check robot server connection
-        const result = await robotAPI.testConnection()
+        const result = robotAPI.testConnection()
         
         if (result.success) {
-          // Get detailed connection status from robot
-          const statusResult = await robotAPI.getConnectionStatus()
-          if (statusResult.success) {
-            setConnectionStatus(statusResult.data)
-            
-            // Update server configs
-            setServerConfig(prev => ({
-              ...prev,
-              robotServer: {
-                ...prev.robotServer,
-                status: 'connected',
-                lastPing: new Date().toLocaleTimeString()
-              },
-              mainServer: {
-                ...prev.mainServer,
-                status: statusResult.data.mainServer === 'connected' ? 'connected' : 'disconnected',
-                lastPing: statusResult.data.mainServer === 'connected' ? new Date().toLocaleTimeString() : null
-              },
-              camera: {
-                ...prev.camera,
-                status: statusResult.data.camera === 'connected' ? 'connected' : 'disconnected',
-                lastPing: statusResult.data.camera === 'connected' ? new Date().toLocaleTimeString() : null
-              }
-            }))
-          }
+          setConnectionStatus(prev => ({
+            ...prev,
+            robotServer: 'connected'
+          }))
+          
+          setServerConfig(prev => ({
+            ...prev,
+            robotServer: {
+              ...prev.robotServer,
+              status: 'connected',
+              lastPing: new Date().toLocaleTimeString()
+            }
+          }))
         } else {
           setConnectionStatus(prev => ({
             ...prev,
@@ -116,7 +104,7 @@ export function ConnectionsScreen() {
     return () => clearInterval(interval)
   }, [])
 
-  const handleConnect = useCallback(async (serverType) => {
+  const handleConnect = useCallback((serverType) => {
     'background only'
     setIsConnecting(true)
     console.log(`Conectando a ${serverType}...`)
@@ -159,14 +147,14 @@ export function ConnectionsScreen() {
     console.log(`${serverType} desconectado`)
   }, [])
 
-  const handleTestConnection = useCallback(async (serverType) => {
+  const handleTestConnection = useCallback((serverType) => {
     'background only'
     console.log(`Probando conexión a ${serverType}...`)
     
     try {
       if (serverType === 'robotServer' || serverType === 'mainServer') {
-        const isOnline = await robotAPI.testConnection()
-        if (isOnline) {
+        const result = robotAPI.testConnection()
+        if (result.success) {
           console.log(`${serverType} está disponible`)
         } else {
           console.log(`${serverType} no está disponible`)
