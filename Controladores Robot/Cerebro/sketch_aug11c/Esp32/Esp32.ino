@@ -517,16 +517,47 @@ void handleRoot() {
   // Controles de sistema
   html += "<div class='section'>";
   html += "<h2>⚙️ Configuración del Sistema</h2>";
+  html += "<div class='control-group'>";
   html += "<button onclick='cambiarSeguridad()' class='" + String(modoSeguridad ? "danger" : "success") + "'>";
   html += modoSeguridad ? "Desactivar Seguridad" : "Activar Seguridad";
   html += "</button>";
   html += "<button onclick='cambiarVelocidad()' class='" + String(modoLento ? "success" : "danger") + "'>";
   html += modoLento ? "Velocidad Normal" : "Velocidad Lenta";
   html += "</button>";
-  html += "<button onclick=fetch('/system/check')>Verificar Conexiones</button>";
-  html += "<button onclick=fetch('/system/sync-security')>🔄 Sincronizar Seguridad</button>";
-  html += "<button onclick=fetch('/system/descanso') class='success'>🛌 Posición Descanso</button>";
-  html += "<button onclick=fetch('/system/reset') class='danger'>Reset Robot</button>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick='verificarConexiones()' class='success'>🔍 Verificar Conexiones</button>";
+  html += "<button onclick='sincronizarSeguridad()' class='success'>🔄 Sincronizar Seguridad</button>";
+  html += "<button onclick='enviarPingMega()' class='success'>📡 Ping MEGA</button>";
+  html += "<button onclick='enviarPingUno()' class='success'>📡 Ping UNO</button>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick='posicionDescanso()' class='success'>🛌 Posición Descanso</button>";
+  html += "<button onclick='resetRobot()' class='danger'>🔄 Reset Robot</button>";
+  html += "<button onclick='reiniciarESP32()' class='danger'>🔄 Reiniciar ESP32</button>";
+  html += "</div>";
+  html += "</div>";
+
+  // Información detallada de conexiones
+  html += "<div class='section'>";
+  html += "<h2>📡 Estado de Conexiones</h2>";
+  html += "<div id='conexion-info' style='background:#f8f9fa;padding:15px;border-radius:8px;font-family:monospace;'>";
+  html += "<h3>Estado General:</h3>";
+  html += "<div id='estado-general'>Cargando...</div>";
+  html += "<h3>Última Comunicación:</h3>";
+  html += "<div id='ultima-comunicacion'>MEGA: " + jsonEscape(ultimoEstadoMega) + "</div>";
+  html += "<div id='ultima-comunicacion-uno'>UNO: " + jsonEscape(ultimoEstadoUno) + "</div>";
+  html += "<h3>Configuración UART:</h3>";
+  html += "<div>ESP32 ↔ MEGA: 115200 baud (TX2:17, RX2:16)</div>";
+  html += "<div>ESP32 ↔ UNO: A través del MEGA</div>";
+  html += "<h3>Configuración WiFi:</h3>";
+  html += "<div>SSID: Senpai | Password: 01234567</div>";
+  html += "<div>IP Local: " + WiFi.localIP().toString() + "</div>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick='actualizarEstadoConexiones()' class='success'>🔄 Actualizar Estado</button>";
+  html += "<button onclick='testConexiones()' class='success'>🧪 Test Completo</button>";
+  html += "</div>";
   html += "</div>";
 
   // Control de Muñecas con Flechas
@@ -743,7 +774,7 @@ void handleRoot() {
 
   // Control Directo de Servos
   html += "<div class='section'>";
-  html += "<h2>🔧 Control Directo</h2>";
+  html += "<h2>🔧 Control Directo de Servos</h2>";
   html += "<div class='control-group'>";
   html += "<label>Canal:</label><input id=ch type=number value=0 min=0 max=15>";
   html += "<label>Ángulo:</label><input id=ang type=number value=90 min=0 max=180>";
@@ -752,6 +783,76 @@ void handleRoot() {
   html += "<div class='control-group'>";
   html += "<label>Comando:</label><input id=cmd type=text value='PING' placeholder='Comando personalizado'>";
   html += "<button onclick=enviarCmd()>Enviar</button>";
+  html += "</div>";
+  html += "</div>";
+
+  // Control Web Directo de Dedos
+  html += "<div class='section'>";
+  html += "<h2>👐 Control Web Directo de Dedos</h2>";
+  html += "<div class='control-group'>";
+  html += "<label>Mano:</label><select id=web_mano><option value=derecha>Derecha</option><option value=izquierda>Izquierda</option></select>";
+  html += "<label>Dedo:</label><select id=web_dedo><option value=pulgar>Pulgar</option><option value=indice>Índice</option><option value=medio>Medio</option><option value=anular>Anular</option><option value=menique>Meñique</option></select>";
+  html += "<label>Ángulo:</label><input id=web_angulo_dedo type=number value=90 min=0 max=180>";
+  html += "<button onclick=moverDedoWeb()>Mover Dedo Web</button>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick=moverDedoWebPos('derecha','pulgar',0)>Pulgar Der Abierto</button>";
+  html += "<button onclick=moverDedoWebPos('derecha','pulgar',120)>Pulgar Der Cerrado</button>";
+  html += "<button onclick=moverDedoWebPos('izquierda','pulgar',120)>Pulgar Izq Abierto</button>";
+  html += "<button onclick=moverDedoWebPos('izquierda','pulgar',0)>Pulgar Izq Cerrado</button>";
+  html += "</div>";
+  html += "</div>";
+
+  // Control Web de Muñecas
+  html += "<div class='section'>";
+  html += "<h2>🦴 Control Web de Muñecas</h2>";
+  html += "<div class='control-group'>";
+  html += "<label>Mano:</label><select id=web_mano_muneca><option value=derecha>Derecha</option><option value=izquierda>Izquierda</option></select>";
+  html += "<label>Ángulo:</label><input id=web_angulo_muneca type=number value=80 min=0 max=160>";
+  html += "<button onclick=moverMunecaWeb()>Mover Muñeca Web</button>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick=moverMunecaWebPos('derecha',0)>Muñeca Der Izquierda</button>";
+  html += "<button onclick=moverMunecaWebPos('derecha',80)>Muñeca Der Centro</button>";
+  html += "<button onclick=moverMunecaWebPos('derecha',160)>Muñeca Der Derecha</button>";
+  html += "</div>";
+  html += "</div>";
+
+  // Control Web de Brazos
+  html += "<div class='section'>";
+  html += "<h2>💪 Control Web de Brazos</h2>";
+  html += "<div class='control-group'>";
+  html += "<h4>Brazo Izquierdo</h4>";
+  html += "<label>Brazo:</label><input id=web_bi type=number value=10 min=10 max=30>";
+  html += "<label>Frente:</label><input id=web_fi type=number value=80 min=60 max=120>";
+  html += "<label>High:</label><input id=web_hi type=number value=80 min=70 max=90>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<h4>Brazo Derecho</h4>";
+  html += "<label>Brazo:</label><input id=web_bd type=number value=40 min=30 max=55>";
+  html += "<label>Frente:</label><input id=web_fd type=number value=90 min=70 max=110>";
+  html += "<label>High:</label><input id=web_hd type=number value=80 min=70 max=90>";
+  html += "<label>Pollo:</label><input id=web_pd type=number value=45 min=0 max=90>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick=moverBrazosWeb()>Mover Brazos Web</button>";
+  html += "<button onclick=moverBrazosWebPos(10,80,80,40,90,80,45)>Posición Descanso</button>";
+  html += "</div>";
+  html += "</div>";
+
+  // Control Web de Cuello
+  html += "<div class='section'>";
+  html += "<h2>🦴 Control Web de Cuello</h2>";
+  html += "<div class='control-group'>";
+  html += "<label>Lateral:</label><input id=web_lateral type=number value=155 min=120 max=190>";
+  html += "<label>Inferior:</label><input id=web_inferior type=number value=95 min=60 max=130>";
+  html += "<label>Superior:</label><input id=web_superior type=number value=105 min=90 max=120>";
+  html += "<button onclick=moverCuelloWeb()>Mover Cuello Web</button>";
+  html += "</div>";
+  html += "<div class='control-group'>";
+  html += "<button onclick=moverCuelloWebPos(155,95,105)>Centro</button>";
+  html += "<button onclick=moverCuelloWebPos(120,95,105)>Izquierda</button>";
+  html += "<button onclick=moverCuelloWebPos(190,95,105)>Derecha</button>";
   html += "</div>";
   html += "</div>";
 
@@ -784,7 +885,7 @@ void handleRoot() {
 
   // JavaScript
   html += "<script>";
-  html += "function gesto(g){const m=document.getElementById('mano').value;fetch('/manos/gesto',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&gesto=${g}`})}\n";
+  html += "function gesto(g){const m=document.getElementById('mano').value;fetch('/manos/gesto',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&gesto=${g}`)}\n";
   html += "function moverDedo(){const m=document.getElementById('mano').value,d=document.getElementById('dedo').value,a=document.getElementById('angulo_dedo').value;fetch('/manos/dedo',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&dedo=${d}&angulo=${a}`})}\n";
   html += "function moverCuello(){const l=document.getElementById('lateral').value,i=document.getElementById('inferior').value,s=document.getElementById('superior').value;fetch('/cuello/mover',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`lateral=${l}&inferior=${i}&superior=${s}`})}\n";
   html += "function moverMuñeca(){const m=document.getElementById('mano_muneca').value,a=document.getElementById('angulo_muneca').value;fetch('/munecas/mover',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&angulo=${a}`})}\n";
@@ -808,8 +909,34 @@ void handleRoot() {
   html += "function actualizarDisplayMunecas(munecas){munecas.forEach((m,i)=>{const el=document.getElementById(`muneca-${i}`);if(el)el.textContent=`Posición: ${m.posicion}°`})}\n";
   html += "function actualizarDisplayCuello(cuello){cuello.forEach((c,i)=>{const el=document.getElementById(`cuello-${i}`);if(el)el.textContent=`Posición: ${c.posicion}°`})}\n";
   html += "function actualizarInfoPosiciones(data){const infoBrazos=document.getElementById('info-brazos');const infoManos=document.getElementById('info-manos');const infoMunecas=document.getElementById('info-munecas');const infoCuello=document.getElementById('info-cuello');if(infoBrazos)infoBrazos.innerHTML=data.brazos.map(b=>`${b.nombre}: ${b.posicion}° (${b.min}-${b.max}°)`).join('<br>');if(infoManos)infoManos.innerHTML=data.manos.map(m=>`${m.nombre}: ${m.posicion}° (${m.min}-${m.max}°)`).join('<br>');if(infoMunecas)infoMunecas.innerHTML=data.munecas.map(m=>`${m.nombre}: ${m.posicion}° (${m.min}-${m.max}°)`).join('<br>');if(infoCuello)infoCuello.innerHTML=data.cuello.map(c=>`${c.nombre}: ${c.posicion}° (${c.min}-${c.max}°)`).join('<br>')}\n";
+
+  // Funciones de conexión y sistema
+  html += "async function verificarConexiones(){try{const r=await fetch('/system/check');const t=await r.text();alert('Verificación enviada: ' + t)}catch(e){console.error('Error:', e); alert('Error al verificar conexiones')}}\n";
+  html += "async function sincronizarSeguridad(){try{const r=await fetch('/system/sync-security');const t=await r.text();alert('Sincronización: ' + t)}catch(e){console.error('Error:', e); alert('Error al sincronizar seguridad')}}\n";
+  html += "async function enviarPingMega(){try{await fetch('/cmd',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'cmd=PING'});alert('Ping enviado al MEGA')}catch(e){console.error('Error:', e); alert('Error al enviar ping al MEGA')}}\n";
+  html += "async function enviarPingUno(){try{await fetch('/cmd',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'cmd=UNO:PING'});alert('Ping enviado al UNO')}catch(e){console.error('Error:', e); alert('Error al enviar ping al UNO')}}\n";
+  html += "async function posicionDescanso(){try{const r=await fetch('/system/descanso');const t=await r.text();alert('Posición descanso: ' + t); actualizarPosiciones()}catch(e){console.error('Error:', e); alert('Error al mover a posición descanso')}}\n";
+  html += "async function resetRobot(){if(confirm('¿Está seguro de resetear el robot?')){try{const r=await fetch('/system/reset');const t=await r.text();alert('Reset: ' + t); actualizarPosiciones()}catch(e){console.error('Error:', e); alert('Error al resetear robot')}}}\n";
+  html += "async function reiniciarESP32(){if(confirm('¿Está seguro de reiniciar la ESP32?')){try{await fetch('/system/restart');alert('Reiniciando ESP32...');setTimeout(()=>{location.reload()},3000)}catch(e){console.error('Error:', e); alert('Error al reiniciar ESP32')}}}\n";
+  html += "async function actualizarEstadoConexiones(){try{const r=await fetch('/system/status');const data=await r.json();const estadoGeneral=document.getElementById('estado-general');if(estadoGeneral){estadoGeneral.innerHTML=`WiFi: ${data.wifi ? '🟢 Conectado' : '🔴 Desconectado'}<br>MEGA: ${data.mega ? '🟢 Conectado' : '🔴 Desconectado'}<br>UNO: ${data.uno ? '🟢 Conectado' : '🔴 Desconectado'}<br>Seguridad: ${data.seguridad ? '🛡️ ACTIVA' : '⚠️ DESACTIVADA'}<br>Velocidad: ${data.velocidad ? '🐌 LENTA' : '⚡ NORMAL'}<br>Uptime: ${data.uptime}s`}}catch(e){console.error('Error:', e); alert('Error al actualizar estado de conexiones')}}\n";
+  html += "async function testConexiones(){alert('Iniciando test completo de conexiones...');try{await verificarConexiones();await new Promise(r=>setTimeout(r,1000));await enviarPingMega();await new Promise(r=>setTimeout(r,1000));await enviarPingUno();await new Promise(r=>setTimeout(r,1000));await sincronizarSeguridad();await new Promise(r=>setTimeout(r,1000));await actualizarEstadoConexiones();alert('Test completo finalizado')}catch(e){console.error('Error:', e); alert('Error durante el test de conexiones')}}\n";
+
+  html += "async function actualizarComunicacion(){try{const r=await fetch('/debug');const log=await r.text();const lineas=log.split('\\n');let ultimaMega='';let ultimaUno='';for(let i=lineas.length-1;i>=0;i--){const linea=lineas[i];if(linea.includes('[MEGA]')&&!ultimaMega){ultimaMega=linea.replace('[MEGA] ','')}if(linea.includes('UNO:')&&!ultimaUno){ultimaUno=linea.replace('UNO:','')}}document.getElementById('ultima-comunicacion').textContent='MEGA: '+ultimaMega;document.getElementById('ultima-comunicacion-uno').textContent='UNO: '+ultimaUno}catch(e){console.error('Error:',e)}}\n";
+
+  // ===== FUNCIONES PARA CONTROL WEB DIRECTO =====
+  html += "async function moverDedoWeb(){const m=document.getElementById('web_mano').value,d=document.getElementById('web_dedo').value,a=document.getElementById('web_angulo_dedo').value;try{await fetch('/web/dedo',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&dedo=${d}&angulo=${a}`});alert('Dedo movido desde web');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover dedo desde web')}}\n";
+  html += "async function moverDedoWebPos(mano, dedo, angulo){try{await fetch('/web/dedo',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${mano}&dedo=${dedo}&angulo=${angulo}`});alert(`${mano} ${dedo} movido a ${angulo}°`);actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover dedo')}}\n";
+  html += "async function moverMunecaWeb(){const m=document.getElementById('web_mano_muneca').value,a=document.getElementById('web_angulo_muneca').value;try{await fetch('/web/muneca',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${m}&angulo=${a}`});alert('Muñeca movida desde web');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover muñeca desde web')}}\n";
+  html += "async function moverMunecaWebPos(mano, angulo){try{await fetch('/web/muneca',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`mano=${mano}&angulo=${angulo}`});alert(`Muñeca ${mano} movida a ${angulo}°`);actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover muñeca')}}\n";
+  html += "async function moverBrazosWeb(){const bi=document.getElementById('web_bi').value,fi=document.getElementById('web_fi').value,hi=document.getElementById('web_hi').value,bd=document.getElementById('web_bd').value,fd=document.getElementById('web_fd').value,hd=document.getElementById('web_hd').value,pd=document.getElementById('web_pd').value;try{await fetch('/web/brazos',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`bi=${bi}&fi=${fi}&hi=${hi}&bd=${bd}&fd=${fd}&hd=${hd}&pd=${pd}`});alert('Brazos movidos desde web');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover brazos desde web')}}\n";
+  html += "async function moverBrazosWebPos(bi, fi, hi, bd, fd, hd, pd){try{await fetch('/web/brazos',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`bi=${bi}&fi=${fi}&hi=${hi}&bd=${bd}&fd=${fd}&hd=${hd}&pd=${pd}`});alert('Brazos movidos a posición específica');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover brazos')}}\n";
+  html += "async function moverCuelloWeb(){const l=document.getElementById('web_lateral').value,i=document.getElementById('web_inferior').value,s=document.getElementById('web_superior').value;try{await fetch('/web/cuello',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`lateral=${l}&inferior=${i}&superior=${s}`});alert('Cuello movido desde web');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover cuello desde web')}}\n";
+  html += "async function moverCuelloWebPos(lateral, inferior, superior){try{await fetch('/web/cuello',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:`lateral=${lateral}&inferior=${inferior}&superior=${superior}`});alert('Cuello movido a posición específica');actualizarPosiciones()}catch(e){console.error('Error:',e);alert('Error al mover cuello')}}\n";
+
   html += "setInterval(actualizarPosiciones,2000);\n";
-  html += "window.onload=function(){actualizarPosiciones();};\n";
+  html += "setInterval(actualizarEstadoConexiones,5000);\n";
+  html += "setInterval(actualizarComunicacion,3000);\n";
+  html += "window.onload=function(){actualizarPosiciones(); actualizarEstadoConexiones(); actualizarComunicacion();};\n";
   html += "</script></body></html>";
 
   server.send(200, "text/html", html);
@@ -850,9 +977,242 @@ void handleSystemReset() {
   server.send(200, "text/plain", "Reset enviado");
 }
 
+void handleSystemRestart() {
+  server.send(200, "text/plain", "Reiniciando ESP32...");
+  delay(1000);
+  ESP.restart();
+}
+
+void handleSystemStatus() {
+  String json = "{";
+  json += "\"wifi\":" + String(WiFi.status() == WL_CONNECTED ? "true" : "false") + ",";
+  json += "\"mega\":" + String(megaConectado ? "true" : "false") + ",";
+  json += "\"uno\":" + String(unoConectado ? "true" : "false") + ",";
+  json += "\"seguridad\":" + String(modoSeguridad ? "true" : "false") + ",";
+  json += "\"velocidad\":" + String(modoLento ? "true" : "false") + ",";
+  json += "\"uptime\":" + String(millis() / 1000) + ",";
+  json += "\"ip\":\"" + WiFi.localIP().toString() + "\",";
+  json += "\"ssid\":\"" + WiFi.SSID() + "\"";
+  json += "}";
+
+  server.send(200, "application/json", json);
+}
+
 void handleSystemDescanso() {
   posicionDescanso();
   server.send(200, "text/plain", "Robot movido a posición de descanso");
+}
+
+// ===== ENDPOINTS PARA SECUENCIAS =====
+
+// Endpoint para comandos de secuencia
+void handleSequenceCommand() {
+  String command = server.arg("command");
+  String params = server.arg("params");
+  
+  if (command.length() == 0) {
+    server.send(400, "text/plain", "Comando vacío");
+    return;
+  }
+  
+  Serial.print("📋 Comando de secuencia recibido: ");
+  Serial.print(command);
+  if (params.length() > 0) {
+    Serial.print(" con parámetros: ");
+    Serial.print(params);
+  }
+  Serial.println();
+  
+  // Procesar comandos de secuencia
+  if (command == "BRAZOS") {
+    // Extraer parámetros BI, FI, HI, BD, FD, HD, PD
+    int bi = extraerValor(params, "BI=");
+    int fi = extraerValor(params, "FI=");
+    int hi = extraerValor(params, "HI=");
+    int bd = extraerValor(params, "BD=");
+    int fd = extraerValor(params, "FD=");
+    int hd = extraerValor(params, "HD=");
+    int pd = extraerValor(params, "PD=");
+    
+    if (bi >= 0 && fi >= 0 && hi >= 0 && bd >= 0 && fd >= 0 && hd >= 0 && pd >= 0) {
+      controlarBrazos(bi, fi, hi, bd, fd, hd, pd);
+      server.send(200, "text/plain", "Brazos movidos por secuencia");
+    } else {
+      server.send(400, "text/plain", "Parámetros de brazos inválidos");
+    }
+  }
+  else if (command == "GESTO") {
+    // Extraer parámetros de gesto
+    String mano = "";
+    String gesto = "";
+    
+    if (params.indexOf("mano=") >= 0) {
+      int start = params.indexOf("mano=") + 5;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      mano = params.substring(start, end);
+    }
+    
+    if (params.indexOf("gesto=") >= 0) {
+      int start = params.indexOf("gesto=") + 6;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      gesto = params.substring(start, end);
+    }
+    
+    if (mano.length() > 0 && gesto.length() > 0) {
+      if (gesto == "paz") gestoPaz(mano);
+      else if (gesto == "rock") gestoRock(mano);
+      else if (gesto == "ok") gestoOK(mano);
+      else if (gesto == "senalar") gestoSeñalar(mano);
+      else if (gesto == "ABRIR") {
+        controlarMano(mano, "abrir");
+      }
+      else if (gesto == "CERRAR") {
+        controlarMano(mano, "cerrar");
+      }
+      else controlarMano(mano, gesto);
+      
+      server.send(200, "text/plain", "Gesto ejecutado por secuencia");
+    } else {
+      server.send(400, "text/plain", "Parámetros de gesto inválidos");
+    }
+  }
+  else if (command == "HABLAR") {
+    // Extraer texto a hablar
+    String texto = "";
+    if (params.indexOf("texto=") >= 0) {
+      int start = params.indexOf("texto=") + 6;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      texto = params.substring(start, end);
+    }
+    
+    if (texto.length() > 0) {
+      // Enviar comando de habla al MEGA
+      String comandoHabla = "HABLAR TEXTO=" + texto;
+      sendToMega(comandoHabla);
+      server.send(200, "text/plain", "Comando de habla enviado: " + texto);
+    } else {
+      server.send(400, "text/plain", "Texto de habla vacío");
+    }
+  }
+  else if (command == "ESPERAR") {
+    // Extraer tiempo de espera
+    int tiempo = 1000; // Default 1 segundo
+    if (params.indexOf("tiempo=") >= 0) {
+      int start = params.indexOf("tiempo=") + 7;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      tiempo = params.substring(start, end).toInt();
+    }
+    
+    if (tiempo > 0) {
+      // Enviar comando de espera al MEGA
+      String comandoEspera = "ESPERAR TIEMPO=" + String(tiempo);
+      sendToMega(comandoEspera);
+      server.send(200, "text/plain", "Comando de espera enviado: " + String(tiempo) + "ms");
+    } else {
+      server.send(400, "text/plain", "Tiempo de espera inválido");
+    }
+  }
+  else if (command == "CUELLO") {
+    // Extraer parámetros L, I, S
+    int l = extraerValor(params, "L=");
+    int i = extraerValor(params, "I=");
+    int s = extraerValor(params, "S=");
+    
+    if (l >= 0 && i >= 0 && s >= 0) {
+      controlarCuello(l, i, s);
+      server.send(200, "text/plain", "Cuello movido por secuencia");
+    } else {
+      server.send(400, "text/plain", "Parámetros de cuello inválidos");
+    }
+  }
+  else if (command == "MANO") {
+    // Extraer parámetros de mano
+    String mano = "";
+    String accion = "";
+    int angulo = -1;
+    
+    if (params.indexOf("M=") >= 0) {
+      int start = params.indexOf("M=") + 2;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      mano = params.substring(start, end);
+    }
+    
+    if (params.indexOf("A=") >= 0) {
+      int start = params.indexOf("A=") + 2;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      accion = params.substring(start, end);
+    }
+    
+    if (params.indexOf("ANG=") >= 0) {
+      int start = params.indexOf("ANG=") + 4;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      angulo = params.substring(start, end).toInt();
+    }
+    
+    if (mano.length() > 0 && accion.length() > 0) {
+      controlarMano(mano, accion, angulo);
+      server.send(200, "text/plain", "Mano controlada por secuencia");
+    } else {
+      server.send(400, "text/plain", "Parámetros de mano inválidos");
+    }
+  }
+  else if (command == "MUNECA") {
+    // Extraer parámetros de muñeca (formato: mano=X angulo=Y)
+    String mano = "";
+    int angulo = -1;
+
+    if (params.indexOf("mano=") >= 0) {
+      int start = params.indexOf("mano=") + 5;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      mano = params.substring(start, end);
+    }
+
+    if (params.indexOf("angulo=") >= 0) {
+      int start = params.indexOf("angulo=") + 7;
+      int end = params.indexOf(" ", start);
+      if (end == -1) end = params.length();
+      angulo = params.substring(start, end).toInt();
+    }
+
+    if (mano.length() > 0 && angulo >= 0) {
+      controlarMuñeca(mano, angulo);
+      server.send(200, "text/plain", "Muñeca movida por secuencia");
+    } else {
+      Serial.print("DEBUG: mano='"); Serial.print(mano);
+      Serial.print("' angulo="); Serial.println(angulo);
+      server.send(400, "text/plain", "Parámetros de muñeca inválidos");
+    }
+  }
+  else {
+    // Comando no reconocido, enviarlo directamente al MEGA
+    sendToMega(command + " " + params);
+    server.send(200, "text/plain", "Comando enviado al MEGA: " + command + " " + params);
+  }
+}
+
+// Endpoint para ejecutar secuencia completa
+void handleExecuteSequence() {
+  String sequenceName = server.arg("sequence");
+  
+  if (sequenceName.length() == 0) {
+    server.send(400, "text/plain", "Nombre de secuencia vacío");
+    return;
+  }
+  
+  Serial.print("🎬 Ejecutando secuencia: ");
+  Serial.println(sequenceName);
+  
+  // Por ahora solo confirmamos que se recibió la secuencia
+  // En el futuro se podría cargar y ejecutar desde aquí
+  server.send(200, "text/plain", "Secuencia recibida: " + sequenceName);
 }
 
 // Manos
@@ -864,6 +1224,10 @@ void handleManoGesto() {
   else if (gesto == "rock") gestoRock(mano);
   else if (gesto == "ok") gestoOK(mano);
   else if (gesto == "senalar") gestoSeñalar(mano);
+  else if (gesto == "abrir") controlarMano(mano, "abrir");
+  else if (gesto == "cerrar") controlarMano(mano, "cerrar");
+  else if (gesto == "ABRIR") controlarMano(mano, "abrir");
+  else if (gesto == "CERRAR") controlarMano(mano, "cerrar");
   else controlarMano(mano, gesto);
   
   server.send(200, "text/plain", "Gesto enviado");
@@ -1041,6 +1405,86 @@ void handleCmd() {
   server.send(200, "text/plain", "Comando enviado");
 }
 
+// ===== NUEVOS ENDPOINTS PARA CONTROL DIRECTO DE SERVOS =====
+
+// Control directo de servos desde web
+void handleServoDirectoWeb() {
+  int canal = server.arg("canal").toInt();
+  int angulo = server.arg("angulo").toInt();
+
+  if (!validarMovimiento("servo_web", angulo, 0, 180)) {
+    server.send(400, "text/plain", "Ángulo fuera de rango (0-180°)");
+    return;
+  }
+
+  if (canal < 0 || canal > 15) {
+    server.send(400, "text/plain", "Canal fuera de rango (0-15)");
+    return;
+  }
+
+  String comando = "SERVO CH=" + String(canal) + " ANG=" + String(angulo);
+  sendToMega(comando);
+
+  server.send(200, "text/plain", "Servo CH=" + String(canal) + " movido a " + String(angulo) + "°");
+}
+
+// Control de dedos individual desde web
+void handleDedoDirectoWeb() {
+  String mano = server.arg("mano");
+  String dedo = server.arg("dedo");
+  int angulo = server.arg("angulo").toInt();
+
+  if (!validarMovimiento("dedo_web", angulo, 0, 180)) {
+    server.send(400, "text/plain", "Ángulo fuera de rango (0-180°)");
+    return;
+  }
+
+  controlarDedo(mano, dedo, angulo);
+
+  server.send(200, "text/plain", "Dedo " + dedo + " de mano " + mano + " movido a " + String(angulo) + "°");
+}
+
+// Control de muñecas desde web
+void handleMunecaDirectoWeb() {
+  String mano = server.arg("mano");
+  int angulo = server.arg("angulo").toInt();
+
+  if (!validarMovimiento("muñeca_web", angulo, 0, 160)) {
+    server.send(400, "text/plain", "Ángulo fuera de rango (0-160°)");
+    return;
+  }
+
+  controlarMuñeca(mano, angulo);
+
+  server.send(200, "text/plain", "Muñeca " + mano + " movida a " + String(angulo) + "°");
+}
+
+// Control de brazos desde web
+void handleBrazosDirectoWeb() {
+  int bi = server.arg("bi").toInt();
+  int fi = server.arg("fi").toInt();
+  int hi = server.arg("hi").toInt();
+  int bd = server.arg("bd").toInt();
+  int fd = server.arg("fd").toInt();
+  int hd = server.arg("hd").toInt();
+  int pd = server.arg("pd").toInt();
+
+  controlarBrazos(bi, fi, hi, bd, fd, hd, pd);
+
+  server.send(200, "text/plain", "Brazos movidos desde web");
+}
+
+// Control de cuello desde web
+void handleCuelloDirectoWeb() {
+  int lateral = server.arg("lateral").toInt();
+  int inferior = server.arg("inferior").toInt();
+  int superior = server.arg("superior").toInt();
+
+  controlarCuello(lateral, inferior, superior);
+
+  server.send(200, "text/plain", "Cuello movido desde web");
+}
+
 // Debug
 void handleDebug() {
   String debug = "=== DEBUG ROBOT ===\n";
@@ -1122,6 +1566,12 @@ void setup() {
   server.on("/system/sync-security", handleSystemSyncSecurity);
   server.on("/system/descanso", handleSystemDescanso);
   server.on("/system/reset", handleSystemReset);
+  server.on("/system/restart", handleSystemRestart);
+  server.on("/system/status", handleSystemStatus);
+  
+  // Secuencias
+  server.on("/sequence/command", HTTP_POST, handleSequenceCommand);
+  server.on("/sequence/execute", HTTP_POST, handleExecuteSequence);
   
   // Manos
   server.on("/manos/gesto", HTTP_POST, handleManoGesto);
@@ -1156,6 +1606,13 @@ void setup() {
   // Debug
   server.on("/debug", handleDebug);
   server.on("/posiciones", handlePosiciones);
+
+  // ===== NUEVOS ENDPOINTS PARA CONTROL WEB =====
+  server.on("/web/servo", HTTP_POST, handleServoDirectoWeb);
+  server.on("/web/dedo", HTTP_POST, handleDedoDirectoWeb);
+  server.on("/web/muneca", HTTP_POST, handleMunecaDirectoWeb);
+  server.on("/web/brazos", HTTP_POST, handleBrazosDirectoWeb);
+  server.on("/web/cuello", HTTP_POST, handleCuelloDirectoWeb);
 
   server.begin();
   Serial.println("🌐 Servidor HTTP iniciado");

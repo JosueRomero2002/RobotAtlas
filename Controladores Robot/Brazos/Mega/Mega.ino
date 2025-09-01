@@ -168,14 +168,12 @@ void procesarComando(String comando) {
     Serial1.println(cmdUno);
     Serial.print("[UNO TX] "); Serial.println(cmdUno);
   }
-  // Detectar comandos de manos/dedos/muñecas y pasarlos al UNO
-  else if (comando.startsWith("MANO") || comando.startsWith("DEDO") || 
-           comando.startsWith("MUNECA") || comando.startsWith("MUÑECA") ||
-           comando.indexOf("mano") >= 0 || comando.indexOf("dedo") >= 0 ||
-           comando.indexOf("muneca") >= 0 || comando.indexOf("muñeca") >= 0 ||
-           comando.indexOf("pulgar") >= 0 || comando.indexOf("indice") >= 0 ||
-           comando.indexOf("medio") >= 0 || comando.indexOf("anular") >= 0 ||
-           comando.indexOf("menique") >= 0) {
+  // Detectar comandos específicos de manos/dedos/muñecas y pasarlos al UNO
+  else if (comando.startsWith("MANO") ||
+           comando.startsWith("DEDO") ||
+           comando.startsWith("MUNECA") ||
+           comando.startsWith("MUÑECA") ||
+           comando.startsWith("GESTO")) {
     // Pasar comando de manos/dedos/muñecas al UNO
     Serial1.println(comando);
     Serial.print("[UNO TX] "); Serial.println(comando);
