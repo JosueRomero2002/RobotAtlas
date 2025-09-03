@@ -14,6 +14,11 @@ bool modoSeguridad = true;
 bool modoLento = true;
 int velocidadMovimiento = 50; // ms entre movimientos
 
+// Configuración específica para MG996R (muñeca derecha)
+const float MG996R_T60_MS = 130.0;       // Tiempo para 60° a 6V (ajustar según voltaje)
+const float MG996R_MARGEN_MS = 50.0;     // Margen de seguridad en ms
+int munecaDerAnguloActual = 90;          // Ángulo actual de la muñeca derecha
+
 // Configuración de dedos (ajustar según tu configuración)
 // Mano derecha (0° abierto, 180° cerrado)
 const int D_PULGAR = 14;
@@ -383,8 +388,8 @@ void procesarMuneca(String comando) {
   if (!validarMuneca(angulo)) return;
   
   if (mano == "derecha" || mano == "ambas") {
-    setServo(MUNECA_DER, angulo);
-    delay(velocidadMovimiento);
+    // Usar función especializada para MG996R (muñeca derecha)
+    setServoMunecaDerecha(angulo);
   }
   if (mano == "izquierda" || mano == "ambas") {
     setServo(MUNECA_IZQ, angulo);
@@ -441,6 +446,45 @@ void setServo(uint8_t canal, int angulo) {
   Serial.print(" -> "); Serial.print(angulo);
   Serial.print("° (duty: "); Serial.print(duty);
   Serial.println(")");
+}
+
+// ===== FUNCIÓN PARA MUÑECA DERECHA MG996R =====
+
+void setServoMunecaDerecha(int angulo) {
+
+  // Calcular tiempo de movimiento basado en el cambio de ángulo
+  int deltaAngulo = abs(angulo - munecaDerAnguloActual);
+  float tiempoMovimiento = (deltaAngulo / 60.0) * MG996R_T60_MS + MG996R_MARGEN_MS;
+  
+   // Aplicar movimiento
+    int direc = (angulo - munecaDerAnguloActual);
+   int duty = map(angulo, 0, 180, pos0, pos180);
+  if(direc > 0){
+    duty = map(140, 0, 180, pos0, pos180);
+  }else{
+    duty = map(40, 0, 180, pos0, pos180);
+  }
+
+  servos.setPWM(MUNECA_DER, 0, duty);
+  
+  // Delay calculado dinámicamente
+  unsigned long tiempoDelay = (unsigned long)tiempoMovimiento;
+  delay(250);
+  
+  // Comando de detención para el MG996R
+  int duty1 = map(90, 0, 180, pos0, pos180);
+  servos.setPWM(MUNECA_DER, 0, duty1);  // Detener el servo
+  delay(10);  // Pequeña pausa para estabilización
+  
+  // Actualizar ángulo actual
+  munecaDerAnguloActual = angulo;
+  
+  // Información del movimiento
+  Serial.print("MG996R "); Serial.print(MUNECA_DER);
+  Serial.print(" -> "); Serial.print(angulo);
+  Serial.print("° (tiempo: "); Serial.print(tiempoMovimiento);
+  Serial.print("ms, delta: "); Serial.print(deltaAngulo);
+  Serial.println("°)");
 }
 
 // ===== VALIDACIONES DE SEGURIDAD =====
@@ -505,7 +549,7 @@ void posicionDescanso() {
   setServo(I_MENIQUE, MANO_IZQUIERDA_DESCANSO);
   
   // Muñecas en posición central
-  setServo(MUNECA_DER, MUNECA_DESCANSO);
+  setServoMunecaDerecha(MUNECA_DESCANSO);  // MG996R con velocidad calculada
   setServo(MUNECA_IZQ, MUNECA_DESCANSO);
   
   Serial.println("UNO:Posición de descanso establecida");
