@@ -11507,7 +11507,7 @@ __webpack_require__.d(__webpack_exports__, {
 /* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
 
 
-const __snapshot_5262b_8c46e_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_2", function() {
+const __snapshot_5262b_10858_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_2", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "control-label");
@@ -11515,7 +11515,7 @@ const __snapshot_5262b_8c46e_2 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_3", function() {
+const __snapshot_5262b_10858_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_3", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "control-value");
@@ -11523,7 +11523,7 @@ const __snapshot_5262b_8c46e_3 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_1", function() {
+const __snapshot_5262b_10858_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_1", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "arrow-control");
@@ -11579,7 +11579,7 @@ const __snapshot_5262b_8c46e_1 = /*#__PURE__*/ (__webpack_require__("(react:main
         3
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_5", function() {
+const __snapshot_5262b_10858_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_5", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "status-icon");
@@ -11587,7 +11587,7 @@ const __snapshot_5262b_8c46e_5 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_6", function() {
+const __snapshot_5262b_10858_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_6", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "status-label");
@@ -11595,7 +11595,7 @@ const __snapshot_5262b_8c46e_6 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_7 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_7", function() {
+const __snapshot_5262b_10858_7 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_7", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "status-value");
@@ -11603,7 +11603,7 @@ const __snapshot_5262b_8c46e_7 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_4", function() {
+const __snapshot_5262b_10858_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_4", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateWrapperElement(pageId);
@@ -11640,7 +11640,7 @@ const __snapshot_5262b_8c46e_4 = /*#__PURE__*/ (__webpack_require__("(react:main
         4
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_9 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_9", function() {
+const __snapshot_5262b_10858_9 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_9", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "preset-icon");
@@ -11648,7 +11648,7 @@ const __snapshot_5262b_8c46e_9 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_10 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_10", function() {
+const __snapshot_5262b_10858_10 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_10", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "preset-name");
@@ -11656,7 +11656,7 @@ const __snapshot_5262b_8c46e_10 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_8 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_8", function() {
+const __snapshot_5262b_10858_8 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_8", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "preset-button");
@@ -11681,7 +11681,7 @@ const __snapshot_5262b_8c46e_8 = /*#__PURE__*/ (__webpack_require__("(react:main
         2
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_12 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_12", function() {
+const __snapshot_5262b_10858_12 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_12", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-icon");
@@ -11689,7 +11689,7 @@ const __snapshot_5262b_8c46e_12 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_13 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_13", function() {
+const __snapshot_5262b_10858_13 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_13", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "tab-label");
@@ -11697,7 +11697,7 @@ const __snapshot_5262b_8c46e_13 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_11 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_11", function() {
+const __snapshot_5262b_10858_11 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_11", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateWrapperElement(pageId);
@@ -11724,7 +11724,7 @@ const __snapshot_5262b_8c46e_11 = /*#__PURE__*/ (__webpack_require__("(react:mai
         2
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_15 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_15", function() {
+const __snapshot_5262b_10858_15 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_15", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "status-bar");
@@ -11732,7 +11732,7 @@ const __snapshot_5262b_8c46e_15 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_16 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_16", function() {
+const __snapshot_5262b_10858_16 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_16", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "button-icon");
@@ -11740,7 +11740,7 @@ const __snapshot_5262b_8c46e_16 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_17 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_17", function() {
+const __snapshot_5262b_10858_17 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_17", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "button-text");
@@ -11748,7 +11748,7 @@ const __snapshot_5262b_8c46e_17 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_14 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_14", function() {
+const __snapshot_5262b_10858_14 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_14", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-content");
@@ -11946,7 +11946,7 @@ const __snapshot_5262b_8c46e_14 = /*#__PURE__*/ (__webpack_require__("(react:mai
         40
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_18 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_18", function() {
+const __snapshot_5262b_10858_18 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_18", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-content");
@@ -11970,7 +11970,7 @@ const __snapshot_5262b_8c46e_18 = /*#__PURE__*/ (__webpack_require__("(react:mai
         3
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_19 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_19", function() {
+const __snapshot_5262b_10858_19 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_19", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-content");
@@ -12026,7 +12026,7 @@ const __snapshot_5262b_8c46e_19 = /*#__PURE__*/ (__webpack_require__("(react:mai
         11
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_21 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_21", function() {
+const __snapshot_5262b_10858_21 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_21", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "fingers-grid");
@@ -12034,7 +12034,7 @@ const __snapshot_5262b_8c46e_21 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_22 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_22", function() {
+const __snapshot_5262b_10858_22 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_22", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "fingers-grid");
@@ -12042,7 +12042,7 @@ const __snapshot_5262b_8c46e_22 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_20 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_20", function() {
+const __snapshot_5262b_10858_20 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_20", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-content");
@@ -12098,7 +12098,7 @@ const __snapshot_5262b_8c46e_20 = /*#__PURE__*/ (__webpack_require__("(react:mai
         11
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_23 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_23", function() {
+const __snapshot_5262b_10858_23 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_23", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-content");
@@ -12122,7 +12122,7 @@ const __snapshot_5262b_8c46e_23 = /*#__PURE__*/ (__webpack_require__("(react:mai
         3
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_25 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_25", function() {
+const __snapshot_5262b_10858_25 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_25", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "tab-navigation");
@@ -12130,7 +12130,7 @@ const __snapshot_5262b_8c46e_25 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_5262b_8c46e_24 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_8c46e_24", function() {
+const __snapshot_5262b_10858_24 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_5262b_10858_24", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -12229,20 +12229,20 @@ function ControlScreen() {
         isConnected
     ]);
     const ArrowControl = ({ label, value, min, max, onChange, unit = "\xb0" })=>{
-        return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_1, {
+        return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_1, {
             values: [
                 1,
                 1
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_2, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_2, {
                     children: label
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                     lineNumber: 161,
                     columnNumber: 11
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_3, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_3, {
                     children: [
                         value,
                         unit
@@ -12259,26 +12259,26 @@ function ControlScreen() {
             columnNumber: 7
         }, this);
     };
-    const StatusIndicator = ({ label, value, status, icon })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_4, {
+    const StatusIndicator = ({ label, value, status, icon })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_4, {
             values: [
                 `status-indicator status-${status}`
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_5, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_5, {
                     children: icon
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                     lineNumber: 178,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_6, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_6, {
                     children: label
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                     lineNumber: 180,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_7, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_7, {
                     children: value
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
@@ -12291,19 +12291,19 @@ function ControlScreen() {
             lineNumber: 177,
             columnNumber: 5
         }, this);
-    const PresetButton = ({ name, icon, action })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_8, {
+    const PresetButton = ({ name, icon, action })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_8, {
             values: [
                 1
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_9, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_9, {
                     children: icon
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                     lineNumber: 188,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_10, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_10, {
                     children: name
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
@@ -12316,20 +12316,20 @@ function ControlScreen() {
             lineNumber: 187,
             columnNumber: 5
         }, this);
-    const TabButton = ({ id, label, icon, isActive })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_11, {
+    const TabButton = ({ id, label, icon, isActive })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_11, {
             values: [
                 `tab-button ${isActive ? 'active' : ''}`,
                 1
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_12, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_12, {
                     children: icon
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                     lineNumber: 198,
                     columnNumber: 7
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_13, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_13, {
                     children: label
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
@@ -12345,14 +12345,14 @@ function ControlScreen() {
     const renderTabContent = ()=>{
         switch(activeTab){
             case 'status':
-                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_14, {
+                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_14, {
                     values: [
                         `control-button ${robotStatus === 'active' ? 'active' : ''}`,
                         1,
                         1
                     ],
                     children: [
-                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_15, {
+                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_15, {
                             children: [
                                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(StatusIndicator, {
                                     label: "Estado",
@@ -12410,14 +12410,14 @@ function ControlScreen() {
                             lineNumber: 208,
                             columnNumber: 13
                         }, this),
-                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_16, {
+                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_16, {
                             children: robotStatus === 'active' ? "\u23F8\uFE0F" : "\u25B6\uFE0F"
                         }, void 0, false, {
                             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
                             lineNumber: 245,
                             columnNumber: 19
                         }, this),
-                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_17, {
+                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_17, {
                             children: robotStatus === 'active' ? 'Pausar' : 'Activar'
                         }, void 0, false, {
                             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ControlScreen.jsx",
@@ -12458,7 +12458,7 @@ function ControlScreen() {
                     columnNumber: 11
                 }, this);
             case 'head':
-                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_18, {
+                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_18, {
                     children: [
                         /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ArrowControl, {
                             label: "Rotaci\xf3n X",
@@ -12500,7 +12500,7 @@ function ControlScreen() {
                     columnNumber: 11
                 }, this);
             case 'arms':
-                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_19, {
+                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_19, {
                     children: [
                         /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                             children: [
@@ -12583,9 +12583,9 @@ function ControlScreen() {
                     columnNumber: 11
                 }, this);
             case 'hands':
-                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_20, {
+                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_20, {
                     children: [
-                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_21, {
+                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_21, {
                             children: Object.entries(currentPosition.leftHand).map(([finger, value])=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ArrowControl, {
                                     label: finger.charAt(0).toUpperCase() + finger.slice(1),
                                     value: value,
@@ -12602,7 +12602,7 @@ function ControlScreen() {
                             lineNumber: 382,
                             columnNumber: 17
                         }, this),
-                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_22, {
+                        /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_22, {
                             children: Object.entries(currentPosition.rightHand).map(([finger, value])=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ArrowControl, {
                                     label: finger.charAt(0).toUpperCase() + finger.slice(1),
                                     value: value,
@@ -12626,7 +12626,7 @@ function ControlScreen() {
                     columnNumber: 11
                 }, this);
             case 'presets':
-                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_23, {
+                return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_23, {
                     children: [
                         /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(PresetButton, {
                             name: "Saludo",
@@ -12686,9 +12686,9 @@ function ControlScreen() {
                 return null;
         }
     };
-    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_24, {
+    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_24, {
         children: [
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_8c46e_25, {
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_5262b_10858_25, {
                 children: [
                     /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(TabButton, {
                         id: "status",
@@ -15483,7 +15483,7 @@ __webpack_require__.d(__webpack_exports__, {
             USER_PREFERENCES: 'user_preferences'
         };
         this.DEFAULT_CONFIG = {
-            host: '192.168.100.6',
+            host: '172.16.225.54',
             port: '8080',
             connectionStatus: 'disconnected',
             lastConnected: null,
@@ -15755,7 +15755,7 @@ __webpack_require__.hu = (chunkId) => ('' + chunkId + '.' + __webpack_require__.
 })();
 // webpack/runtime/get_full_hash
 (() => {
-__webpack_require__.h = () => ("398fac5298ab6e9d")
+__webpack_require__.h = () => ("33dce4b9e65704eb")
 })();
 // webpack/runtime/get_main_filename/update manifest
 (() => {
@@ -16220,7 +16220,7 @@ if (typeof globalThis !== "undefined") {
 // webpack/runtime/lynx css hot update
 (() => {
 
-__webpack_require__.cssHotUpdateList = [["main__main-thread",".rspeedy/main__main-thread/main__main-thread.css.hot-update.json"]];
+__webpack_require__.cssHotUpdateList = [["main__main-thread",".rspeedy/main__main-thread/main__main-thread.da0acbc193e1a2f1.css.hot-update.json"]];
 
 })();
 // webpack/runtime/make_namespace_object
@@ -16235,7 +16235,7 @@ __webpack_require__.r = (exports) => {
 })();
 // webpack/runtime/public_path
 (() => {
-__webpack_require__.p = "http://192.168.100.6:3000/";
+__webpack_require__.p = "http://10.90.183.163:3000/";
 })();
 // webpack/runtime/Lynx async chunks
 (() => {
@@ -16720,4 +16720,4 @@ var installedChunks = __webpack_require__.hmrS_require = __webpack_require__.hmr
 __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/css-extract-webpack-plugin/runtime/hotModuleReplacement.lepus.cjs");
 var __webpack_exports__ = __webpack_require__("(react:main-thread)/./src/index.jsx");
 
-//# sourceMappingURL=http://192.168.100.6:3000/.rspeedy/main/main-thread.js.map
+//# sourceMappingURL=http://10.90.183.163:3000/.rspeedy/main/main-thread.js.map
