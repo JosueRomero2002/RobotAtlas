@@ -31,9 +31,17 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib.parse
 
 # Import modular tabs
-from tabs import (MainTab, ESP32Tab, SequenceBuilderTab, SettingsTab, 
+from tabs import (MainTab, ESP32Tab, SequenceBuilderTab, SettingsTab,
                   SimulatorTab, ClassBuilderTab, ClassControllerTab,
-                  MobileAppTab, StudentsManagerTab)
+                  MobileAppTab, StudentsManagerTab, ClassesManagerTab)
+
+# Import class manager
+try:
+    from class_manager import get_class_manager
+    CLASS_MANAGER_AVAILABLE = True
+except ImportError:
+    CLASS_MANAGER_AVAILABLE = False
+    print("⚠️ Class manager no disponible")
 
 # Robot arm inverse kinematics imports
 try:
@@ -1199,6 +1207,17 @@ class RobotGUI:
                        padding=[10, 5], font=('Arial', 10, 'bold'))
         style.map('TNotebook.Tab', background=[('selected', '#4CAF50'), ('active', '#3d3d3d')])
         
+        # Initialize class manager
+        self.class_manager = None
+        if CLASS_MANAGER_AVAILABLE:
+            try:
+                self.class_manager = get_class_manager()
+                print("✅ Class manager initialized")
+            except Exception as e:
+                print(f"⚠️ Error initializing class manager: {e}")
+        else:
+            print("⚠️ Class manager not available")
+
         # Create tabs using modular system
         self.setup_modular_tabs()  # All tabs are now modular
     
@@ -1232,7 +1251,15 @@ class RobotGUI:
             
             self.students_manager_tab = StudentsManagerTab(self, self.notebook)
             self.students_manager_tab.create_tab()
-            
+
+            # Classes Manager Tab
+            try:
+                self.classes_manager_tab = ClassesManagerTab(self, self.notebook)
+                self.classes_manager_tab.create_tab()
+                print("✅ Classes Manager tab created")
+            except Exception as e:
+                print(f"⚠️ Error creating Classes Manager tab: {e}")
+
             print("✅ All modular tabs created successfully")
             
         except Exception as e:
@@ -1247,6 +1274,7 @@ class RobotGUI:
             self.setup_class_controller_tab()
             self.setup_mobile_app_tab()
             self.setup_students_manager_tab()
+            self.setup_classes_manager_tab()
     
     def setup_main_tab(self):
         """Setup the main robot control tab (legacy fallback)"""
@@ -10512,6 +10540,13 @@ if __name__ == "__main__":
         except Exception as e:
             self.log_students_message(f"Error clearing students: {e}")
             messagebox.showerror("Error", f"Failed to clear students: {e}")
+
+    def setup_classes_manager_tab(self):
+        """Setup the classes manager tab (legacy fallback)"""
+        classes_tab = tk.Frame(self.notebook, bg='#1e1e1e')
+        self.notebook.add(classes_tab, text="📚 Classes Manager")
+        tk.Label(classes_tab, text="Classes Manager tab fallback - please restart application",
+                bg='#1e1e1e', fg='#ff0000', font=('Arial', 14)).pack(pady=50)
 
 def main():
     """Main function"""

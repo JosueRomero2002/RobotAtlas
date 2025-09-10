@@ -32,7 +32,7 @@ export function ManualConfigScreen() {
     setPort(serverConfig.port)
     setMessage(`Cargado: ${serverConfig.host}:${serverConfig.port} - Estado: ${connectionStatus.status}`)
     console.log('ManualConfig loaded:', { serverConfig, connectionStatus, configStats })
-  }, [serverConfig, connectionStatus, configStats])
+  }, [serverConfig.host, serverConfig.port, connectionStatus.status, configStats])
 
   const handleSave = () => {
     console.log('ManualConfig saving:', { host, port, hostLength: host.length })
@@ -73,7 +73,7 @@ export function ManualConfigScreen() {
     }
   }
 
-    const handleRefresh = () => {
+  const handleRefresh = () => {
     // Force refresh configuration from storage
     forceRefresh()
     
@@ -130,12 +130,35 @@ export function ManualConfigScreen() {
 
   const handleHostInput = (e) => {
     setHost(e.target.value)
+    setMessage('🔄 IP actualizada - Presiona "Guardar" para aplicar cambios')
   }
 
   const handlePortInput = (e) => {
-    setMessage('🔄 Actualizando Puerto...')
-    
     setPort(e.target.value)
+    setMessage('🔄 Puerto actualizado - Presiona "Guardar" para aplicar cambios')
+  }
+
+  const handleQuickUpdate = () => {
+    if (!host || !port) {
+      setMessage('❌ Error: IP y puerto son requeridos')
+      return
+    }
+
+    const trimmedHost = host.trim()
+    const trimmedPort = port.trim()
+    
+    if (!trimmedHost || !trimmedPort) {
+      setMessage('❌ Error: IP y puerto no pueden estar vacíos')
+      return
+    }
+
+    // Update configuration immediately
+    const success = updateServerConfig(trimmedHost, trimmedPort)
+    if (success) {
+      setMessage(`✅ IP actualizada inmediatamente: ${trimmedHost}:${trimmedPort}`)
+    } else {
+      setMessage('❌ Error: No se pudo actualizar la IP')
+    }
   }
 
   return (
@@ -372,6 +395,24 @@ export function ManualConfigScreen() {
               💾 Guardar Configuración
             </text>
           </view>
+
+          <view 
+            style={{ 
+              padding: '15px',
+              backgroundColor: '#10b981',
+              borderRadius: '8px',
+              marginBottom: '10px',
+              cursor: 'pointer'
+            }}
+            bindtap={() => {
+              handleQuickUpdate()
+              console.log('🔍 DEBUG: Actualización rápida de IP')
+            }}
+          >
+            <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+              ⚡ Actualizar IP Inmediatamente
+            </text>
+          </view>
           
           <view 
             style={{ 
@@ -468,9 +509,9 @@ export function ManualConfigScreen() {
             2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux){'\n'}
             3. Tap "📝 Poner Ejemplo" para autocompletar{'\n'}
             4. Modifica la IP según tu red{'\n'}
-            5. Tap "🔄 Actualizar Valores" para verificar{'\n'}
-            6. Tap "💾 Guardar Configuración"{'\n'}
-            7. Tap "🚀 Probar Conexión"
+            5. Tap "⚡ Actualizar IP Inmediatamente" para aplicar cambios{'\n'}
+            6. Tap "🚀 Probar Conexión" para verificar{'\n'}
+            7. Opcional: Tap "💾 Guardar Configuración" para persistir
           </text>
         </view>
       </view>

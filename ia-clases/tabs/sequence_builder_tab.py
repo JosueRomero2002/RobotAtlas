@@ -529,13 +529,13 @@ class SequenceBuilderTab(BaseTab):
             if self.debug_mode:
                 print(f"🐛 [DEBUG] ESP32 Wrist Command: hand={esp32_hand}, angle={value}")
 
-            # If recording, add to current movement
+            # If recording, add to current movement with correct command format
             if self.is_recording:
-                self.add_action_to_sequence("MANO", {
-                    "M": esp32_hand,
-                    "TIPO": "muñeca",
-                    "ANG": int(value)
-                }, f"{esp32_hand} wrist")
+                # Use MUNECA command for wrist movements (compatible with ESP32)
+                self.add_action_to_sequence("MUNECA", {
+                    "mano": esp32_hand,
+                    "angulo": int(value)
+                }, f"{esp32_hand} wrist to {value}°")
 
             # Update simulator if enabled (for visual feedback)
             if hasattr(self, 'sim_enabled_var') and self.sim_enabled_var.get():
@@ -916,7 +916,7 @@ class SequenceBuilderTab(BaseTab):
             # Right wrist control
             tk.Label(right_hand_frame, text="Wrist:", bg='#4d4d4d', fg='#ffffff',
                     font=('Arial', 9)).pack(anchor="w")
-            right_wrist_scale = tk.Scale(right_hand_frame, from_=0, to=160, orient="horizontal",
+            right_wrist_scale = tk.Scale(right_hand_frame, from_=0, to=180, orient="horizontal",
                                         variable=self.right_wrist_var, bg='#4d4d4d', fg='#ffffff',
                                         highlightthickness=0, command=lambda v: self.on_wrist_change('right', v))
             right_wrist_scale.pack(fill="x", pady=(0, 5))
@@ -1042,12 +1042,12 @@ class SequenceBuilderTab(BaseTab):
 
             decrease_btn = tk.Button(arrows_frame, text="⬅️", bg='#dc3545', fg='#ffffff',
                                 font=('Arial', 8), width=2,
-                                command=lambda: self.adjust_wrist_value(variable, -10, hand))
+                                command=lambda: self.adjust_wrist_value(variable, -20, hand))
             decrease_btn.pack(side="left", padx=1)
 
             increase_btn = tk.Button(arrows_frame, text="➡️", bg='#28a745', fg='#ffffff',
                                 font=('Arial', 8), width=2,
-                                command=lambda: self.adjust_wrist_value(variable, 10, hand))
+                                command=lambda: self.adjust_wrist_value(variable, 20, hand))
             increase_btn.pack(side="right", padx=1)
 
     def adjust_arm_value(self, variable, delta, min_val, max_val, arm_type):
@@ -1067,7 +1067,7 @@ class SequenceBuilderTab(BaseTab):
     def adjust_wrist_value(self, variable, delta, hand):
             """Adjust wrist value and trigger command"""
             current = variable.get()
-            new_value = max(0, min(160, current + delta))
+            new_value = max(0, min(180, current + delta))
             variable.set(new_value)
             self.on_wrist_change(hand, new_value)
 
@@ -2323,65 +2323,84 @@ class SequenceBuilderTab(BaseTab):
                 self.sim_status_label.config(text="Simulator: Error", fg='#f44336')
 
     def simulate_action_in_simulator(self, action):
-            """Simulate an action in the simulator"""
-            try:
-                command = action.get('command', '')
-                parameters = action.get('parameters', {})
+        """Simulate an action in the simulator"""
+        try:
+            command = action.get('command', '')
+            parameters = action.get('parameters', {})
 
-                if command == 'BRAZOS':
-                    # Update arm positions in simulator
-                    # Sequence uses: BI, FI, HI, BD, FD, HD, PD
-                    # Simulator expects: left_brazo_var, left_frente_var, left_high_var, right_brazo_var, etc.
+            if command == 'BRAZOS':
+                # Update arm positions in simulator
+                # Sequence uses: BI, FI, HI, BD, FD, HD, PD
+                # Simulator expects: left_brazo_var, left_frente_var, left_high_var, right_brazo_var, etc.
 
-                    bi = parameters.get('BI', 10)  # Brazo Izquierdo
-                    bd = parameters.get('BD', 40)  # Brazo Derecho
-                    fi = parameters.get('FI', 80)  # Frente Izquierdo
-                    fd = parameters.get('FD', 90)  # Frente Derecho
-                    hi = parameters.get('HI', 80)  # High Izquierdo
-                    hd = parameters.get('HD', 80)  # High Derecho
-                    pd = parameters.get('PD', 45)  # Pollo Derecho
+                bi = parameters.get('BI', 10)  # Brazo Izquierdo
+                bd = parameters.get('BD', 40)  # Brazo Derecho
+                fi = parameters.get('FI', 80)  # Frente Izquierdo
+                fd = parameters.get('FD', 90)  # Frente Derecho
+                hi = parameters.get('HI', 80)  # High Izquierdo
+                hd = parameters.get('HD', 80)  # High Derecho
+                pd = parameters.get('PD', 45)  # Pollo Derecho
 
-                    # Update simulator variables
-                    if hasattr(self, 'left_brazo_var'):
-                        self.left_brazo_var.set(bi)
-                    if hasattr(self, 'left_frente_var'):
-                        self.left_frente_var.set(fi)
-                    if hasattr(self, 'left_high_var'):
-                        self.left_high_var.set(hi)
-                    if hasattr(self, 'right_brazo_var'):
-                        self.right_brazo_var.set(bd)
-                    if hasattr(self, 'right_frente_var'):
-                        self.right_frente_var.set(fd)
-                    if hasattr(self, 'right_high_var'):
-                        self.right_high_var.set(hd)
-                    if hasattr(self, 'right_pollo_var'):
-                        self.right_pollo_var.set(pd)
+                # Update simulator variables
+                if hasattr(self, 'left_brazo_var'):
+                    self.left_brazo_var.set(bi)
+                if hasattr(self, 'left_frente_var'):
+                    self.left_frente_var.set(fi)
+                if hasattr(self, 'left_high_var'):
+                    self.left_high_var.set(hi)
+                if hasattr(self, 'right_brazo_var'):
+                    self.right_brazo_var.set(bd)
+                if hasattr(self, 'right_frente_var'):
+                    self.right_frente_var.set(fd)
+                if hasattr(self, 'right_high_var'):
+                    self.right_high_var.set(hd)
+                if hasattr(self, 'right_pollo_var'):
+                    self.right_pollo_var.set(pd)
 
-                    # Update simulator state
-                    self.sim_arms_state['left_arm']['brazo'] = bi
-                    self.sim_arms_state['left_arm']['frente'] = fi
-                    self.sim_arms_state['left_arm']['high'] = hi
-                    self.sim_arms_state['right_arm']['brazo'] = bd
-                    self.sim_arms_state['right_arm']['frente'] = fd
-                    self.sim_arms_state['right_arm']['high'] = hd
-                    self.sim_arms_state['right_arm']['pollo'] = pd
+                # Update simulator state
+                self.sim_arms_state['left_arm']['brazo'] = bi
+                self.sim_arms_state['left_arm']['frente'] = fi
+                self.sim_arms_state['left_arm']['high'] = hi
+                self.sim_arms_state['right_arm']['brazo'] = bd
+                self.sim_arms_state['right_arm']['frente'] = fd
+                self.sim_arms_state['right_arm']['high'] = hd
+                self.sim_arms_state['right_arm']['pollo'] = pd
 
-                    # Update visualization
-                    self.update_simulator_visualization()
+                # Update visualization
+                self.update_simulator_visualization()
 
-                elif command == 'MANO':
-                    # Simulate hand gestures (just show status for now)
-                    gesture = parameters.get('GESTO', '')
-                    if gesture:
-                        print(f"🤖 Simulator: Hand gesture {gesture}")
+            elif command == 'MUNECA':
+                # Simulate wrist movements with new relative positioning system
+                mano = parameters.get('mano', '')
+                angulo = parameters.get('angulo', 80)
+                
+                if mano == 'derecha':
+                    # Update right wrist variable if it exists
+                    if hasattr(self, 'right_wrist_var'):
+                        self.right_wrist_var.set(angulo)
+                    print(f"🤖 Simulator: Right wrist moved to {angulo}° (relative positioning)")
+                elif mano == 'izquierda':
+                    # Update left wrist variable if it exists
+                    if hasattr(self, 'left_wrist_var'):
+                        self.left_wrist_var.set(angulo)
+                    print(f"🤖 Simulator: Left wrist moved to {angulo}°")
+                
+                # Update visualization
+                self.update_simulator_visualization()
 
-                elif command == 'HABLAR':
-                    # Simulate speech (just show status for now)
-                    text = parameters.get('texto', '')
-                    if text:
-                        print(f"🗣️ Simulator: Speaking '{text[:50]}...'")
+            elif command == 'MANO':
+                # Simulate hand gestures (just show status for now)
+                gesture = parameters.get('GESTO', '')
+                if gesture:
+                    print(f"🤖 Simulator: Hand gesture {gesture}")
 
-            except Exception as e:
+            elif command == 'HABLAR':
+                # Simulate speech (just show status for now)
+                text = parameters.get('texto', '')
+                if text:
+                    print(f"🗣️ Simulator: Speaking '{text[:50]}...'")
+
+        except Exception as e:
              print(f"❌ Error simulating action: {e}")
 
     def reset_simulator_position(self):
@@ -3019,6 +3038,16 @@ class SequenceBuilderTab(BaseTab):
                     elif dedo:
                         self.esp32_client.send_finger_control(mano, dedo, angulo)
             
+            elif command == 'MUNECA':
+                # Handle wrist movements with new relative positioning system
+                mano = parameters.get('mano', '')
+                angulo = parameters.get('angulo', 80)
+                
+                if self.esp32_client:
+                    # Send wrist control command to ESP32
+                    self.esp32_client.send_wrist_control(mano, angulo)
+                    print(f"🎯 Executing wrist command: {mano} wrist to {angulo}°")
+            
             elif command == 'CUELLO':
                 l = parameters.get('L', 0)
                 i = parameters.get('I', 0)
@@ -3202,6 +3231,26 @@ class SequenceBuilderTab(BaseTab):
                         "timestamp": time.time()
                     },
                     {
+                        "command": "MUNECA",
+                        "parameters": {
+                            "mano": "derecha",
+                            "angulo": 80
+                        },
+                        "duration": 1000,
+                        "description": "Right Wrist to 80° (Rest Position)",
+                        "timestamp": time.time()
+                    },
+                    {
+                        "command": "MUNECA",
+                        "parameters": {
+                            "mano": "derecha",
+                            "angulo": 120
+                        },
+                        "duration": 1000,
+                        "description": "Right Wrist to 120° (Relative Movement)",
+                        "timestamp": time.time()
+                    },
+                    {
                         "command": "MANO",
                         "parameters": {
                             "M": "derecha",
@@ -3214,7 +3263,7 @@ class SequenceBuilderTab(BaseTab):
                     {
                         "command": "HABLAR",
                         "parameters": {
-                            "texto": "Hello students! This is a sample sequence."
+                            "texto": "Hello students! This is a sample sequence with wrist movements."
                         },
                         "duration": 2000,
                         "description": "Sample Speech",
@@ -3237,6 +3286,8 @@ class SequenceBuilderTab(BaseTab):
                 "A sample sequence has been created!\n\n"
                 "This sequence includes:\n"
                 "- Home position movement\n"
+                "- Right wrist to 80° (rest position)\n"
+                "- Right wrist to 120° (relative movement)\n"
                 "- Wave gesture\n"
                 "- Sample speech\n\n"
                 "You can now save this sequence or modify it.")

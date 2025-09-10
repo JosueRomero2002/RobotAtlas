@@ -49,7 +49,7 @@ const int MUNECA_MAX = 160;
 // Posiciones de descanso
 const int MANO_DERECHA_DESCANSO = 0;  // Semi-abierta
 const int MANO_IZQUIERDA_DESCANSO = 0; // Semi-abierta
-const int MUNECA_DESCANSO = 80;       // Posición central
+const int MUNECA_DESCANSO = 90;       // Posición central
 
 void setup() {
   Serial.begin(9600);
@@ -385,11 +385,20 @@ void procesarMuneca(String comando) {
   String mano = extraerParametroString(comando, "M=", "derecha");
   int angulo = extraerParametro(comando, "ANG=", MUNECA_DESCANSO);
   
-  if (!validarMuneca(angulo)) return;
   
-  if (mano == "derecha" || mano == "ambas") {
-    // Usar función especializada para MG996R (muñeca derecha)
-    setServoMunecaDerecha(angulo);
+  if (mano == "derecha") {
+    if (angulo == -1){
+      setServo(MUNECA_DER,120);
+      delay(250);
+      setServo(MUNECA_DER,90);
+    }
+    else if (angulo == 1)
+    {
+      setServo(MUNECA_DER,70);
+      delay(250);
+      setServo(MUNECA_DER,90);
+    }
+    
   }
   if (mano == "izquierda" || mano == "ambas") {
     setServo(MUNECA_IZQ, angulo);

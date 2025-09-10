@@ -26,13 +26,24 @@ except ImportError:
         ESP32_CLIENT_AVAILABLE = False
         print("⚠️ ESP32 Binary Config o ESP32Client no disponible")
 
+class MockBooleanVar:
+    """Mock BooleanVar for when tkinter is not available"""
+    def __init__(self, value=False):
+        self._value = bool(value)
+
+    def get(self):
+        return self._value
+
+    def set(self, value):
+        self._value = bool(value)
+
 class ESP32Tab(BaseTab):
     """ESP32 controller tab with connection management and robot controls"""
     
     def __init__(self, parent_gui, notebook):
         super().__init__(parent_gui, notebook)
         self.tab_name = "🔌 ESP32 Controller"
-        
+
         # Initialize ESP32 configuration manager
         if CONFIG_AVAILABLE:
             self.config_manager = ESP32BinaryConfig()
@@ -40,17 +51,27 @@ class ESP32Tab(BaseTab):
         else:
             self.config_manager = None
             self.current_config = None
-        
+
         # Initialize ESP32 client
         if ESP32_CLIENT_AVAILABLE:
             self.esp32_client = None
             self.esp32_connected = False
-            self.esp32_real_mode = tk.BooleanVar(value=False)  # Toggle between simulation and real ESP32
+            # Initialize tkinter variables safely
+            self.esp32_real_mode = self._create_boolean_var(False)  # Toggle between simulation and real ESP32
         else:
             self.esp32_client = None
             self.esp32_connected = False
-            self.esp32_real_mode = tk.BooleanVar(value=False)
-        
+            self.esp32_real_mode = self._create_boolean_var(False)
+
+    def _create_boolean_var(self, value=False):
+        """Create a tkinter BooleanVar safely"""
+        try:
+            return tk.BooleanVar(value=value)
+        except Exception as e:
+            print(f"Warning: Could not create BooleanVar: {e}")
+            # Return a mock object that behaves like BooleanVar
+            return MockBooleanVar(value)
+
     def setup_tab_content(self):
         """Setup the ESP32 tab content"""
         # Create scrollable frame for ESP32 content
@@ -181,7 +202,7 @@ class ESP32Tab(BaseTab):
         controls_frame.pack(fill="x", pady=(0, 10))
         
         # Enable log toggle
-        self.log_enabled_var = tk.BooleanVar(value=True)
+        self.log_enabled_var = self._create_boolean_var(True)
         tk.Checkbutton(controls_frame, text="📝 Enable Command Log", 
                       variable=self.log_enabled_var,
                       bg='#2d2d2d', fg='#ffffff', selectcolor='#4d4d4d',
@@ -306,15 +327,15 @@ class ESP32Tab(BaseTab):
         panel_content.pack(fill="x", padx=10, pady=10)
         
         # Enable simulator toggle
-        self.sim_enabled_var = tk.BooleanVar(value=True)
-        tk.Checkbutton(panel_content, text="🎮 Enable Simulator", 
+        self.sim_enabled_var = self._create_boolean_var(True)
+        tk.Checkbutton(panel_content, text="🎮 Enable Simulator",
                       variable=self.sim_enabled_var,
                       bg='#3d3d3d', fg='#ffffff', selectcolor='#4d4d4d',
                       font=('Arial', 10, 'bold'),
                       command=self.toggle_simulator).pack(anchor="w", pady=5)
-        
+
         # Real-time update toggle
-        self.realtime_update_var = tk.BooleanVar(value=True)
+        self.realtime_update_var = self._create_boolean_var(True)
         tk.Checkbutton(panel_content, text="⚡ Real-time Update", 
                       variable=self.realtime_update_var,
                       bg='#3d3d3d', fg='#ffffff', selectcolor='#4d4d4d',

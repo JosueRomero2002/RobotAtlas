@@ -16,11 +16,8 @@ from .mobile_app_tab import MobileAppTab
 from .students_manager_tab import StudentsManagerTab
 from .demo_sequence_tab import DemoSequenceTab
 
-# Optional imports
-try:
-    from .classes_manager_tab import ClassesManagerTab
-except ImportError:
-    ClassesManagerTab = None
+# Import ClassesManagerTab
+from .classes_manager_tab import ClassesManagerTab
 
 __all__ = [
     'BaseTab', 'MainTab', 'ESP32Tab', 'SequenceBuilderTab', 

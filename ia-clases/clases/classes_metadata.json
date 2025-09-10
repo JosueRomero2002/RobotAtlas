@@ -5,9 +5,9 @@
       "folder": "main",
       "file_path": "clases\\main\\demo_sequence_manager.py",
       "folder_path": "clases\\main",
-      "modified": "2025-09-01T12:21:20.260051",
-      "size": 19183,
-      "title": "main.Py",
+      "modified": "2025-09-07T18:57:38.223385",
+      "size": 154641,
+      "title": "main.py",
       "subject": "Robótica",
       "description": "Clase para TESTING",
       "duration": "45 minutos",
@@ -17,8 +17,8 @@
           {
             "name": "demo_sequence_manager.py",
             "path": "clases\\main\\demo_sequence_manager.py",
-            "size": 19183,
-            "modified": "2025-09-01T12:21:20.260051"
+            "size": 154641,
+            "modified": "2025-09-07T18:57:38.223385"
           },
           {
             "name": "main.py",
@@ -36,12 +36,12 @@
             "name": "class_config.json",
             "path": "clases\\main\\class_config.json",
             "size": 270,
-            "modified": "2025-08-31T14:26:17.045469"
+            "modified": "2025-09-07T18:57:30.667485"
           }
         ]
       },
       "config": {
-        "title": "main.Py",
+        "title": "main.py",
         "subject": "Robótica",
         "description": "Clase para TESTING",
         "duration": "45 minutos",
@@ -141,5 +141,5 @@
       }
     }
   ],
-  "last_scan": "2025-09-07T17:29:36.228292"
+  "last_scan": "2025-09-09T12:26:44.057739"
 }

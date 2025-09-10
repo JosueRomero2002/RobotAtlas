@@ -6233,8 +6233,8 @@ function createSocketURL(parsedURL, token) {
 
 
 }),
-"(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=10.90.183.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-var __resourceQuery = "?hostname=10.90.183.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1";
+"(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=10.235.33.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+var __resourceQuery = "?hostname=10.235.33.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1";
 __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -10999,7 +10999,7 @@ __webpack_require__.d(__webpack_exports__, {
             USER_PREFERENCES: 'user_preferences'
         };
         this.DEFAULT_CONFIG = {
-            host: '172.16.225.54',
+            host: '10.235.33.163',
             port: '8080',
             connectionStatus: 'disconnected',
             lastConnected: null,
@@ -17280,7 +17280,7 @@ __webpack_require__.d(__webpack_exports__, {
 
 
 
-const __snapshot_b75cd_01c7c_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_2", function() {
+const __snapshot_b75cd_d0954_2 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_2", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     return [
@@ -17291,7 +17291,7 @@ const __snapshot_b75cd_01c7c_2 = /*#__PURE__*/ (__webpack_require__("(react:back
         if (ctx.__elements) __SetInlineStyles(ctx.__elements[0], ctx.__values[0]);
     }
 ], (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_01c7c_3 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_3", function() {
+const __snapshot_b75cd_d0954_3 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_3", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetInlineStyles(el, "font-size:12px;color:#cccccc;display:block;margin-top:5px");
@@ -17310,7 +17310,7 @@ const __snapshot_b75cd_01c7c_3 = /*#__PURE__*/ (__webpack_require__("(react:back
         2
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_01c7c_4 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_4", function() {
+const __snapshot_b75cd_d0954_4 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_4", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     return [
@@ -17321,7 +17321,7 @@ const __snapshot_b75cd_01c7c_4 = /*#__PURE__*/ (__webpack_require__("(react:back
         if (ctx.__elements) __SetInlineStyles(ctx.__elements[0], ctx.__values[0]);
     }
 ], (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_01c7c_5 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_5", function() {
+const __snapshot_b75cd_d0954_5 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_5", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetInlineStyles(el, "font-size:12px;color:#22c55e;display:block;margin-top:5px");
@@ -17332,7 +17332,7 @@ const __snapshot_b75cd_01c7c_5 = /*#__PURE__*/ (__webpack_require__("(react:back
         el1
     ];
 }, null, null, undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_01c7c_6 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_6", function() {
+const __snapshot_b75cd_d0954_6 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_6", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetInlineStyles(el, "padding:15px;background-color:rgba(0, 0, 0, 0.8);border-radius:8px;border:1px solid #4b5563");
@@ -17352,7 +17352,7 @@ const __snapshot_b75cd_01c7c_6 = /*#__PURE__*/ (__webpack_require__("(react:back
         1
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_01c7c_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_01c7c_1", function() {
+const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_1", function() {
     const pageId = (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -17472,89 +17472,97 @@ const __snapshot_b75cd_01c7c_1 = /*#__PURE__*/ (__webpack_require__("(react:back
     const el47 = __CreateRawText("\u{1F4BE} Guardar Configuraci\xf3n");
     __AppendElement(el46, el47);
     const el48 = __CreateView(pageId);
+    __SetInlineStyles(el48, "padding:15px;background-color:#10b981;border-radius:8px;margin-bottom:10px;cursor:pointer");
     __AppendElement(el35, el48);
     const el49 = __CreateText(pageId);
     __SetInlineStyles(el49, "color:white;font-size:16px;font-weight:bold");
     __AppendElement(el48, el49);
-    const el50 = __CreateRawText("\u{1F680} Probar Conexi\xf3n");
+    const el50 = __CreateRawText("\u26A1 Actualizar IP Inmediatamente");
     __AppendElement(el49, el50);
     const el51 = __CreateView(pageId);
     __AppendElement(el35, el51);
     const el52 = __CreateText(pageId);
     __SetInlineStyles(el52, "color:white;font-size:16px;font-weight:bold");
     __AppendElement(el51, el52);
-    const el53 = __CreateRawText("\u{1F504} Reset a Valores por Defecto");
+    const el53 = __CreateRawText("\u{1F680} Probar Conexi\xf3n");
     __AppendElement(el52, el53);
-    const el54 = __CreateWrapperElement(pageId);
-    __AppendElement(el1, el54);
-    const el55 = __CreateView(pageId);
-    __SetInlineStyles(el55, "margin-top:20px;padding:15px;background-color:rgba(34, 197, 94, 0.2);border-radius:8px;text-align:left");
-    __AppendElement(el1, el55);
-    const el56 = __CreateText(pageId);
-    __SetInlineStyles(el56, "font-size:14px;color:#22c55e;font-weight:bold");
+    const el54 = __CreateView(pageId);
+    __AppendElement(el35, el54);
+    const el55 = __CreateText(pageId);
+    __SetInlineStyles(el55, "color:white;font-size:16px;font-weight:bold");
+    __AppendElement(el54, el55);
+    const el56 = __CreateRawText("\u{1F504} Reset a Valores por Defecto");
     __AppendElement(el55, el56);
-    const el57 = __CreateRawText("\u{1F4C8} Estad\xedsticas de Configuraci\xf3n:");
-    __AppendElement(el56, el57);
-    const el58 = __CreateText(pageId);
-    __SetInlineStyles(el58, "font-size:12px;color:#86efac");
-    __AppendElement(el55, el58);
-    const el59 = __CreateRawText("Claves guardadas: ");
+    const el57 = __CreateWrapperElement(pageId);
+    __AppendElement(el1, el57);
+    const el58 = __CreateView(pageId);
+    __SetInlineStyles(el58, "margin-top:20px;padding:15px;background-color:rgba(34, 197, 94, 0.2);border-radius:8px;text-align:left");
+    __AppendElement(el1, el58);
+    const el59 = __CreateText(pageId);
+    __SetInlineStyles(el59, "font-size:14px;color:#22c55e;font-weight:bold");
     __AppendElement(el58, el59);
-    const el60 = __CreateWrapperElement(pageId);
-    __AppendElement(el58, el60);
-    const el61 = __CreateRawText("/");
+    const el60 = __CreateRawText("\u{1F4C8} Estad\xedsticas de Configuraci\xf3n:");
+    __AppendElement(el59, el60);
+    const el61 = __CreateText(pageId);
+    __SetInlineStyles(el61, "font-size:12px;color:#86efac");
     __AppendElement(el58, el61);
-    const el62 = __CreateWrapperElement(pageId);
-    __AppendElement(el58, el62);
-    const el63 = __CreateRawText("Versi\xf3n: ");
-    __AppendElement(el58, el63);
-    const el64 = __CreateWrapperElement(pageId);
-    __AppendElement(el58, el64);
-    const el65 = __CreateRawText("Estado: ");
-    __AppendElement(el58, el65);
-    const el66 = __CreateWrapperElement(pageId);
-    __AppendElement(el58, el66);
-    const el67 = __CreateRawText("\xdaltima conexi\xf3n: ");
-    __AppendElement(el58, el67);
-    const el68 = __CreateWrapperElement(pageId);
-    __AppendElement(el58, el68);
-    const el69 = __CreateView(pageId);
-    __SetInlineStyles(el69, "margin-top:20px;padding:15px;background-color:rgba(59, 130, 246, 0.2);border-radius:8px;text-align:left");
-    __AppendElement(el1, el69);
-    const el70 = __CreateText(pageId);
-    __SetInlineStyles(el70, "font-size:14px;color:#60a5fa;font-weight:bold");
-    __AppendElement(el69, el70);
-    const el71 = __CreateRawText("\u{1F3AF} Instrucciones:");
-    __AppendElement(el70, el71);
-    const el72 = __CreateText(pageId);
-    __SetInlineStyles(el72, "font-size:12px;color:#93c5fd");
-    __AppendElement(el69, el72);
-    const el73 = __CreateRawText("1. Ejecuta robot_gui.py en tu computadora");
+    const el62 = __CreateRawText("Claves guardadas: ");
+    __AppendElement(el61, el62);
+    const el63 = __CreateWrapperElement(pageId);
+    __AppendElement(el61, el63);
+    const el64 = __CreateRawText("/");
+    __AppendElement(el61, el64);
+    const el65 = __CreateWrapperElement(pageId);
+    __AppendElement(el61, el65);
+    const el66 = __CreateRawText("Versi\xf3n: ");
+    __AppendElement(el61, el66);
+    const el67 = __CreateWrapperElement(pageId);
+    __AppendElement(el61, el67);
+    const el68 = __CreateRawText("Estado: ");
+    __AppendElement(el61, el68);
+    const el69 = __CreateWrapperElement(pageId);
+    __AppendElement(el61, el69);
+    const el70 = __CreateRawText("\xdaltima conexi\xf3n: ");
+    __AppendElement(el61, el70);
+    const el71 = __CreateWrapperElement(pageId);
+    __AppendElement(el61, el71);
+    const el72 = __CreateView(pageId);
+    __SetInlineStyles(el72, "margin-top:20px;padding:15px;background-color:rgba(59, 130, 246, 0.2);border-radius:8px;text-align:left");
+    __AppendElement(el1, el72);
+    const el73 = __CreateText(pageId);
+    __SetInlineStyles(el73, "font-size:14px;color:#60a5fa;font-weight:bold");
     __AppendElement(el72, el73);
-    const el74 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el74);
-    const el75 = __CreateRawText('2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux)');
+    const el74 = __CreateRawText("\u{1F3AF} Instrucciones:");
+    __AppendElement(el73, el74);
+    const el75 = __CreateText(pageId);
+    __SetInlineStyles(el75, "font-size:12px;color:#93c5fd");
     __AppendElement(el72, el75);
-    const el76 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el76);
-    const el77 = __CreateRawText('3. Tap "\u{1F4DD} Poner Ejemplo" para autocompletar');
-    __AppendElement(el72, el77);
-    const el78 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el78);
-    const el79 = __CreateRawText("4. Modifica la IP seg\xfan tu red");
-    __AppendElement(el72, el79);
-    const el80 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el80);
-    const el81 = __CreateRawText('5. Tap "\u{1F504} Actualizar Valores" para verificar');
-    __AppendElement(el72, el81);
-    const el82 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el82);
-    const el83 = __CreateRawText('6. Tap "\u{1F4BE} Guardar Configuraci\xf3n"');
-    __AppendElement(el72, el83);
-    const el84 = __CreateWrapperElement(pageId);
-    __AppendElement(el72, el84);
-    const el85 = __CreateRawText('7. Tap "\u{1F680} Probar Conexi\xf3n"');
-    __AppendElement(el72, el85);
+    const el76 = __CreateRawText("1. Ejecuta robot_gui.py en tu computadora");
+    __AppendElement(el75, el76);
+    const el77 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el77);
+    const el78 = __CreateRawText('2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux)');
+    __AppendElement(el75, el78);
+    const el79 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el79);
+    const el80 = __CreateRawText('3. Tap "\u{1F4DD} Poner Ejemplo" para autocompletar');
+    __AppendElement(el75, el80);
+    const el81 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el81);
+    const el82 = __CreateRawText("4. Modifica la IP seg\xfan tu red");
+    __AppendElement(el75, el82);
+    const el83 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el83);
+    const el84 = __CreateRawText('5. Tap "\u26A1 Actualizar IP Inmediatamente" para aplicar cambios');
+    __AppendElement(el75, el84);
+    const el85 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el85);
+    const el86 = __CreateRawText('6. Tap "\u{1F680} Probar Conexi\xf3n" para verificar');
+    __AppendElement(el75, el86);
+    const el87 = __CreateWrapperElement(pageId);
+    __AppendElement(el75, el87);
+    const el88 = __CreateRawText('7. Opcional: Tap "\u{1F4BE} Guardar Configuraci\xf3n" para persistir');
+    __AppendElement(el75, el88);
     return [
         el,
         el1,
@@ -17641,7 +17649,10 @@ const __snapshot_b75cd_01c7c_1 = /*#__PURE__*/ (__webpack_require__("(react:back
         el82,
         el83,
         el84,
-        el85
+        el85,
+        el86,
+        el87,
+        el88
     ];
 }, [
     function(ctx) {
@@ -17693,14 +17704,15 @@ const __snapshot_b75cd_01c7c_1 = /*#__PURE__*/ (__webpack_require__("(react:back
         if (ctx.__elements) __SetInlineStyles(ctx.__elements[45], ctx.__values[17]);
     },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 45, "bindEvent", "tap", ''),
-    function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[48], ctx.__values[19]);
-    },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 48, "bindEvent", "tap", ''),
     function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[51], ctx.__values[21]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[51], ctx.__values[20]);
     },
-    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 51, "bindEvent", "tap", '')
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 51, "bindEvent", "tap", ''),
+    function(ctx) {
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[54], ctx.__values[22]);
+    },
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 54, "bindEvent", "tap", '')
 ], [
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
@@ -17744,51 +17756,51 @@ const __snapshot_b75cd_01c7c_1 = /*#__PURE__*/ (__webpack_require__("(react:back
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        54
+        57
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        60
+        63
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        62
+        65
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        64
+        67
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        66
+        69
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        68
+        71
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        74
+        77
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        76
+        79
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        78
+        81
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        80
+        83
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        82
+        85
     ],
     [
         (__webpack_require__("(react:background)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        84
+        87
     ]
 ], undefined, globDynamicComponentEntry, null);
 function ManualConfigScreen() {
@@ -17815,8 +17827,9 @@ function ManualConfigScreen() {
             configStats
         });
     }, [
-        serverConfig,
-        connectionStatus,
+        serverConfig.host,
+        serverConfig.port,
+        connectionStatus.status,
         configStats
     ]);
     const handleSave = ()=>{
@@ -17914,12 +17927,29 @@ function ManualConfigScreen() {
     };
     const handleHostInput = (e)=>{
         setHost(e.target.value);
+        setMessage('\u{1F504} IP actualizada - Presiona "Guardar" para aplicar cambios');
     };
     const handlePortInput = (e)=>{
-        setMessage("\u{1F504} Actualizando Puerto...");
         setPort(e.target.value);
+        setMessage('\u{1F504} Puerto actualizado - Presiona "Guardar" para aplicar cambios');
     };
-    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_1, {
+    const handleQuickUpdate = ()=>{
+        if (!host || !port) {
+            setMessage("\u274C Error: IP y puerto son requeridos");
+            return;
+        }
+        const trimmedHost = host.trim();
+        const trimmedPort = port.trim();
+        if (!trimmedHost || !trimmedPort) {
+            setMessage("\u274C Error: IP y puerto no pueden estar vac\xedos");
+            return;
+        }
+        // Update configuration immediately
+        const success = updateServerConfig(trimmedHost, trimmedPort);
+        if (success) setMessage(`\u{2705} IP actualizada inmediatamente: ${trimmedHost}:${trimmedPort}`);
+        else setMessage("\u274C Error: No se pudo actualizar la IP");
+    };
+    return /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_1, {
         values: [
             {
                 marginTop: '15px',
@@ -17998,6 +18028,10 @@ function ManualConfigScreen() {
                 // Resetear el color después de 500ms
                 setTimeout(()=>setSavePressed(false), 500);
             },
+            ()=>{
+                handleQuickUpdate();
+                console.log("\u{1F50D} DEBUG: Actualizaci\xf3n r\xe1pida de IP");
+            },
             {
                 padding: '15px',
                 backgroundColor: testPressed ? '#dc2626' : '#8b5cf6',
@@ -18027,7 +18061,7 @@ function ManualConfigScreen() {
             }
         ],
         children: [
-            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_2, {
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_2, {
                 values: [
                     {
                         fontSize: '18px',
@@ -18038,15 +18072,15 @@ function ManualConfigScreen() {
                 children: getStatusText(connectionStatus.status)
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                lineNumber: 156,
+                lineNumber: 179,
                 columnNumber: 11
             }, this),
             /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: connectionStatus.lastConnected && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_3, {
+                children: connectionStatus.lastConnected && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_3, {
                     children: formatTimestamp(connectionStatus.lastConnected)
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 165,
+                    lineNumber: 188,
                     columnNumber: 13
                 }, this)
             }, void 0, false, void 0, this),
@@ -18074,7 +18108,7 @@ function ManualConfigScreen() {
             /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: configStats.configVersion || '1.0.0'
             }, void 0, false, void 0, this),
-            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_4, {
+            /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_4, {
                 values: [
                     {
                         fontSize: '16px',
@@ -18088,18 +18122,18 @@ function ManualConfigScreen() {
                 children: host && port ? `http://${host}:${port}/api` : 'Completa IP y Puerto para ver la URL'
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                lineNumber: 207,
+                lineNumber: 230,
                 columnNumber: 11
             }, this),
             /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: host && port && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_5, {}, void 0, false, {
+                children: host && port && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_5, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 218,
+                    lineNumber: 241,
                     columnNumber: 13
                 }, this)
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: message && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_01c7c_6, {
+                children: message && /*#__PURE__*/ (0,_lynx_js_react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_6, {
                     values: [
                         {
                             color: message.includes("\u274C") ? '#ff4444' : message.includes("\u2705") ? '#00ff00' : '#60a5fa',
@@ -18110,7 +18144,7 @@ function ManualConfigScreen() {
                     children: message
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 420,
+                    lineNumber: 461,
                     columnNumber: 11
                 }, this)
             }, void 0, false, void 0, this),
@@ -18159,7 +18193,7 @@ function ManualConfigScreen() {
         ]
     }, void 0, true, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-        lineNumber: 142,
+        lineNumber: 165,
         columnNumber: 5
     }, this);
 }
@@ -19227,7 +19261,7 @@ __webpack_require__.r(__webpack_exports__);
   if (true) {
     (function() {
       var localsJsonString = undefined;
-      // 1757023263091
+      // 1757288569737
       var cssReload = __webpack_require__("(react:background)/./node_modules/@lynx-js/css-extract-webpack-plugin/runtime/hotModuleReplacement.cjs")(module.id, {}, "");
       // only invalidate when locals change
       if (
@@ -19342,7 +19376,7 @@ __webpack_require__.hu = (chunkId) => ('' + chunkId + '.' + __webpack_require__.
 })();
 // webpack/runtime/get_full_hash
 (() => {
-__webpack_require__.h = () => ("33dce4b9e65704eb")
+__webpack_require__.h = () => ("93b46081dafd5524")
 })();
 // webpack/runtime/get_main_filename/update manifest
 (() => {
@@ -19807,7 +19841,7 @@ if (typeof globalThis !== "undefined") {
 // webpack/runtime/lynx css hot update
 (() => {
 
-__webpack_require__.cssHotUpdateList = [["main",".rspeedy/main/main.da0acbc193e1a2f1.css.hot-update.json"]];
+__webpack_require__.cssHotUpdateList = [["main",".rspeedy/main/main.ace55a1df74aa8cb.css.hot-update.json"]];
 
 })();
 // webpack/runtime/make_namespace_object
@@ -19822,7 +19856,7 @@ __webpack_require__.r = (exports) => {
 })();
 // webpack/runtime/public_path
 (() => {
-__webpack_require__.p = "http://10.90.183.163:3000/";
+__webpack_require__.p = "http://10.235.33.163:3000/";
 })();
 // webpack/runtime/Lynx async chunks
 (() => {
@@ -20305,7 +20339,7 @@ var installedChunks = __webpack_require__.hmrS_require = __webpack_require__.hmr
 // startup
 // Load entry module and return exports
 __webpack_require__("(react:background)/./node_modules/@lynx-js/react/refresh/dist/index.js");
-__webpack_require__("(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=10.90.183.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1");
+__webpack_require__("(react:background)/./node_modules/@lynx-js/webpack-dev-transport/lib/client/index.js?hostname=10.235.33.163&port=3000&pathname=%2Frsbuild-hmr&hot=true&live-reload=true&protocol=ws&token=06939135db5716a1");
 __webpack_require__("(react:background)/./node_modules/@rspack/core/hot/dev-server.js");
 var __webpack_exports__ = __webpack_require__("(react:background)/./src/index.jsx");
 
@@ -20323,4 +20357,4 @@ var __webpack_exports__ = __webpack_require__("(react:background)/./src/index.js
   };
 })();
 
-//# sourceMappingURL=http://10.90.183.163:3000/.rspeedy/main/background.js.map
+//# sourceMappingURL=http://10.235.33.163:3000/.rspeedy/main/background.js.map
