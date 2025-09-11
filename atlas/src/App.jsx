@@ -8,6 +8,7 @@ import { ControlScreen } from './components/ControlScreen'
 import { RobotControlScreen } from './components/RobotControlScreen'
 import { ManualConfigScreen } from './components/ManualConfigScreen'
 import { ConfigDebugScreen } from './components/ConfigDebugScreen'
+import { GlobalStateProvider } from './services/GlobalStateProvider'
 
 import './App.css'
 
@@ -47,14 +48,16 @@ export function App(props) {
   }
 
   return (
-    <view>
-      <view className='Background' />
-      <view className='App'>
-        <scroll-view className='MainContent' scroll-orientation='vertical'>
-          {renderScreen()}
-        </scroll-view>
-        <Navbar activeRoute={currentRoute} onRouteChange={handleRouteChange} />
+    <GlobalStateProvider>
+      <view>
+        <view className='Background' />
+        <view className='App'>
+          <scroll-view className='MainContent' scroll-orientation='vertical'>
+            {renderScreen()}
+          </scroll-view>
+          <Navbar activeRoute={currentRoute} onRouteChange={handleRouteChange} />
+        </view>
       </view>
-    </view>
+    </GlobalStateProvider>
   )
 }

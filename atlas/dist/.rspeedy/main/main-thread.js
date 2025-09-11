@@ -8801,7 +8801,8 @@ __webpack_require__.d(__webpack_exports__, {
 /* ESM import */var _components_RobotControlScreen__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("(react:main-thread)/./src/components/RobotControlScreen.jsx");
 /* ESM import */var _components_ManualConfigScreen__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("(react:main-thread)/./src/components/ManualConfigScreen.jsx");
 /* ESM import */var _components_ConfigDebugScreen__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("(react:main-thread)/./src/components/ConfigDebugScreen.jsx");
-/* ESM import */var _App_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("(react:main-thread)/./src/App.css");
+/* ESM import */var _services_GlobalStateProvider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("(react:main-thread)/./src/services/GlobalStateProvider.jsx");
+/* ESM import */var _App_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("(react:main-thread)/./src/App.css");
 
 
 
@@ -8814,7 +8815,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 
 
-const __snapshot_c0e9e_9cb13_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_9cb13_2", function() {
+
+const __snapshot_c0e9e_0cfed_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_0cfed_2", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateScrollView(pageId);
     __SetClasses(el, "MainContent");
@@ -8823,7 +8825,7 @@ const __snapshot_c0e9e_9cb13_2 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_c0e9e_9cb13_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_9cb13_1", function() {
+const __snapshot_c0e9e_0cfed_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_c0e9e_0cfed_1", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateView(pageId);
@@ -8864,82 +8866,88 @@ function App(props) {
             case 'home':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_HomeScreen__WEBPACK_IMPORTED_MODULE_3__.HomeScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 29,
+                    lineNumber: 30,
                     columnNumber: 16
                 }, this);
             case 'dashboard':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_DashboardScreen__WEBPACK_IMPORTED_MODULE_4__.DashboardScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 31,
+                    lineNumber: 32,
                     columnNumber: 16
                 }, this);
             case 'classes':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ClassesScreen__WEBPACK_IMPORTED_MODULE_5__.ClassesScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 33,
+                    lineNumber: 34,
                     columnNumber: 16
                 }, this);
             case 'connections':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ConnectionsScreen__WEBPACK_IMPORTED_MODULE_6__.ConnectionsScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 35,
+                    lineNumber: 36,
                     columnNumber: 16
                 }, this);
             case 'control':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ControlScreen__WEBPACK_IMPORTED_MODULE_7__.ControlScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 37,
+                    lineNumber: 38,
                     columnNumber: 16
                 }, this);
             case 'robotcontrol':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_RobotControlScreen__WEBPACK_IMPORTED_MODULE_8__.RobotControlScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 39,
+                    lineNumber: 40,
                     columnNumber: 16
                 }, this);
             case 'manualconfig':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ManualConfigScreen__WEBPACK_IMPORTED_MODULE_9__.ManualConfigScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 41,
+                    lineNumber: 42,
                     columnNumber: 16
                 }, this);
             case 'debug':
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_ConfigDebugScreen__WEBPACK_IMPORTED_MODULE_10__.ConfigDebugScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 43,
+                    lineNumber: 44,
                     columnNumber: 16
                 }, this);
             default:
                 return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_HomeScreen__WEBPACK_IMPORTED_MODULE_3__.HomeScreen, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 45,
+                    lineNumber: 46,
                     columnNumber: 16
                 }, this);
         }
     };
-    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_9cb13_1, {
-        children: [
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_9cb13_2, {
-                children: renderScreen()
-            }, void 0, false, {
-                fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                lineNumber: 53,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_Navbar__WEBPACK_IMPORTED_MODULE_2__.Navbar, {
-                    activeRoute: currentRoute,
-                    onRouteChange: handleRouteChange
+    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_services_GlobalStateProvider__WEBPACK_IMPORTED_MODULE_11__.GlobalStateProvider, {
+        children: /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_0cfed_1, {
+            children: [
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_c0e9e_0cfed_2, {
+                    children: renderScreen()
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-                    lineNumber: 56,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, void 0, this)
-        ]
-    }, void 0, true, {
+                    lineNumber: 55,
+                    columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                    children: /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_components_Navbar__WEBPACK_IMPORTED_MODULE_2__.Navbar, {
+                        activeRoute: currentRoute,
+                        onRouteChange: handleRouteChange
+                    }, void 0, false, {
+                        fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
+                        lineNumber: 58,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, void 0, this)
+            ]
+        }, void 0, true, {
+            fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
+            lineNumber: 52,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\App.jsx",
-        lineNumber: 50,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 }
@@ -9283,11 +9291,13 @@ __webpack_require__.d(__webpack_exports__, {
 });
 /* ESM import */var _lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lepus/jsx-runtime/index.js");
 /* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
-/* ESM import */var _ClassProgressBar_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/components/ClassProgressBar.jsx");
+/* ESM import */var _services_useClassesState__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/services/useClassesState.js");
+/* ESM import */var _ClassProgressBar_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("(react:main-thread)/./src/components/ClassProgressBar.jsx");
 
 
 
-const __snapshot_09aa1_58a62_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_2", function() {
+
+const __snapshot_09aa1_c400d_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_2", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "class-title");
@@ -9295,7 +9305,7 @@ const __snapshot_09aa1_58a62_2 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_3", function() {
+const __snapshot_09aa1_c400d_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_3", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "class-duration");
@@ -9303,7 +9313,7 @@ const __snapshot_09aa1_58a62_3 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_4", function() {
+const __snapshot_09aa1_c400d_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_4", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "class-subject");
@@ -9311,7 +9321,7 @@ const __snapshot_09aa1_58a62_4 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_5", function() {
+const __snapshot_09aa1_c400d_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_5", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "class-description");
@@ -9319,7 +9329,7 @@ const __snapshot_09aa1_58a62_5 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_6", function() {
+const __snapshot_09aa1_c400d_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_6", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "action-button stop");
@@ -9336,7 +9346,7 @@ const __snapshot_09aa1_58a62_6 = /*#__PURE__*/ (__webpack_require__("(react:main
 }, [
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 0, "bindEvent", "tap", '')
 ], null, undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_7 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_7", function() {
+const __snapshot_09aa1_c400d_7 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_7", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "action-button start");
@@ -9353,7 +9363,7 @@ const __snapshot_09aa1_58a62_7 = /*#__PURE__*/ (__webpack_require__("(react:main
 }, [
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 0, "bindEvent", "tap", '')
 ], null, undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_1", function() {
+const __snapshot_09aa1_c400d_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_1", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     const el1 = __CreateView(pageId);
@@ -9466,7 +9476,7 @@ const __snapshot_09aa1_58a62_1 = /*#__PURE__*/ (__webpack_require__("(react:main
         17
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_9 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_9", function() {
+const __snapshot_09aa1_c400d_9 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_9", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "details-title");
@@ -9474,7 +9484,7 @@ const __snapshot_09aa1_58a62_9 = /*#__PURE__*/ (__webpack_require__("(react:main
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_10 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_10", function() {
+const __snapshot_09aa1_c400d_10 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_10", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "details-description");
@@ -9482,7 +9492,7 @@ const __snapshot_09aa1_58a62_10 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_8 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_8", function() {
+const __snapshot_09aa1_c400d_8 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_8", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "class-details");
@@ -9669,7 +9679,7 @@ const __snapshot_09aa1_58a62_8 = /*#__PURE__*/ (__webpack_require__("(react:main
         32
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_11 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_11", function() {
+const __snapshot_09aa1_c400d_11 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_11", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -9688,7 +9698,7 @@ const __snapshot_09aa1_58a62_11 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el3
     ];
 }, null, null, undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_12 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_12", function() {
+const __snapshot_09aa1_c400d_12 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_12", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -9728,7 +9738,7 @@ const __snapshot_09aa1_58a62_12 = /*#__PURE__*/ (__webpack_require__("(react:mai
         4
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_14 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_14", function() {
+const __snapshot_09aa1_c400d_14 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_14", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "connection-warning");
@@ -9761,7 +9771,7 @@ const __snapshot_09aa1_58a62_14 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el7
     ];
 }, null, null, undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_15 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_15", function() {
+const __snapshot_09aa1_c400d_15 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_15", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "active-class-banner");
@@ -9815,7 +9825,7 @@ const __snapshot_09aa1_58a62_15 = /*#__PURE__*/ (__webpack_require__("(react:mai
         8
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_17 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_17", function() {
+const __snapshot_09aa1_c400d_17 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_17", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "no-classes");
@@ -9837,7 +9847,7 @@ const __snapshot_09aa1_58a62_17 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el4
     ];
 }, null, null, undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_16 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_16", function() {
+const __snapshot_09aa1_c400d_16 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_16", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "classes-grid");
@@ -9845,7 +9855,7 @@ const __snapshot_09aa1_58a62_16 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_18 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_18", function() {
+const __snapshot_09aa1_c400d_18 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_18", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "stat-number");
@@ -9853,7 +9863,7 @@ const __snapshot_09aa1_58a62_18 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_19 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_19", function() {
+const __snapshot_09aa1_c400d_19 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_19", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "stat-number");
@@ -9861,7 +9871,7 @@ const __snapshot_09aa1_58a62_19 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_20 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_20", function() {
+const __snapshot_09aa1_c400d_20 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_20", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetClasses(el, "stat-number");
@@ -9869,7 +9879,7 @@ const __snapshot_09aa1_58a62_20 = /*#__PURE__*/ (__webpack_require__("(react:mai
         el
     ];
 }, null, (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_09aa1_58a62_13 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_58a62_13", function() {
+const __snapshot_09aa1_c400d_13 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_09aa1_c400d_13", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -9969,21 +9979,13 @@ const __snapshot_09aa1_58a62_13 = /*#__PURE__*/ (__webpack_require__("(react:mai
     ]
 ], undefined, globDynamicComponentEntry, null);
 function ClassesScreen() {
-    const [selectedClass, setSelectedClass] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const [isPlaying, setIsPlaying] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [isConnected, setIsConnected] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [classes, setClasses] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-    const [loading, setLoading] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
-    const [error, setError] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const [classProgress, setClassProgress] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    // Use the new persistent state management
+    const { selectedClass, isPlaying, isConnected, classes, classProgress, totalClasses, runningClasses, availableClasses, completedClasses, hasSelectedClass, isClassActive, setSelectedClass, setClassProgress } = (0,_services_useClassesState__WEBPACK_IMPORTED_MODULE_2__.useClassesState)();
+    const { loading, error, loadClassesFromAPI } = (0,_services_useClassesState__WEBPACK_IMPORTED_MODULE_2__.useClassesLoader)();
+    const { handleStartClass, handleStopClass } = (0,_services_useClassesState__WEBPACK_IMPORTED_MODULE_2__.useClassControl)();
     // Load classes from robot API
     (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useEffect)();
-    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(async ()=>{}, [
-        isConnected
-    ]);
-    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(async ()=>{}, [
-        isConnected
-    ]);
+    // handleStartClass and handleStopClass are now provided by useClassControl hook
     const getStatusColor = (status)=>{
         switch(status){
             case 'running':
@@ -9996,39 +9998,39 @@ function ClassesScreen() {
                 return 'gray';
         }
     };
-    const ClassCard = ({ classItem })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_1, {
+    const ClassCard = ({ classItem })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_1, {
             values: [
                 `class-card ${classItem.status || 'available'}`,
                 `status-dot ${getStatusColor(classItem.status || 'available')}`,
                 1
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_2, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_2, {
                     children: classItem.title
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 123,
+                    lineNumber: 62,
                     columnNumber: 11
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_3, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_3, {
                     children: classItem.duration || 'N/A'
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 126,
+                    lineNumber: 65,
                     columnNumber: 11
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_4, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_4, {
                     children: classItem.subject || 'N/A'
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 127,
+                    lineNumber: 66,
                     columnNumber: 11
                 }, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_5, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_5, {
                     children: classItem.description || "Sin descripci\xf3n disponible"
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 132,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
@@ -10038,41 +10040,41 @@ function ClassesScreen() {
                     children: classItem.name
                 }, void 0, false, void 0, this),
                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                    children: classItem.status === 'running' ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_6, {
+                    children: classItem.status === 'running' ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_6, {
                         values: [
                             1
                         ]
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 139,
+                        lineNumber: 78,
                         columnNumber: 11
-                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_7, {
+                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_7, {
                         values: [
                             1
                         ]
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 143,
+                        lineNumber: 82,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, void 0, this)
             ]
         }, void 0, true, {
             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-            lineNumber: 119,
+            lineNumber: 58,
             columnNumber: 5
         }, this);
-    const ClassDetails = ({ classItem })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_8, {
+    const ClassDetails = ({ classItem })=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_8, {
             values: [
                 1,
                 1
             ],
             children: [
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_9, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_9, {
                     children: classItem.title
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 157,
+                    lineNumber: 96,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
@@ -10084,11 +10086,11 @@ function ClassesScreen() {
                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                     children: classItem.name
                 }, void 0, false, void 0, this),
-                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_10, {
+                /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_10, {
                     children: classItem.description || "Sin descripci\xf3n disponible"
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                    lineNumber: 166,
+                    lineNumber: 105,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
@@ -10109,106 +10111,106 @@ function ClassesScreen() {
             ]
         }, void 0, true, {
             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-            lineNumber: 155,
+            lineNumber: 94,
             columnNumber: 5
         }, this);
-    if (loading) return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_11, {}, void 0, false, {
+    if (loading) return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_11, {}, void 0, false, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-        lineNumber: 191,
+        lineNumber: 130,
         columnNumber: 7
     }, this);
-    if (error) return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_12, {
+    if (error) return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_12, {
         values: [
             1
         ],
         children: error
     }, void 0, false, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-        lineNumber: 201,
+        lineNumber: 140,
         columnNumber: 7
     }, this);
-    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_13, {
+    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_13, {
         children: [
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: [
-                    !isConnected && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_14, {}, void 0, false, {
+                    !isConnected && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_14, {}, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 219,
+                        lineNumber: 158,
                         columnNumber: 11
                     }, this),
-                    isPlaying && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_15, {
+                    isClassActive && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_15, {
                         values: [
                             1
                         ],
                         children: selectedClass
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 229,
+                        lineNumber: 168,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: [
-                    /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ClassProgressBar_jsx__WEBPACK_IMPORTED_MODULE_2__.ClassProgressBar, {
+                    /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ClassProgressBar_jsx__WEBPACK_IMPORTED_MODULE_3__.ClassProgressBar, {
                         className: selectedClass,
-                        isActive: isPlaying,
+                        isActive: isClassActive,
                         onProgressUpdate: setClassProgress
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 242,
+                        lineNumber: 181,
                         columnNumber: 9
                     }, this),
-                    selectedClass ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ClassDetails, {
+                    hasSelectedClass ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ClassDetails, {
                         classItem: classes.find((c)=>c.name === selectedClass)
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 249,
+                        lineNumber: 188,
                         columnNumber: 11
-                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_16, {
-                        children: classes.length === 0 ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_17, {}, void 0, false, {
+                    }, this) : /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_16, {
+                        children: totalClasses === 0 ? /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_17, {}, void 0, false, {
                             fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                            lineNumber: 253,
+                            lineNumber: 192,
                             columnNumber: 15
                         }, this) : classes.map((classItem)=>/*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(ClassCard, {
                                 classItem: classItem
                             }, classItem.name, false, {
                                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                                lineNumber: 259,
+                                lineNumber: 198,
                                 columnNumber: 17
                             }, this))
                     }, void 0, false, {
                         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                        lineNumber: 251,
+                        lineNumber: 190,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, void 0, this),
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_18, {
-                children: classes.length
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_18, {
+                children: totalClasses
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                lineNumber: 267,
+                lineNumber: 206,
                 columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_19, {
-                children: classes.filter((c)=>c.status === 'running').length
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_19, {
+                children: runningClasses
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                lineNumber: 271,
+                lineNumber: 210,
                 columnNumber: 13
             }, this),
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_58a62_20, {
-                children: classes.filter((c)=>c.status === 'completed').length
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_09aa1_c400d_20, {
+                children: completedClasses
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-                lineNumber: 275,
+                lineNumber: 214,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ClassesScreen.jsx",
-        lineNumber: 213,
+        lineNumber: 152,
         columnNumber: 5
     }, this);
 }
@@ -13529,10 +13531,12 @@ __webpack_require__.d(__webpack_exports__, {
 /* ESM import */var _lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lepus/jsx-runtime/index.js");
 /* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
 /* ESM import */var _services_useConfig__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/services/useConfig.js");
+/* ESM import */var _services_useIPConfig__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("(react:main-thread)/./src/services/useIPConfig.js");
 
 
 
-const __snapshot_b75cd_d0954_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_2", function() {
+
+const __snapshot_b75cd_3d4e6_2 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_2", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     return [
@@ -13543,7 +13547,7 @@ const __snapshot_b75cd_d0954_2 = /*#__PURE__*/ (__webpack_require__("(react:main
         if (ctx.__elements) __SetInlineStyles(ctx.__elements[0], ctx.__values[0]);
     }
 ], (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_d0954_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_3", function() {
+const __snapshot_b75cd_3d4e6_3 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_3", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetInlineStyles(el, "font-size:12px;color:#cccccc;display:block;margin-top:5px");
@@ -13562,7 +13566,7 @@ const __snapshot_b75cd_d0954_3 = /*#__PURE__*/ (__webpack_require__("(react:main
         2
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_d0954_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_4", function() {
+const __snapshot_b75cd_3d4e6_4 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_4", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     return [
@@ -13573,7 +13577,7 @@ const __snapshot_b75cd_d0954_4 = /*#__PURE__*/ (__webpack_require__("(react:main
         if (ctx.__elements) __SetInlineStyles(ctx.__elements[0], ctx.__values[0]);
     }
 ], (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartChildren_0 */.__DynamicPartChildren_0), undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_d0954_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_5", function() {
+const __snapshot_b75cd_3d4e6_5 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_5", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateText(pageId);
     __SetInlineStyles(el, "font-size:12px;color:#22c55e;display:block;margin-top:5px");
@@ -13584,7 +13588,7 @@ const __snapshot_b75cd_d0954_5 = /*#__PURE__*/ (__webpack_require__("(react:main
         el1
     ];
 }, null, null, undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_d0954_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_6", function() {
+const __snapshot_b75cd_3d4e6_6 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_6", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetInlineStyles(el, "padding:15px;background-color:rgba(0, 0, 0, 0.8);border-radius:8px;border:1px solid #4b5563");
@@ -13604,7 +13608,7 @@ const __snapshot_b75cd_d0954_6 = /*#__PURE__*/ (__webpack_require__("(react:main
         1
     ]
 ], undefined, globDynamicComponentEntry, null);
-const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_d0954_1", function() {
+const __snapshot_b75cd_3d4e6_1 = /*#__PURE__*/ (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .createSnapshot */.createSnapshot)("__snapshot_b75cd_3d4e6_1", function() {
     const pageId = (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__pageId */.__pageId);
     const el = __CreateView(pageId);
     __SetClasses(el, "screen");
@@ -13732,89 +13736,141 @@ const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main
     const el50 = __CreateRawText("\u26A1 Actualizar IP Inmediatamente");
     __AppendElement(el49, el50);
     const el51 = __CreateView(pageId);
+    __SetInlineStyles(el51, "padding:15px;background-color:#6366f1;border-radius:8px;margin-bottom:10px;cursor:pointer");
     __AppendElement(el35, el51);
     const el52 = __CreateText(pageId);
     __SetInlineStyles(el52, "color:white;font-size:16px;font-weight:bold");
     __AppendElement(el51, el52);
-    const el53 = __CreateRawText("\u{1F680} Probar Conexi\xf3n");
+    const el53 = __CreateRawText("\u{1F4CB} Ver Valores Actuales en Inputs");
     __AppendElement(el52, el53);
     const el54 = __CreateView(pageId);
+    __SetInlineStyles(el54, "padding:15px;background-color:#8b5cf6;border-radius:8px;margin-bottom:10px;cursor:pointer");
     __AppendElement(el35, el54);
     const el55 = __CreateText(pageId);
     __SetInlineStyles(el55, "color:white;font-size:16px;font-weight:bold");
     __AppendElement(el54, el55);
-    const el56 = __CreateRawText("\u{1F504} Reset a Valores por Defecto");
+    const el56 = __CreateRawText("\u{1F680} IP Desarrollo (192.168.100.6:8080)");
     __AppendElement(el55, el56);
-    const el57 = __CreateWrapperElement(pageId);
-    __AppendElement(el1, el57);
-    const el58 = __CreateView(pageId);
-    __SetInlineStyles(el58, "margin-top:20px;padding:15px;background-color:rgba(34, 197, 94, 0.2);border-radius:8px;text-align:left");
-    __AppendElement(el1, el58);
-    const el59 = __CreateText(pageId);
-    __SetInlineStyles(el59, "font-size:14px;color:#22c55e;font-weight:bold");
+    const el57 = __CreateView(pageId);
+    __SetInlineStyles(el57, "padding:15px;background-color:#f59e0b;border-radius:8px;margin-bottom:10px;cursor:pointer");
+    __AppendElement(el35, el57);
+    const el58 = __CreateText(pageId);
+    __SetInlineStyles(el58, "color:white;font-size:16px;font-weight:bold");
+    __AppendElement(el57, el58);
+    const el59 = __CreateRawText("\u{1F3E0} IP Casa (192.168.1.100:2233)");
     __AppendElement(el58, el59);
-    const el60 = __CreateRawText("\u{1F4C8} Estad\xedsticas de Configuraci\xf3n:");
-    __AppendElement(el59, el60);
+    const el60 = __CreateView(pageId);
+    __SetInlineStyles(el60, "padding:15px;background-color:#06b6d4;border-radius:8px;margin-bottom:10px;cursor:pointer");
+    __AppendElement(el35, el60);
     const el61 = __CreateText(pageId);
-    __SetInlineStyles(el61, "font-size:12px;color:#86efac");
-    __AppendElement(el58, el61);
-    const el62 = __CreateRawText("Claves guardadas: ");
+    __SetInlineStyles(el61, "color:white;font-size:16px;font-weight:bold");
+    __AppendElement(el60, el61);
+    const el62 = __CreateRawText("\u{1F4BB} IP Localhost (127.0.0.1:8080)");
     __AppendElement(el61, el62);
-    const el63 = __CreateWrapperElement(pageId);
-    __AppendElement(el61, el63);
-    const el64 = __CreateRawText("/");
-    __AppendElement(el61, el64);
-    const el65 = __CreateWrapperElement(pageId);
-    __AppendElement(el61, el65);
-    const el66 = __CreateRawText("Versi\xf3n: ");
-    __AppendElement(el61, el66);
-    const el67 = __CreateWrapperElement(pageId);
-    __AppendElement(el61, el67);
-    const el68 = __CreateRawText("Estado: ");
-    __AppendElement(el61, el68);
+    const el63 = __CreateView(pageId);
+    __AppendElement(el35, el63);
+    const el64 = __CreateText(pageId);
+    __SetInlineStyles(el64, "color:white;font-size:16px;font-weight:bold");
+    __AppendElement(el63, el64);
+    const el65 = __CreateRawText("\u{1F680} Probar Conexi\xf3n");
+    __AppendElement(el64, el65);
+    const el66 = __CreateView(pageId);
+    __AppendElement(el35, el66);
+    const el67 = __CreateText(pageId);
+    __SetInlineStyles(el67, "color:white;font-size:16px;font-weight:bold");
+    __AppendElement(el66, el67);
+    const el68 = __CreateRawText("\u{1F504} Reset a Valores por Defecto");
+    __AppendElement(el67, el68);
     const el69 = __CreateWrapperElement(pageId);
-    __AppendElement(el61, el69);
-    const el70 = __CreateRawText("\xdaltima conexi\xf3n: ");
-    __AppendElement(el61, el70);
-    const el71 = __CreateWrapperElement(pageId);
-    __AppendElement(el61, el71);
-    const el72 = __CreateView(pageId);
-    __SetInlineStyles(el72, "margin-top:20px;padding:15px;background-color:rgba(59, 130, 246, 0.2);border-radius:8px;text-align:left");
-    __AppendElement(el1, el72);
+    __AppendElement(el1, el69);
+    const el70 = __CreateView(pageId);
+    __SetInlineStyles(el70, "margin-top:20px;padding:15px;background-color:rgba(34, 197, 94, 0.2);border-radius:8px;text-align:left");
+    __AppendElement(el1, el70);
+    const el71 = __CreateText(pageId);
+    __SetInlineStyles(el71, "font-size:14px;color:#22c55e;font-weight:bold");
+    __AppendElement(el70, el71);
+    const el72 = __CreateRawText("\u{1F4C8} Estad\xedsticas de Configuraci\xf3n:");
+    __AppendElement(el71, el72);
     const el73 = __CreateText(pageId);
-    __SetInlineStyles(el73, "font-size:14px;color:#60a5fa;font-weight:bold");
-    __AppendElement(el72, el73);
-    const el74 = __CreateRawText("\u{1F3AF} Instrucciones:");
+    __SetInlineStyles(el73, "font-size:12px;color:#86efac");
+    __AppendElement(el70, el73);
+    const el74 = __CreateRawText("Claves guardadas: ");
     __AppendElement(el73, el74);
-    const el75 = __CreateText(pageId);
-    __SetInlineStyles(el75, "font-size:12px;color:#93c5fd");
-    __AppendElement(el72, el75);
-    const el76 = __CreateRawText("1. Ejecuta robot_gui.py en tu computadora");
-    __AppendElement(el75, el76);
+    const el75 = __CreateWrapperElement(pageId);
+    __AppendElement(el73, el75);
+    const el76 = __CreateRawText("/");
+    __AppendElement(el73, el76);
     const el77 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el77);
-    const el78 = __CreateRawText('2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux)');
-    __AppendElement(el75, el78);
+    __AppendElement(el73, el77);
+    const el78 = __CreateRawText("Versi\xf3n: ");
+    __AppendElement(el73, el78);
     const el79 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el79);
-    const el80 = __CreateRawText('3. Tap "\u{1F4DD} Poner Ejemplo" para autocompletar');
-    __AppendElement(el75, el80);
+    __AppendElement(el73, el79);
+    const el80 = __CreateRawText("Estado: ");
+    __AppendElement(el73, el80);
     const el81 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el81);
-    const el82 = __CreateRawText("4. Modifica la IP seg\xfan tu red");
-    __AppendElement(el75, el82);
+    __AppendElement(el73, el81);
+    const el82 = __CreateRawText("\xdaltima conexi\xf3n: ");
+    __AppendElement(el73, el82);
     const el83 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el83);
-    const el84 = __CreateRawText('5. Tap "\u26A1 Actualizar IP Inmediatamente" para aplicar cambios');
-    __AppendElement(el75, el84);
-    const el85 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el85);
-    const el86 = __CreateRawText('6. Tap "\u{1F680} Probar Conexi\xf3n" para verificar');
-    __AppendElement(el75, el86);
-    const el87 = __CreateWrapperElement(pageId);
-    __AppendElement(el75, el87);
-    const el88 = __CreateRawText('7. Opcional: Tap "\u{1F4BE} Guardar Configuraci\xf3n" para persistir');
-    __AppendElement(el75, el88);
+    __AppendElement(el73, el83);
+    const el84 = __CreateView(pageId);
+    __SetInlineStyles(el84, "margin-top:20px;padding:15px;background-color:rgba(59, 130, 246, 0.2);border-radius:8px;text-align:left");
+    __AppendElement(el1, el84);
+    const el85 = __CreateText(pageId);
+    __SetInlineStyles(el85, "font-size:14px;color:#60a5fa;font-weight:bold");
+    __AppendElement(el84, el85);
+    const el86 = __CreateRawText("\u{1F3AF} Instrucciones:");
+    __AppendElement(el85, el86);
+    const el87 = __CreateText(pageId);
+    __SetInlineStyles(el87, "font-size:12px;color:#93c5fd");
+    __AppendElement(el84, el87);
+    const el88 = __CreateRawText("1. Ejecuta robot_gui.py en tu computadora");
+    __AppendElement(el87, el88);
+    const el89 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el89);
+    const el90 = __CreateRawText('2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux)');
+    __AppendElement(el87, el90);
+    const el91 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el91);
+    const el92 = __CreateRawText("3. M\xc9TODO A - Botones r\xe1pidos:");
+    __AppendElement(el87, el92);
+    const el93 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el93);
+    const el94 = __CreateRawText('\u2022 Tap "\u{1F4DD} Poner Ejemplo" para autocompletar');
+    __AppendElement(el87, el94);
+    const el95 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el95);
+    const el96 = __CreateRawText('\u2022 Tap "\u{1F680} IP Desarrollo" para IP de desarrollo');
+    __AppendElement(el87, el96);
+    const el97 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el97);
+    const el98 = __CreateRawText('\u2022 Tap "\u{1F3E0} IP Casa" para IP de casa');
+    __AppendElement(el87, el98);
+    const el99 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el99);
+    const el100 = __CreateRawText("4. M\xc9TODO B - Escritura manual:");
+    __AppendElement(el87, el100);
+    const el101 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el101);
+    const el102 = __CreateRawText("\u2022 Escribe manualmente en los inputs");
+    __AppendElement(el87, el102);
+    const el103 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el103);
+    const el104 = __CreateRawText('\u2022 Tap "\u{1F4CB} Ver Valores Actuales" para verificar');
+    __AppendElement(el87, el104);
+    const el105 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el105);
+    const el106 = __CreateRawText('\u2022 Tap "\u26A1 Actualizar IP Inmediatamente" para aplicar');
+    __AppendElement(el87, el106);
+    const el107 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el107);
+    const el108 = __CreateRawText('5. Tap "\u{1F680} Probar Conexi\xf3n" para verificar');
+    __AppendElement(el87, el108);
+    const el109 = __CreateWrapperElement(pageId);
+    __AppendElement(el87, el109);
+    const el110 = __CreateRawText('6. Opcional: Tap "\u{1F4BE} Guardar Configuraci\xf3n" para persistir');
+    __AppendElement(el87, el110);
     return [
         el,
         el1,
@@ -13904,7 +13960,29 @@ const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main
         el85,
         el86,
         el87,
-        el88
+        el88,
+        el89,
+        el90,
+        el91,
+        el92,
+        el93,
+        el94,
+        el95,
+        el96,
+        el97,
+        el98,
+        el99,
+        el100,
+        el101,
+        el102,
+        el103,
+        el104,
+        el105,
+        el106,
+        el107,
+        el108,
+        el109,
+        el110
     ];
 }, [
     function(ctx) {
@@ -13914,57 +13992,37 @@ const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main
         if (ctx.__elements) __SetAttribute(ctx.__elements[31], "value", ctx.__values[1]);
     },
     function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[31], "onInput", ctx.__values[2]);
+        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "value", ctx.__values[2]);
     },
     function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[31], "onChange", ctx.__values[3]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[31], "onBlur", ctx.__values[4]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[31], "onKeyUp", ctx.__values[5]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "value", ctx.__values[6]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "onInput", ctx.__values[7]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "onChange", ctx.__values[8]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "onBlur", ctx.__values[9]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetAttribute(ctx.__elements[34], "onKeyUp", ctx.__values[10]);
-    },
-    function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[36], ctx.__values[11]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[36], ctx.__values[3]);
     },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 36, "bindEvent", "tap", ''),
     function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[39], ctx.__values[13]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[39], ctx.__values[5]);
     },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 39, "bindEvent", "tap", ''),
     function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[42], ctx.__values[15]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[42], ctx.__values[7]);
     },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 42, "bindEvent", "tap", ''),
     function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[45], ctx.__values[17]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[45], ctx.__values[9]);
     },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 45, "bindEvent", "tap", ''),
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 48, "bindEvent", "tap", ''),
-    function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[51], ctx.__values[20]);
-    },
     (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 51, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 54, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 57, "bindEvent", "tap", ''),
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 60, "bindEvent", "tap", ''),
     function(ctx) {
-        if (ctx.__elements) __SetInlineStyles(ctx.__elements[54], ctx.__values[22]);
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[63], ctx.__values[16]);
     },
-    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 54, "bindEvent", "tap", '')
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 63, "bindEvent", "tap", ''),
+    function(ctx) {
+        if (ctx.__elements) __SetInlineStyles(ctx.__elements[66], ctx.__values[18]);
+    },
+    (snapshot, index, oldValue)=>(__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .updateEvent */.updateEvent)(snapshot, index, oldValue, 66, "bindEvent", "tap", '')
 ], [
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
@@ -14008,27 +14066,11 @@ const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main
     ],
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        57
-    ],
-    [
-        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        63
-    ],
-    [
-        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        65
-    ],
-    [
-        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        67
-    ],
-    [
-        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
         69
     ],
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        71
+        75
     ],
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
@@ -14048,17 +14090,50 @@ const __snapshot_b75cd_d0954_1 = /*#__PURE__*/ (__webpack_require__("(react:main
     ],
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        85
+        89
     ],
     [
         (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
-        87
+        91
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        93
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        95
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        97
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        99
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        101
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        103
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        105
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        107
+    ],
+    [
+        (__webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/internal.js")/* .__DynamicPartSlot */.__DynamicPartSlot),
+        109
     ]
 ], undefined, globDynamicComponentEntry, null);
 function ManualConfigScreen() {
-    const [host, setHost] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-    const [port, setPort] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-    const [message, setMessage] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     // Estados para debug de botones
     const [examplePressed, setExamplePressed] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [refreshPressed, setRefreshPressed] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -14066,6 +14141,12 @@ function ManualConfigScreen() {
     const [testPressed, setTestPressed] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [resetPressed, setResetPressed] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [staticPressed, setStaticPressed] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    // Use the IP input hook for handling IP configuration
+    const { inputIP, inputPort, message, currentIP, currentPort, handleIPChange, handlePortChange, updateConfiguration, setExampleValues, setStaticValues, clearMessage, setMessage: setIPMessage } = (0,_services_useIPConfig__WEBPACK_IMPORTED_MODULE_3__.useIPInput)();
+    // Use IP config hook for direct updates
+    const { updateIPConfig } = (0,_services_useIPConfig__WEBPACK_IMPORTED_MODULE_3__.useIPConfig)();
+    // Use quick IP update methods
+    const { setDevIP, setHomeIP, setLocalhostIP } = (0,_services_useIPConfig__WEBPACK_IMPORTED_MODULE_3__.useQuickIPUpdate)();
     // Use the configuration hook for reactive state management
     const { serverConfig, connectionStatus, configStats, isConnected, setServerConfig: updateServerConfig, forceRefresh, resetToDefaults } = (0,_services_useConfig__WEBPACK_IMPORTED_MODULE_2__.useConfig)();
     (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_1__.useEffect)();
@@ -14101,15 +14182,7 @@ function ManualConfigScreen() {
                 return "\u26AA DESCONECTADO";
         }
     };
-    const handleHostInput = (e)=>{
-        setHost(e.target.value);
-        setMessage('\u{1F504} IP actualizada - Presiona "Guardar" para aplicar cambios');
-    };
-    const handlePortInput = (e)=>{
-        setPort(e.target.value);
-        setMessage('\u{1F504} Puerto actualizado - Presiona "Guardar" para aplicar cambios');
-    };
-    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_1, {
+    return /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_1, {
         values: [
             {
                 marginTop: '15px',
@@ -14118,16 +14191,8 @@ function ManualConfigScreen() {
                 borderRadius: '8px',
                 border: `2px solid ${getStatusColor(connectionStatus.status)}`
             },
-            host,
-            handleHostInput,
-            handleHostInput,
-            handleHostInput,
-            handleHostInput,
-            port,
-            handlePortInput,
-            handlePortInput,
-            handlePortInput,
-            handlePortInput,
+            inputIP,
+            inputPort,
             {
                 padding: '15px',
                 backgroundColor: examplePressed ? '#dc2626' : '#f59e0b',
@@ -14161,6 +14226,10 @@ function ManualConfigScreen() {
             },
             1,
             1,
+            1,
+            1,
+            1,
+            1,
             {
                 padding: '15px',
                 backgroundColor: testPressed ? '#dc2626' : '#8b5cf6',
@@ -14178,7 +14247,7 @@ function ManualConfigScreen() {
             1
         ],
         children: [
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_2, {
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_2, {
                 values: [
                     {
                         fontSize: '18px',
@@ -14189,35 +14258,35 @@ function ManualConfigScreen() {
                 children: getStatusText(connectionStatus.status)
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                lineNumber: 179,
+                lineNumber: 202,
                 columnNumber: 11
             }, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: connectionStatus.lastConnected && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_3, {
+                children: connectionStatus.lastConnected && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_3, {
                     children: formatTimestamp(connectionStatus.lastConnected)
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 188,
+                    lineNumber: 211,
                     columnNumber: 13
                 }, this)
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: [
-                    host,
+                    inputIP,
                     '\n'
                 ]
             }, void 0, true, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: [
-                    port,
+                    inputPort,
                     '\n'
                 ]
             }, void 0, true, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: host
+                children: inputIP
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: port
+                children: inputPort
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: '\n'
@@ -14225,32 +14294,32 @@ function ManualConfigScreen() {
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: configStats.configVersion || '1.0.0'
             }, void 0, false, void 0, this),
-            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_4, {
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_4, {
                 values: [
                     {
                         fontSize: '16px',
-                        color: host && port ? '#22c55e' : '#f59e0b',
+                        color: inputIP && inputPort ? '#22c55e' : '#f59e0b',
                         fontWeight: 'bold',
                         fontFamily: 'monospace',
                         display: 'block',
                         marginTop: '8px'
                     }
                 ],
-                children: host && port ? `http://${host}:${port}/api` : 'Completa IP y Puerto para ver la URL'
+                children: inputIP && inputPort ? `http://${inputIP}:${inputPort}/api` : 'Completa IP y Puerto para ver la URL'
             }, void 0, false, {
                 fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                lineNumber: 230,
+                lineNumber: 253,
                 columnNumber: 11
             }, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: host && port && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_5, {}, void 0, false, {
+                children: inputIP && inputPort && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_5, {}, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 241,
+                    lineNumber: 264,
                     columnNumber: 13
                 }, this)
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
-                children: message && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_d0954_6, {
+                children: message && /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(__snapshot_b75cd_3d4e6_6, {
                     values: [
                         {
                             color: message.includes("\u274C") ? '#ff4444' : message.includes("\u2705") ? '#00ff00' : '#60a5fa',
@@ -14261,7 +14330,7 @@ function ManualConfigScreen() {
                     children: message
                 }, void 0, false, {
                     fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-                    lineNumber: 461,
+                    lineNumber: 554,
                     columnNumber: 11
                 }, this)
             }, void 0, false, void 0, this),
@@ -14306,11 +14375,26 @@ function ManualConfigScreen() {
             }, void 0, false, void 0, this),
             /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
                 children: '\n'
+            }, void 0, false, void 0, this),
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                children: '\n'
+            }, void 0, false, void 0, this),
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                children: '\n'
+            }, void 0, false, void 0, this),
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                children: '\n'
+            }, void 0, false, void 0, this),
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                children: '\n'
+            }, void 0, false, void 0, this),
+            /*#__PURE__*/ (0,_lynx_js_react_lepus_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("wrapper", {
+                children: '\n'
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "C:\\Users\\josue\\Desktop\\RobotAtlas\\atlas\\src\\components\\ManualConfigScreen.jsx",
-        lineNumber: 165,
+        lineNumber: 188,
         columnNumber: 5
     }, this);
 }
@@ -15150,6 +15234,395 @@ if (typeof globalThis !== "undefined") {
 
 
 }),
+"(react:main-thread)/./src/services/ClassesStateManager.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+});
+/**
+ * Classes State Manager Service
+ * Handles all classes state persistence and management for the mobile app
+ * Maintains state across page navigation
+ */ class ClassesStateManager {
+    /**
+   * Load state from localStorage
+   * @returns {Object} Current state
+   */ loadState() {
+        try {
+            const state = {
+                ...this.DEFAULT_STATE
+            };
+            // Load selected class
+            state.selectedClass = this.getStorageItem(this.STORAGE_KEYS.SELECTED_CLASS, this.DEFAULT_STATE.selectedClass);
+            // Load playing status
+            state.isPlaying = this.getStorageItem(this.STORAGE_KEYS.IS_PLAYING, this.DEFAULT_STATE.isPlaying) === 'true';
+            // Load connection status
+            state.isConnected = this.getStorageItem(this.STORAGE_KEYS.IS_CONNECTED, this.DEFAULT_STATE.isConnected) === 'true';
+            // Load classes list
+            const savedClasses = this.getStorageItem(this.STORAGE_KEYS.CLASSES_LIST, null);
+            if (savedClasses) try {
+                state.classes = JSON.parse(savedClasses);
+            } catch (error) {
+                console.warn('Error parsing classes list, using empty array:', error);
+                state.classes = [];
+            }
+            // Load class progress
+            const savedProgress = this.getStorageItem(this.STORAGE_KEYS.CLASS_PROGRESS, null);
+            if (savedProgress) try {
+                state.classProgress = JSON.parse(savedProgress);
+            } catch (error) {
+                console.warn('Error parsing class progress, using null:', error);
+                state.classProgress = null;
+            }
+            // Load last loaded timestamp
+            state.lastLoaded = this.getStorageItem(this.STORAGE_KEYS.LAST_LOADED, this.DEFAULT_STATE.lastLoaded);
+            // Load version
+            state.classesVersion = this.getStorageItem(this.STORAGE_KEYS.CLASSES_VERSION, this.DEFAULT_STATE.classesVersion);
+            console.log('Classes state loaded:', state);
+            return state;
+        } catch (error) {
+            console.error('Error loading classes state:', error);
+            return {
+                ...this.DEFAULT_STATE
+            };
+        }
+    }
+    /**
+   * Save state to localStorage
+   * @param {Object} stateUpdate - State updates to save
+   * @returns {boolean} Success status
+   */ saveState(stateUpdate) {
+        try {
+            const oldState = {
+                ...this.currentState
+            };
+            const newState = {
+                ...this.currentState,
+                ...stateUpdate
+            };
+            // Save selected class
+            this.setStorageItem(this.STORAGE_KEYS.SELECTED_CLASS, newState.selectedClass);
+            // Save playing status
+            this.setStorageItem(this.STORAGE_KEYS.IS_PLAYING, newState.isPlaying.toString());
+            // Save connection status
+            this.setStorageItem(this.STORAGE_KEYS.IS_CONNECTED, newState.isConnected.toString());
+            // Save classes list
+            this.setStorageItem(this.STORAGE_KEYS.CLASSES_LIST, JSON.stringify(newState.classes));
+            // Save class progress
+            this.setStorageItem(this.STORAGE_KEYS.CLASS_PROGRESS, JSON.stringify(newState.classProgress));
+            // Save last loaded timestamp
+            this.setStorageItem(this.STORAGE_KEYS.LAST_LOADED, newState.lastLoaded);
+            // Save version
+            this.setStorageItem(this.STORAGE_KEYS.CLASSES_VERSION, newState.classesVersion);
+            this.currentState = newState;
+            console.log('Classes state saved:', newState);
+            // Notify listeners of state change
+            this.notifyListeners('classesStateChanged', {
+                oldState,
+                newState,
+                changedKeys: Object.keys(stateUpdate)
+            });
+            return true;
+        } catch (error) {
+            console.error('Error saving classes state:', error);
+            return false;
+        }
+    }
+    /**
+   * Get current state
+   * @returns {Object} Current state
+   */ getState() {
+        return {
+            ...this.currentState
+        };
+    }
+    /**
+   * Set selected class
+   * @param {string|null} className - Class name to select
+   * @returns {boolean} Success status
+   */ setSelectedClass(className) {
+        console.log('Setting selected class:', className);
+        return this.saveState({
+            selectedClass: className
+        });
+    }
+    /**
+   * Set playing status
+   * @param {boolean} isPlaying - Whether a class is playing
+   * @returns {boolean} Success status
+   */ setIsPlaying(isPlaying) {
+        console.log('Setting isPlaying:', isPlaying);
+        return this.saveState({
+            isPlaying
+        });
+    }
+    /**
+   * Set connection status
+   * @param {boolean} isConnected - Whether robot is connected
+   * @returns {boolean} Success status
+   */ setIsConnected(isConnected) {
+        console.log('Setting isConnected:', isConnected);
+        return this.saveState({
+            isConnected
+        });
+    }
+    /**
+   * Set classes list
+   * @param {Array} classes - Array of classes
+   * @returns {boolean} Success status
+   */ setClasses(classes) {
+        console.log('Setting classes list:', classes.length, 'classes');
+        const lastLoaded = new Date().toISOString();
+        return this.saveState({
+            classes,
+            lastLoaded
+        });
+    }
+    /**
+   * Set class progress
+   * @param {Object|null} progress - Class progress object
+   * @returns {boolean} Success status
+   */ setClassProgress(progress) {
+        console.log('Setting class progress:', progress);
+        return this.saveState({
+            classProgress: progress
+        });
+    }
+    /**
+   * Update class status in the classes list
+   * @param {string} className - Class name to update
+   * @param {string} status - New status ('running', 'available', 'completed')
+   * @returns {boolean} Success status
+   */ updateClassStatus(className, status) {
+        try {
+            const updatedClasses = this.currentState.classes.map((cls)=>cls.name === className ? {
+                    ...cls,
+                    status
+                } : cls);
+            return this.setClasses(updatedClasses);
+        } catch (error) {
+            console.error('Error updating class status:', error);
+            return false;
+        }
+    }
+    /**
+   * Get class by name
+   * @param {string} className - Class name
+   * @returns {Object|null} Class object or null
+   */ getClassByName(className) {
+        return this.currentState.classes.find((cls)=>cls.name === className) || null;
+    }
+    /**
+   * Get classes by status
+   * @param {string} status - Status to filter by
+   * @returns {Array} Array of classes with the specified status
+   */ getClassesByStatus(status) {
+        return this.currentState.classes.filter((cls)=>cls.status === status);
+    }
+    /**
+   * Reset state to defaults
+   * @returns {boolean} Success status
+   */ resetToDefaults() {
+        try {
+            this.currentState = {
+                ...this.DEFAULT_STATE
+            };
+            // Clear all storage items
+            Object.values(this.STORAGE_KEYS).forEach((key)=>{
+                this.removeStorageItem(key);
+            });
+            console.log('Classes state reset to defaults');
+            return true;
+        } catch (error) {
+            console.error('Error resetting classes state:', error);
+            return false;
+        }
+    }
+    /**
+   * Export state as JSON
+   * @returns {string} JSON string of current state
+   */ exportState() {
+        try {
+            return JSON.stringify(this.currentState, null, 2);
+        } catch (error) {
+            console.error('Error exporting classes state:', error);
+            return null;
+        }
+    }
+    /**
+   * Import state from JSON
+   * @param {string} jsonState - JSON string of state
+   * @returns {boolean} Success status
+   */ importState(jsonState) {
+        try {
+            const importedState = JSON.parse(jsonState);
+            return this.saveState(importedState);
+        } catch (error) {
+            console.error('Error importing classes state:', error);
+            return false;
+        }
+    }
+    /**
+   * Get state statistics
+   * @returns {Object} State statistics
+   */ getStateStats() {
+        const stats = {
+            totalClasses: this.currentState.classes.length,
+            runningClasses: this.getClassesByStatus('running').length,
+            availableClasses: this.getClassesByStatus('available').length,
+            completedClasses: this.getClassesByStatus('completed').length,
+            isPlaying: this.currentState.isPlaying,
+            isConnected: this.currentState.isConnected,
+            selectedClass: this.currentState.selectedClass,
+            lastLoaded: this.currentState.lastLoaded,
+            classesVersion: this.currentState.classesVersion
+        };
+        return stats;
+    }
+    // Storage helper methods
+    getStorageItem(key, defaultValue) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                const item = localStorage.getItem(key);
+                return item !== null ? item : defaultValue;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return defaultValue;
+    }
+    setStorageItem(key, value) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(key, value);
+                return true;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return false;
+    }
+    removeStorageItem(key) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.removeItem(key);
+                return true;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return false;
+    }
+    // Event management methods
+    /**
+   * Add event listener for state changes
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   * @returns {Function} Unsubscribe function
+   */ addEventListener(event, callback) {
+        if (typeof callback !== 'function') {
+            console.warn('Event listener callback must be a function');
+            return ()=>{};
+        }
+        const listener = {
+            event,
+            callback
+        };
+        this.listeners.push(listener);
+        console.log(`Classes event listener added for '${event}'. Total listeners: ${this.listeners.length}`);
+        // Return unsubscribe function
+        return ()=>{
+            const index = this.listeners.indexOf(listener);
+            if (index > -1) {
+                this.listeners.splice(index, 1);
+                console.log(`Classes event listener removed for '${event}'. Total listeners: ${this.listeners.length}`);
+            }
+        };
+    }
+    /**
+   * Remove event listener
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   */ removeEventListener(event, callback) {
+        this.listeners = this.listeners.filter((listener)=>!(listener.event === event && listener.callback === callback));
+        console.log(`Classes event listeners removed for '${event}'. Total listeners: ${this.listeners.length}`);
+    }
+    /**
+   * Notify all listeners of an event
+   * @param {string} event - Event name
+   * @param {*} data - Event data
+   */ notifyListeners(event, data) {
+        const relevantListeners = this.listeners.filter((listener)=>listener.event === event);
+        console.log(`Notifying ${relevantListeners.length} classes listeners for event '${event}'`);
+        relevantListeners.forEach((listener)=>{
+            try {
+                listener.callback(data);
+            } catch (error) {
+                console.error(`Error in classes event listener for '${event}':`, error);
+            }
+        });
+    }
+    /**
+   * Force refresh state from storage
+   * @returns {boolean} Success status
+   */ forceRefresh() {
+        try {
+            const oldState = {
+                ...this.currentState
+            };
+            this.currentState = this.loadState();
+            console.log('Classes state force refreshed:', this.currentState);
+            // Notify listeners of state refresh
+            this.notifyListeners('classesStateRefreshed', {
+                oldState,
+                newState: this.currentState
+            });
+            return true;
+        } catch (error) {
+            console.error('Error force refreshing classes state:', error);
+            return false;
+        }
+    }
+    constructor(){
+        this.STORAGE_KEYS = {
+            SELECTED_CLASS: 'classes_selected_class',
+            IS_PLAYING: 'classes_is_playing',
+            IS_CONNECTED: 'classes_is_connected',
+            CLASSES_LIST: 'classes_list',
+            CLASS_PROGRESS: 'classes_progress',
+            LAST_LOADED: 'classes_last_loaded',
+            CLASSES_VERSION: 'classes_version'
+        };
+        this.DEFAULT_STATE = {
+            selectedClass: null,
+            isPlaying: false,
+            isConnected: false,
+            classes: [],
+            classProgress: null,
+            lastLoaded: null,
+            classesVersion: '1.0.0'
+        };
+        // Event listeners for state changes
+        this.listeners = [];
+        this.currentState = this.loadState();
+        console.log('ClassesStateManager initialized with state:', this.currentState);
+    }
+}
+// Create singleton instance
+const classesStateManager = new ClassesStateManager();
+/* ESM default export */ const __WEBPACK_DEFAULT_EXPORT__ = (classesStateManager);
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
 "(react:main-thread)/./src/services/ConfigManager.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
@@ -15530,6 +16003,1396 @@ if (typeof globalThis !== "undefined") {
 
 
 }),
+"(react:main-thread)/./src/services/GlobalStateProvider.jsx": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  GlobalStateProvider: () => (GlobalStateProvider),
+  useGlobalClassesState: () => (useGlobalClassesState),
+  useGlobalConfigState: () => (useGlobalConfigState),
+  useGlobalState: () => (useGlobalState)
+});
+/* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
+/* ESM import */var _useClassesState__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./src/services/useClassesState.js");
+/* ESM import */var _useConfig__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/services/useConfig.js");
+/**
+ * Global State Provider Component
+ * Provides persistent state management across all screens
+ * Ensures state is maintained when navigating between pages
+ */ 
+
+
+/**
+ * Global State Provider Component
+ * This component should be used at the App level to initialize
+ * and maintain global state across all screens
+ */ function GlobalStateProvider({ children }) {
+    // Initialize all global state hooks
+    (0,_useClassesState__WEBPACK_IMPORTED_MODULE_1__.useClassesState)();
+    (0,_useConfig__WEBPACK_IMPORTED_MODULE_2__.useConfig)();
+    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useEffect)();
+    // This component doesn't render anything, it just provides state management
+    return children;
+}
+/**
+ * Hook to access global state from any component
+ * @returns {Object} Global state object
+ */ function useGlobalState() {
+    const classesState = (0,_useClassesState__WEBPACK_IMPORTED_MODULE_1__.useClassesState)();
+    const configState = (0,_useConfig__WEBPACK_IMPORTED_MODULE_2__.useConfig)();
+    return {
+        // Classes state
+        classes: {
+            selectedClass: classesState.selectedClass,
+            isPlaying: classesState.isPlaying,
+            isConnected: classesState.isConnected,
+            classes: classesState.classes,
+            classProgress: classesState.classProgress,
+            totalClasses: classesState.totalClasses,
+            runningClasses: classesState.runningClasses,
+            availableClasses: classesState.availableClasses,
+            completedClasses: classesState.completedClasses,
+            hasSelectedClass: classesState.hasSelectedClass,
+            isClassActive: classesState.isClassActive,
+            lastLoaded: classesState.lastLoaded,
+            classesVersion: classesState.classesVersion
+        },
+        // Config state
+        config: {
+            isConnected: configState.isConnected,
+            baseURL: configState.baseURL,
+            host: configState.serverConfig.host,
+            port: configState.serverConfig.port,
+            connectionStatus: configState.connectionStatus,
+            configStats: configState.configStats
+        },
+        // Combined state
+        global: {
+            isAnyClassActive: classesState.isClassActive,
+            isRobotConnected: configState.isConnected && classesState.isConnected,
+            hasClasses: classesState.totalClasses > 0,
+            lastActivity: classesState.lastLoaded || configState.connectionStatus.lastConnected
+        }
+    };
+}
+/**
+ * Hook for classes state only
+ * @returns {Object} Classes state and methods
+ */ function useGlobalClassesState() {
+    return (0,_useClassesState__WEBPACK_IMPORTED_MODULE_1__.useClassesState)();
+}
+/**
+ * Hook for config state only
+ * @returns {Object} Config state and methods
+ */ function useGlobalConfigState() {
+    return (0,_useConfig__WEBPACK_IMPORTED_MODULE_2__.useConfig)();
+}
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
+"(react:main-thread)/./src/services/IPConfigStore.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+});
+/**
+ * IP Configuration Store
+ * Handles IP configuration state with persistence and real-time updates
+ * Solves ReactLynx input bug by using programmatic updates
+ */ class IPConfigStore {
+    /**
+   * Load state from localStorage
+   * @returns {Object} Current state
+   */ loadState() {
+        try {
+            const state = {
+                ...this.DEFAULT_STATE
+            };
+            // Load current IP and port
+            state.currentIP = this.getStorageItem(this.STORAGE_KEYS.CURRENT_IP, this.DEFAULT_STATE.currentIP);
+            state.currentPort = this.getStorageItem(this.STORAGE_KEYS.CURRENT_PORT, this.DEFAULT_STATE.currentPort);
+            // Load last updated timestamp
+            state.lastUpdated = this.getStorageItem(this.STORAGE_KEYS.LAST_UPDATED, this.DEFAULT_STATE.lastUpdated);
+            // Load update history
+            const savedHistory = this.getStorageItem(this.STORAGE_KEYS.UPDATE_HISTORY, null);
+            if (savedHistory) try {
+                state.updateHistory = JSON.parse(savedHistory);
+            } catch (error) {
+                console.warn('Error parsing update history, using empty array:', error);
+                state.updateHistory = [];
+            }
+            // Load version
+            state.version = this.getStorageItem(this.STORAGE_KEYS.IP_VERSION, this.DEFAULT_STATE.version);
+            console.log('IP config state loaded:', state);
+            return state;
+        } catch (error) {
+            console.error('Error loading IP config state:', error);
+            return {
+                ...this.DEFAULT_STATE
+            };
+        }
+    }
+    /**
+   * Save state to localStorage
+   * @param {Object} stateUpdate - State updates to save
+   * @returns {boolean} Success status
+   */ saveState(stateUpdate) {
+        try {
+            const oldState = {
+                ...this.currentState
+            };
+            const newState = {
+                ...this.currentState,
+                ...stateUpdate
+            };
+            // Save current IP and port
+            this.setStorageItem(this.STORAGE_KEYS.CURRENT_IP, newState.currentIP);
+            this.setStorageItem(this.STORAGE_KEYS.CURRENT_PORT, newState.currentPort);
+            // Save last updated timestamp
+            this.setStorageItem(this.STORAGE_KEYS.LAST_UPDATED, newState.lastUpdated);
+            // Save update history
+            this.setStorageItem(this.STORAGE_KEYS.UPDATE_HISTORY, JSON.stringify(newState.updateHistory));
+            // Save version
+            this.setStorageItem(this.STORAGE_KEYS.IP_VERSION, newState.version);
+            this.currentState = newState;
+            console.log('IP config state saved:', newState);
+            // Notify listeners of state change
+            this.notifyListeners('ipConfigChanged', {
+                oldState,
+                newState,
+                changedKeys: Object.keys(stateUpdate)
+            });
+            return true;
+        } catch (error) {
+            console.error('Error saving IP config state:', error);
+            return false;
+        }
+    }
+    /**
+   * Get current state
+   * @returns {Object} Current state
+   */ getState() {
+        return {
+            ...this.currentState
+        };
+    }
+    /**
+   * Set current IP
+   * @param {string} ip - IP address
+   * @returns {boolean} Success status
+   */ setCurrentIP(ip) {
+        console.log('Setting current IP:', ip);
+        const timestamp = new Date().toISOString();
+        // Add to history
+        const historyEntry = {
+            ip,
+            timestamp,
+            action: 'ip_updated'
+        };
+        const newHistory = [
+            historyEntry,
+            ...this.currentState.updateHistory
+        ].slice(0, 10); // Keep last 10 entries
+        return this.saveState({
+            currentIP: ip,
+            lastUpdated: timestamp,
+            updateHistory: newHistory
+        });
+    }
+    /**
+   * Set current port
+   * @param {string} port - Port number
+   * @returns {boolean} Success status
+   */ setCurrentPort(port) {
+        console.log('Setting current port:', port);
+        const timestamp = new Date().toISOString();
+        // Add to history
+        const historyEntry = {
+            port,
+            timestamp,
+            action: 'port_updated'
+        };
+        const newHistory = [
+            historyEntry,
+            ...this.currentState.updateHistory
+        ].slice(0, 10); // Keep last 10 entries
+        return this.saveState({
+            currentPort: port,
+            lastUpdated: timestamp,
+            updateHistory: newHistory
+        });
+    }
+    /**
+   * Set both IP and port
+   * @param {string} ip - IP address
+   * @param {string} port - Port number
+   * @returns {boolean} Success status
+   */ setIPAndPort(ip, port) {
+        console.log('Setting IP and port:', {
+            ip,
+            port
+        });
+        const timestamp = new Date().toISOString();
+        // Add to history
+        const historyEntry = {
+            ip,
+            port,
+            timestamp,
+            action: 'ip_port_updated'
+        };
+        const newHistory = [
+            historyEntry,
+            ...this.currentState.updateHistory
+        ].slice(0, 10); // Keep last 10 entries
+        return this.saveState({
+            currentIP: ip,
+            currentPort: port,
+            lastUpdated: timestamp,
+            updateHistory: newHistory
+        });
+    }
+    /**
+   * Get current IP and port as URL
+   * @returns {string} Complete URL
+   */ getCurrentURL() {
+        if (this.currentState.currentIP && this.currentState.currentPort) return `http://${this.currentState.currentIP}:${this.currentState.currentPort}/api`;
+        return '';
+    }
+    /**
+   * Get formatted display string
+   * @returns {string} Formatted IP:Port string
+   */ getFormattedAddress() {
+        if (this.currentState.currentIP && this.currentState.currentPort) return `${this.currentState.currentIP}:${this.currentState.currentPort}`;
+        return 'No configurado';
+    }
+    /**
+   * Check if IP and port are set
+   * @returns {boolean} True if both are configured
+   */ isConfigured() {
+        return !!(this.currentState.currentIP && this.currentState.currentPort);
+    }
+    /**
+   * Get recent update history
+   * @param {number} limit - Number of recent entries to return
+   * @returns {Array} Recent update history
+   */ getRecentHistory(limit = 5) {
+        return this.currentState.updateHistory.slice(0, limit);
+    }
+    /**
+   * Clear update history
+   * @returns {boolean} Success status
+   */ clearHistory() {
+        console.log('Clearing IP config history');
+        return this.saveState({
+            updateHistory: []
+        });
+    }
+    /**
+   * Reset to defaults
+   * @returns {boolean} Success status
+   */ resetToDefaults() {
+        try {
+            this.currentState = {
+                ...this.DEFAULT_STATE
+            };
+            // Clear all storage items
+            Object.values(this.STORAGE_KEYS).forEach((key)=>{
+                this.removeStorageItem(key);
+            });
+            console.log('IP config state reset to defaults');
+            return true;
+        } catch (error) {
+            console.error('Error resetting IP config state:', error);
+            return false;
+        }
+    }
+    /**
+   * Export state as JSON
+   * @returns {string} JSON string of current state
+   */ exportState() {
+        try {
+            return JSON.stringify(this.currentState, null, 2);
+        } catch (error) {
+            console.error('Error exporting IP config state:', error);
+            return null;
+        }
+    }
+    /**
+   * Import state from JSON
+   * @param {string} jsonState - JSON string of state
+   * @returns {boolean} Success status
+   */ importState(jsonState) {
+        try {
+            const importedState = JSON.parse(jsonState);
+            return this.saveState(importedState);
+        } catch (error) {
+            console.error('Error importing IP config state:', error);
+            return false;
+        }
+    }
+    /**
+   * Get state statistics
+   * @returns {Object} State statistics
+   */ getStateStats() {
+        const stats = {
+            isConfigured: this.isConfigured(),
+            currentIP: this.currentState.currentIP,
+            currentPort: this.currentState.currentPort,
+            formattedAddress: this.getFormattedAddress(),
+            currentURL: this.getCurrentURL(),
+            lastUpdated: this.currentState.lastUpdated,
+            historyCount: this.currentState.updateHistory.length,
+            version: this.currentState.version
+        };
+        return stats;
+    }
+    // Storage helper methods
+    getStorageItem(key, defaultValue) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                const item = localStorage.getItem(key);
+                return item !== null ? item : defaultValue;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return defaultValue;
+    }
+    setStorageItem(key, value) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(key, value);
+                return true;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return false;
+    }
+    removeStorageItem(key) {
+        try {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.removeItem(key);
+                return true;
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error);
+        }
+        return false;
+    }
+    // Event management methods
+    /**
+   * Add event listener for state changes
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   * @returns {Function} Unsubscribe function
+   */ addEventListener(event, callback) {
+        if (typeof callback !== 'function') {
+            console.warn('Event listener callback must be a function');
+            return ()=>{};
+        }
+        const listener = {
+            event,
+            callback
+        };
+        this.listeners.push(listener);
+        console.log(`IP config event listener added for '${event}'. Total listeners: ${this.listeners.length}`);
+        // Return unsubscribe function
+        return ()=>{
+            const index = this.listeners.indexOf(listener);
+            if (index > -1) {
+                this.listeners.splice(index, 1);
+                console.log(`IP config event listener removed for '${event}'. Total listeners: ${this.listeners.length}`);
+            }
+        };
+    }
+    /**
+   * Remove event listener
+   * @param {string} event - Event name
+   * @param {Function} callback - Callback function
+   */ removeEventListener(event, callback) {
+        this.listeners = this.listeners.filter((listener)=>!(listener.event === event && listener.callback === callback));
+        console.log(`IP config event listeners removed for '${event}'. Total listeners: ${this.listeners.length}`);
+    }
+    /**
+   * Notify all listeners of an event
+   * @param {string} event - Event name
+   * @param {*} data - Event data
+   */ notifyListeners(event, data) {
+        const relevantListeners = this.listeners.filter((listener)=>listener.event === event);
+        console.log(`Notifying ${relevantListeners.length} IP config listeners for event '${event}'`);
+        relevantListeners.forEach((listener)=>{
+            try {
+                listener.callback(data);
+            } catch (error) {
+                console.error(`Error in IP config event listener for '${event}':`, error);
+            }
+        });
+    }
+    /**
+   * Force refresh state from storage
+   * @returns {boolean} Success status
+   */ forceRefresh() {
+        try {
+            const oldState = {
+                ...this.currentState
+            };
+            this.currentState = this.loadState();
+            console.log('IP config state force refreshed:', this.currentState);
+            // Notify listeners of state refresh
+            this.notifyListeners('ipConfigRefreshed', {
+                oldState,
+                newState: this.currentState
+            });
+            return true;
+        } catch (error) {
+            console.error('Error force refreshing IP config state:', error);
+            return false;
+        }
+    }
+    constructor(){
+        this.STORAGE_KEYS = {
+            CURRENT_IP: 'ipconfig_current_ip',
+            CURRENT_PORT: 'ipconfig_current_port',
+            LAST_UPDATED: 'ipconfig_last_updated',
+            UPDATE_HISTORY: 'ipconfig_update_history',
+            IP_VERSION: 'ipconfig_version'
+        };
+        this.DEFAULT_STATE = {
+            currentIP: '',
+            currentPort: '',
+            lastUpdated: null,
+            updateHistory: [],
+            version: '1.0.0'
+        };
+        // Event listeners for state changes
+        this.listeners = [];
+        this.currentState = this.loadState();
+        console.log('IPConfigStore initialized with state:', this.currentState);
+    }
+}
+// Create singleton instance
+const ipConfigStore = new IPConfigStore();
+/* ESM default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ipConfigStore);
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
+"(react:main-thread)/./src/services/RobotAPI.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+});
+/* ESM import */var _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./src/services/ConfigManager.js");
+/**
+ * Robot API Service
+ * Handles communication with the robot_gui.py server
+ */ 
+class RobotAPI {
+    /**
+   * Update base URL from current configuration
+   */ updateBaseURL() {
+        const config = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getServerConfig();
+        this.host = config.host;
+        this.port = config.port;
+        this.baseURL = config.baseURL;
+        console.log('RobotAPI: Base URL updated to:', this.baseURL);
+    }
+    // Helper method for making HTTP requests
+    async makeRequest(endpoint, options = {}) {
+        // Update base URL in case configuration changed
+        this.updateBaseURL();
+        const url = `${this.baseURL}${endpoint}`;
+        const defaultOptions = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        const requestOptions = {
+            ...defaultOptions,
+            ...options
+        };
+        try {
+            // Update connection status to connecting
+            _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('connecting');
+            const response = await fetch(url, requestOptions);
+            if (!response.ok) {
+                _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('error');
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            // Update connection status to connected
+            _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('connected');
+            return {
+                success: true,
+                data
+            };
+        } catch (error) {
+            console.error('API Request failed:', error);
+            _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('error');
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+    // CONFIGURATION METHODS
+    /**
+   * Get current server configuration
+   * @returns {Object} Current host, port, and baseURL
+   */ getServerConfig() {
+        return _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getServerConfig();
+    }
+    /**
+   * Set server configuration
+   * @param {string} host - Server host/IP
+   * @param {string} port - Server port
+   * @returns {boolean} True if configuration was updated
+   */ setServerConfig(host, port) {
+        try {
+            console.log('setServerConfig called with:', {
+                host,
+                port,
+                hostType: typeof host,
+                portType: typeof port,
+                hostLength: host ? host.length : 0,
+                portLength: port ? port.length : 0
+            });
+            const success = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].setServerConfig(host, port);
+            if (success) {
+                // Update local base URL
+                this.updateBaseURL();
+                console.log(`Robot API configuration updated: ${this.baseURL}`);
+                console.log('Current config after update:', this.getServerConfig());
+            }
+            return success;
+        } catch (error) {
+            console.error('Error setting server config:', error);
+            return false;
+        }
+    }
+    /**
+   * Reset to default configuration
+   */ resetToDefault() {
+        _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].resetToDefaults();
+        this.updateBaseURL();
+        console.log('Robot API configuration reset to default');
+    }
+    /**
+   * Test connection with current configuration
+   * @returns {Promise<Object>} Connection test result
+   */ async testConnection() {
+        try {
+            console.log('Testing connection to:', this.baseURL);
+            // Make a real request to test the connection
+            const response = await this.makeRequest('/status');
+            if (response.success) {
+                console.log('Connection test successful');
+                return {
+                    success: true,
+                    message: 'Connection successful',
+                    config: this.getServerConfig(),
+                    serverData: response.data
+                };
+            } else {
+                console.log('Connection test failed:', response.error);
+                return {
+                    success: false,
+                    message: `Connection failed: ${response.error}`,
+                    config: this.getServerConfig()
+                };
+            }
+        } catch (error) {
+            console.log('Connection test error:', error);
+            return {
+                success: false,
+                message: `Connection error: ${error.message}`,
+                config: this.getServerConfig()
+            };
+        }
+    }
+    /**
+   * Simple ping test for quick connection verification
+   * @returns {Promise<Object>} Simple connection test result
+   */ async pingServer() {
+        try {
+            this.updateBaseURL();
+            const url = `${this.baseURL}/status`;
+            console.log('Pinging server:', url);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(()=>controller.abort(), 5000); // 5 second timeout
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('connected');
+                return {
+                    success: true,
+                    status: response.status,
+                    message: 'Server is reachable'
+                };
+            } else {
+                _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('error');
+                return {
+                    success: false,
+                    status: response.status,
+                    message: `Server returned ${response.status}`
+                };
+            }
+        } catch (error) {
+            _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].updateConnectionStatus('error');
+            if (error.name === 'AbortError') return {
+                success: false,
+                message: 'Connection timeout'
+            };
+            return {
+                success: false,
+                message: error.message
+            };
+        }
+    }
+    /**
+   * Get connection status
+   * @returns {Object} Connection status information
+   */ getConnectionStatus() {
+        return _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getConnectionStatus();
+    }
+    /**
+   * Get configuration statistics
+   * @returns {Object} Configuration statistics
+   */ getConfigStats() {
+        return _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getConfigStats();
+    }
+    // GET METHODS - Retrieve data from robot
+    /**
+   * Get current robot status
+   * @returns {Promise<Object>} Robot status including battery, temperature, connection
+   */ async getRobotStatus() {
+        return this.makeRequest('/status');
+    }
+    /**
+   * Get current robot position
+   * @returns {Promise<Object>} Current positions of all robot parts
+   */ async getRobotPosition() {
+        return this.makeRequest('/position');
+    }
+    /**
+   * Get available robot classes
+   * @returns {Promise<Object>} List of available classes with movements
+   */ async getAvailableClasses() {
+        return this.makeRequest('/classes');
+    }
+    /**
+   * Get connection status of all systems
+   * @returns {Promise<Object>} Connection status for all components
+   */ async getConnectionStatus() {
+        return this.makeRequest('/connection');
+    }
+    /**
+   * Get available movement presets
+   * @returns {Promise<Object>} List of available movement presets
+   */ async getMovementPresets() {
+        return this.makeRequest('/presets');
+    }
+    // POST METHODS - Send commands to robot
+    /**
+   * Move robot part to specified position
+   * @param {Object} moveData - Movement data containing part, position, etc.
+   * @returns {Promise<Object>} Success status and message
+   */ async moveRobot(moveData) {
+        return this.makeRequest('/robot/move', {
+            method: 'POST',
+            body: JSON.stringify(moveData)
+        });
+    }
+    /**
+   * Make robot speak text
+   * @param {string} text - Text for robot to speak
+   * @returns {Promise<Object>} Success status and message
+   */ async speakText(text) {
+        return this.makeRequest('/robot/speak', {
+            method: 'POST',
+            body: JSON.stringify({
+                text
+            })
+        });
+    }
+    /**
+   * Start a robot class
+   * @param {string} className - Name of the class to execute
+   * @returns {Promise<Object>} Success status and message
+   */ async startClass(className) {
+        return this.makeRequest('/class/execute', {
+            method: 'POST',
+            body: JSON.stringify({
+                class_name: className
+            })
+        });
+    }
+    /**
+   * Stop current robot class
+   * @returns {Promise<Object>} Success status and message
+   */ async stopClass() {
+        return this.makeRequest('/class/stop', {
+            method: 'POST',
+            body: JSON.stringify({})
+        });
+    }
+    /**
+   * Get current class progress
+   * @returns {Promise<Object>} Class progress information
+   */ async getClassProgress() {
+        return this.makeRequest('/api/class/progress');
+    }
+    /**
+   * Get class details by name
+   * @param {string} className - Name of the class to get details for
+   * @returns {Promise<Object>} Class details
+   */ async getClassDetails(className) {
+        const result = await this.getAvailableClasses();
+        if (result.success && result.data.classes) {
+            const classDetails = result.data.classes.find((cls)=>cls.name === className);
+            return {
+                success: true,
+                data: classDetails
+            };
+        }
+        return {
+            success: false,
+            error: 'Class not found'
+        };
+    }
+    /**
+   * Execute a movement preset
+   * @param {string} presetName - Name of the preset to execute
+   * @returns {Promise<Object>} Success status and message
+   */ async executePreset(presetName) {
+        return this.makeRequest('/preset/execute', {
+            method: 'POST',
+            body: JSON.stringify({
+                preset: presetName
+            })
+        });
+    }
+    /**
+   * Emergency stop - immediately stop all robot movements
+   * @returns {Promise<Object>} Success status and message
+   */ async emergencyStop() {
+        return this.makeRequest('/robot/emergency', {
+            method: 'POST',
+            body: JSON.stringify({})
+        });
+    }
+    // CONVENIENCE METHODS - Common robot movements
+    /**
+   * Move robot head
+   * @param {number} x - X rotation (-45 to 45 degrees)
+   * @param {number} y - Y rotation (-30 to 30 degrees)  
+   * @param {number} z - Z rotation (-90 to 90 degrees)
+   * @returns {Promise<Object>} Success status and message
+   */ async moveHead(x = 0, y = 0, z = 0) {
+        return this.moveRobot({
+            part: 'head',
+            x,
+            y,
+            z
+        });
+    }
+    /**
+   * Move robot arm
+   * @param {string} arm - 'leftArm' or 'rightArm'
+   * @param {number} shoulder - Shoulder angle (-90 to 90 degrees)
+   * @param {number} elbow - Elbow angle (0 to 120 degrees)
+   * @param {number} wrist - Wrist angle (-45 to 45 degrees)
+   * @returns {Promise<Object>} Success status and message
+   */ async moveArm(arm, shoulder = 0, elbow = 0, wrist = 0) {
+        return this.makeRequest('/robot/move', {
+            method: 'POST',
+            body: JSON.stringify({
+                part: arm,
+                shoulder,
+                elbow,
+                wrist
+            })
+        });
+    }
+    /**
+   * Move robot hand fingers
+   * @param {string} hand - 'leftHand' or 'rightHand'
+   * @param {Object} fingers - Object with finger positions (thumb, index, middle, ring, pinky)
+   * @returns {Promise<Object>} Success status and message
+   */ async moveHand(hand, fingers) {
+        return this.makeRequest('/robot/move', {
+            method: 'POST',
+            body: JSON.stringify({
+                part: hand,
+                ...fingers
+            })
+        });
+    }
+    // UTILITY METHODS
+    /**
+   * Get robot server URL
+   * @returns {string} The base URL for the robot API
+   */ getServerURL() {
+        this.updateBaseURL();
+        return this.baseURL;
+    }
+    /**
+   * Set robot server URL (for different environments)
+   * @param {string} url - New base URL
+   */ setServerURL(url) {
+        this.baseURL = url;
+    }
+    /**
+   * Export current configuration
+   * @returns {string} JSON string of current configuration
+   */ exportConfiguration() {
+        return _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].exportConfiguration();
+    }
+    /**
+   * Import configuration from JSON
+   * @param {string} jsonConfig - JSON string of configuration
+   * @returns {boolean} Success status
+   */ importConfiguration(jsonConfig) {
+        const success = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].importConfiguration(jsonConfig);
+        if (success) this.updateBaseURL();
+        return success;
+    }
+    // ROBOT MOVEMENT METHODS
+    /**
+   * Execute a preset movement
+   * @param {string} presetName - Name of the preset to execute
+   * @returns {Promise<Object>} Result of the operation
+   */ async executePreset(presetName) {
+        return await this.makeRequest('/api/preset/execute', {
+            method: 'POST',
+            body: JSON.stringify({
+                preset: presetName
+            })
+        });
+    }
+    /**
+   * Move robot parts with specific actions
+   * @param {Object} movementData - Movement data including action, part, angles, etc.
+   * @returns {Promise<Object>} Result of the operation
+   */ async moveRobot(movementData) {
+        return await this.makeRequest('/api/robot/move', {
+            method: 'POST',
+            body: JSON.stringify(movementData)
+        });
+    }
+    /**
+   * Make robot speak text
+   * @param {string} text - Text for robot to speak
+   * @returns {Promise<Object>} Result of the operation
+   */ async speakText(text) {
+        return await this.makeRequest('/api/robot/speak', {
+            method: 'POST',
+            body: JSON.stringify({
+                text: text
+            })
+        });
+    }
+    /**
+   * Get robot status
+   * @returns {Promise<Object>} Robot status information
+   */ async getRobotStatus() {
+        return await this.makeRequest('/api/status');
+    }
+    /**
+   * Get robot position information
+   * @returns {Promise<Object>} Robot position data
+   */ async getRobotPosition() {
+        return await this.makeRequest('/api/position');
+    }
+    /**
+   * Get available movement presets
+   * @returns {Promise<Object>} Available presets
+   */ async getMovementPresets() {
+        return await this.makeRequest('/api/presets');
+    }
+    /**
+   * Emergency stop for robot
+   * @returns {Promise<Object>} Result of emergency stop
+   */ async emergencyStop() {
+        return await this.makeRequest('/api/robot/emergency', {
+            method: 'POST',
+            body: JSON.stringify({
+                action: 'emergency_stop'
+            })
+        });
+    }
+    // SPECIFIC MOVEMENT SHORTCUTS
+    /**
+   * Move robot to rest position
+   * @returns {Promise<Object>} Result of the operation
+   */ async moveToRestPosition() {
+        return await this.moveRobot({
+            action: 'rest_position',
+            name: "Posici\xf3n de Descanso"
+        });
+    }
+    /**
+   * Move robot to safe position
+   * @returns {Promise<Object>} Result of the operation
+   */ async moveToSafePosition() {
+        return await this.moveRobot({
+            action: 'safe_position',
+            name: "Posici\xf3n Segura"
+        });
+    }
+    /**
+   * Move arms to rest position
+   * @returns {Promise<Object>} Result of the operation
+   */ async moveArmsToRest() {
+        return await this.moveRobot({
+            action: 'arms_rest',
+            part: 'arms',
+            name: 'Brazos Descanso'
+        });
+    }
+    /**
+   * Move arms to hug position
+   * @returns {Promise<Object>} Result of the operation
+   */ async moveArmsToHug() {
+        return await this.moveRobot({
+            action: 'arms_hug',
+            part: 'arms',
+            name: 'Abrazo'
+        });
+    }
+    /**
+   * Center neck position
+   * @returns {Promise<Object>} Result of the operation
+   */ async centerNeck() {
+        return await this.moveRobot({
+            action: 'neck_center',
+            part: 'neck',
+            name: 'Cuello Centro'
+        });
+    }
+    /**
+   * Neck "yes" gesture
+   * @returns {Promise<Object>} Result of the operation
+   */ async neckYes() {
+        return await this.moveRobot({
+            action: 'neck_yes',
+            part: 'neck',
+            name: 'Asentir'
+        });
+    }
+    /**
+   * Neck "no" gesture
+   * @returns {Promise<Object>} Result of the operation
+   */ async neckNo() {
+        return await this.moveRobot({
+            action: 'neck_no',
+            part: 'neck',
+            name: 'Negar'
+        });
+    }
+    /**
+   * Random neck movement
+   * @returns {Promise<Object>} Result of the operation
+   */ async neckRandom() {
+        return await this.moveRobot({
+            action: 'neck_random',
+            part: 'neck',
+            name: 'Cuello Aleatorio'
+        });
+    }
+    constructor(){
+        // Load configuration from ConfigManager
+        this.updateBaseURL();
+        // Listen for configuration changes
+        this.configChangeListener = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListener('configurationChanged', (data)=>{
+            console.log('RobotAPI: Configuration changed, updating base URL');
+            this.updateBaseURL();
+        });
+        // Listen for configuration refresh
+        this.configRefreshListener = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addEventListener('configurationRefreshed', (data)=>{
+            console.log('RobotAPI: Configuration refreshed, updating base URL');
+            this.updateBaseURL();
+        });
+        console.log('RobotAPI initialized with base URL:', this.baseURL);
+    }
+}
+// Create singleton instance
+const robotAPI = new RobotAPI();
+/* ESM default export */ const __WEBPACK_DEFAULT_EXPORT__ = (robotAPI);
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
+"(react:main-thread)/./src/services/useClassesState.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  useClassControl: () => (useClassControl),
+  useClassesLoader: () => (useClassesLoader),
+  useClassesState: () => (useClassesState)
+});
+/* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
+/* ESM import */var _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./src/services/ClassesStateManager.js");
+/* ESM import */var _RobotAPI_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/services/RobotAPI.js");
+/**
+ * React Hook for Classes State Management
+ * Provides reactive access to classes state with persistence across page navigation
+ */ 
+
+
+/**
+ * Custom hook for accessing and managing classes state
+ * @returns {Object} Classes state and methods
+ */ function useClassesState() {
+    const [state, setState] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+    const [loading, setLoading] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [error, setError] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useEffect)();
+    // Classes state methods
+    const methods = {
+        /**
+     * Set selected class
+     * @param {string|null} className - Class name to select
+     * @returns {boolean} Success status
+     */ setSelectedClass: (className)=>{
+            console.log('useClassesState: Setting selected class:', className);
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setSelectedClass(className);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set playing status
+     * @param {boolean} isPlaying - Whether a class is playing
+     * @returns {boolean} Success status
+     */ setIsPlaying: (isPlaying)=>{
+            console.log('useClassesState: Setting isPlaying:', isPlaying);
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setIsPlaying(isPlaying);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set connection status
+     * @param {boolean} isConnected - Whether robot is connected
+     * @returns {boolean} Success status
+     */ setIsConnected: (isConnected)=>{
+            console.log('useClassesState: Setting isConnected:', isConnected);
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setIsConnected(isConnected);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set classes list
+     * @param {Array} classes - Array of classes
+     * @returns {boolean} Success status
+     */ setClasses: (classes)=>{
+            console.log('useClassesState: Setting classes list:', classes.length, 'classes');
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setClasses(classes);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set class progress
+     * @param {Object|null} progress - Class progress object
+     * @returns {boolean} Success status
+     */ setClassProgress: (progress)=>{
+            console.log('useClassesState: Setting class progress:', progress);
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].setClassProgress(progress);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Update class status in the classes list
+     * @param {string} className - Class name to update
+     * @param {string} status - New status ('running', 'available', 'completed')
+     * @returns {boolean} Success status
+     */ updateClassStatus: (className, status)=>{
+            console.log('useClassesState: Updating class status:', className, 'to', status);
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].updateClassStatus(className, status);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Get class by name
+     * @param {string} className - Class name
+     * @returns {Object|null} Class object or null
+     */ getClassByName: (className)=>{
+            return _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getClassByName(className);
+        },
+        /**
+     * Get classes by status
+     * @param {string} status - Status to filter by
+     * @returns {Array} Array of classes with the specified status
+     */ getClassesByStatus: (status)=>{
+            return _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getClassesByStatus(status);
+        },
+        /**
+     * Reset state to defaults
+     * @returns {boolean} Success status
+     */ resetToDefaults: ()=>{
+            console.log('useClassesState: Resetting to defaults');
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].resetToDefaults();
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Force refresh state from storage
+     * @returns {boolean} Success status
+     */ forceRefresh: ()=>{
+            console.log('useClassesState: Force refreshing state');
+            return _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].forceRefresh();
+        },
+        /**
+     * Export current state
+     * @returns {string} JSON state
+     */ exportState: ()=>{
+            return _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].exportState();
+        },
+        /**
+     * Import state from JSON
+     * @param {string} jsonState - JSON state
+     * @returns {boolean} Success status
+     */ importState: (jsonState)=>{
+            console.log('useClassesState: Importing state');
+            const success = _ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].importState(jsonState);
+            if (success) setState(_ClassesStateManager_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        }
+    };
+    return {
+        // State
+        selectedClass: state.selectedClass,
+        isPlaying: state.isPlaying,
+        isConnected: state.isConnected,
+        classes: state.classes,
+        classProgress: state.classProgress,
+        lastLoaded: state.lastLoaded,
+        classesVersion: state.classesVersion,
+        loading,
+        error,
+        // Computed values
+        totalClasses: state.classes.length,
+        runningClasses: state.classes.filter((c)=>c.status === 'running').length,
+        availableClasses: state.classes.filter((c)=>c.status === 'available').length,
+        completedClasses: state.classes.filter((c)=>c.status === 'completed').length,
+        hasSelectedClass: state.selectedClass !== null,
+        isClassActive: state.isPlaying && state.selectedClass !== null,
+        // Methods
+        ...methods
+    };
+}
+/**
+ * Hook for loading classes from robot API with state persistence
+ * @returns {Object} Classes loading state and methods
+ */ function useClassesLoader() {
+    const { classes, isConnected, setClasses, setIsConnected, setError: setStateError } = useClassesState();
+    const [loading, setLoading] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [error, setError] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    /**
+   * Load classes from robot API
+   */ const loadClassesFromAPI = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async ()=>{
+        try {
+            setLoading(true);
+            setError(null);
+            setStateError(null);
+            console.log('Loading classes from robot API...');
+            const connected = await _RobotAPI_js__WEBPACK_IMPORTED_MODULE_2__["default"].testConnection();
+            setIsConnected(connected.success);
+            if (connected.success) {
+                const result = await _RobotAPI_js__WEBPACK_IMPORTED_MODULE_2__["default"].getAvailableClasses();
+                if (result.success && result.data.classes) {
+                    setClasses(result.data.classes);
+                    console.log('Classes loaded successfully:', result.data.classes.length);
+                } else {
+                    const errorMsg = 'No se pudieron cargar las clases';
+                    setError(errorMsg);
+                    setStateError(errorMsg);
+                }
+            } else {
+                const errorMsg = 'No se pudo conectar con el robot';
+                setError(errorMsg);
+                setStateError(errorMsg);
+            }
+        } catch (error) {
+            console.error('Failed to load classes from robot:', error);
+            const errorMsg = 'Error al cargar las clases';
+            setError(errorMsg);
+            setStateError(errorMsg);
+            setIsConnected(false);
+        } finally{
+            setLoading(false);
+        }
+    }, [
+        setClasses,
+        setIsConnected,
+        setStateError
+    ]);
+    /**
+   * Start a class
+   * @param {string} className - Class name to start
+   */ const startClass = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async (className)=>{
+        if (!isConnected) {
+            console.log('Robot not connected');
+            return false;
+        }
+        try {
+            console.log(`Starting class ${className}`);
+            const result = await _RobotAPI_js__WEBPACK_IMPORTED_MODULE_2__["default"].startClass(className);
+            if (result.success) {
+                console.log(`Class ${className} started successfully`);
+                return true;
+            } else {
+                console.error('Failed to start class:', result.error);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error starting class:', error);
+            return false;
+        }
+    }, [
+        isConnected
+    ]);
+    /**
+   * Stop current class
+   */ const stopClass = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async ()=>{
+        if (!isConnected) {
+            console.log('Robot not connected');
+            return false;
+        }
+        try {
+            const result = await _RobotAPI_js__WEBPACK_IMPORTED_MODULE_2__["default"].stopClass();
+            if (result.success) {
+                console.log('Class stopped successfully');
+                return true;
+            } else {
+                console.error('Failed to stop class:', result.error);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error stopping class:', error);
+            return false;
+        }
+    }, [
+        isConnected
+    ]);
+    return {
+        // State
+        classes,
+        isConnected,
+        loading,
+        error,
+        // Methods
+        loadClassesFromAPI,
+        startClass,
+        stopClass
+    };
+}
+/**
+ * Hook for class control operations
+ * @returns {Object} Class control state and methods
+ */ function useClassControl() {
+    const { selectedClass, isPlaying, setSelectedClass, setIsPlaying, updateClassStatus } = useClassesState();
+    const { startClass, stopClass } = useClassesLoader();
+    /**
+   * Handle starting a class
+   * @param {string} className - Class name to start
+   */ const handleStartClass = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async (className)=>{
+        try {
+            setIsPlaying(true);
+            setSelectedClass(className);
+            updateClassStatus(className, 'running');
+            const success = await startClass(className);
+            if (!success) {
+                setIsPlaying(false);
+                setSelectedClass(null);
+                updateClassStatus(className, 'available');
+            }
+            return success;
+        } catch (error) {
+            console.error('Error in handleStartClass:', error);
+            setIsPlaying(false);
+            setSelectedClass(null);
+            updateClassStatus(className, 'available');
+            return false;
+        }
+    }, [
+        setIsPlaying,
+        setSelectedClass,
+        updateClassStatus,
+        startClass
+    ]);
+    /**
+   * Handle stopping current class
+   */ const handleStopClass = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async ()=>{
+        try {
+            const success = await stopClass();
+            if (success) {
+                if (selectedClass) updateClassStatus(selectedClass, 'completed');
+                setIsPlaying(false);
+                setSelectedClass(null);
+            }
+            return success;
+        } catch (error) {
+            console.error('Error in handleStopClass:', error);
+            return false;
+        }
+    }, [
+        stopClass,
+        selectedClass,
+        updateClassStatus,
+        setIsPlaying,
+        setSelectedClass
+    ]);
+    return {
+        // State
+        selectedClass,
+        isPlaying,
+        // Methods
+        handleStartClass,
+        handleStopClass
+    };
+}
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
 "(react:main-thread)/./src/services/useConfig.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 __webpack_require__.r(__webpack_exports__);
 __webpack_require__.d(__webpack_exports__, {
@@ -15686,6 +17549,296 @@ if (typeof globalThis !== "undefined") {
 
 
 }),
+"(react:main-thread)/./src/services/useIPConfig.js": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+__webpack_require__.r(__webpack_exports__);
+__webpack_require__.d(__webpack_exports__, {
+  useIPConfig: () => (useIPConfig),
+  useIPInput: () => (useIPInput),
+  useQuickIPUpdate: () => (useQuickIPUpdate)
+});
+/* ESM import */var _lynx_js_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/react/runtime/lib/index.js");
+/* ESM import */var _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("(react:main-thread)/./src/services/IPConfigStore.js");
+/* ESM import */var _ConfigManager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("(react:main-thread)/./src/services/ConfigManager.js");
+/**
+ * React Hook for IP Configuration Management
+ * Provides reactive access to IP configuration state with persistence
+ * Solves ReactLynx input bug by using programmatic updates
+ */ 
+
+
+/**
+ * Custom hook for accessing and managing IP configuration
+ * @returns {Object} IP configuration state and methods
+ */ function useIPConfig() {
+    const [state, setState] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+    const [loading, setLoading] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [error, setError] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useEffect)();
+    // IP configuration methods
+    const methods = {
+        /**
+     * Set current IP
+     * @param {string} ip - IP address
+     * @returns {boolean} Success status
+     */ setCurrentIP: (ip)=>{
+            console.log('useIPConfig: Setting current IP:', ip);
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].setCurrentIP(ip);
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set current port
+     * @param {string} port - Port number
+     * @returns {boolean} Success status
+     */ setCurrentPort: (port)=>{
+            console.log('useIPConfig: Setting current port:', port);
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].setCurrentPort(port);
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Set both IP and port
+     * @param {string} ip - IP address
+     * @param {string} port - Port number
+     * @returns {boolean} Success status
+     */ setIPAndPort: (ip, port)=>{
+            console.log('useIPConfig: Setting IP and port:', {
+                ip,
+                port
+            });
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].setIPAndPort(ip, port);
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Update IP configuration and sync with main config
+     * @param {string} ip - IP address
+     * @param {string} port - Port number
+     * @returns {boolean} Success status
+     */ updateIPConfig: (ip, port)=>{
+            console.log('useIPConfig: Updating IP config:', {
+                ip,
+                port
+            });
+            // Update IP store
+            const ipSuccess = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].setIPAndPort(ip, port);
+            // Update main config manager
+            const configSuccess = _ConfigManager_js__WEBPACK_IMPORTED_MODULE_2__["default"].setServerConfig(ip, port);
+            if (ipSuccess && configSuccess) {
+                setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+                return true;
+            }
+            return false;
+        },
+        /**
+     * Get recent update history
+     * @param {number} limit - Number of recent entries to return
+     * @returns {Array} Recent update history
+     */ getRecentHistory: (limit = 5)=>{
+            return _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getRecentHistory(limit);
+        },
+        /**
+     * Clear update history
+     * @returns {boolean} Success status
+     */ clearHistory: ()=>{
+            console.log('useIPConfig: Clearing history');
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].clearHistory();
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Reset to defaults
+     * @returns {boolean} Success status
+     */ resetToDefaults: ()=>{
+            console.log('useIPConfig: Resetting to defaults');
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].resetToDefaults();
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        },
+        /**
+     * Force refresh state from storage
+     * @returns {boolean} Success status
+     */ forceRefresh: ()=>{
+            console.log('useIPConfig: Force refreshing state');
+            return _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].forceRefresh();
+        },
+        /**
+     * Export current state
+     * @returns {string} JSON state
+     */ exportState: ()=>{
+            return _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].exportState();
+        },
+        /**
+     * Import state from JSON
+     * @param {string} jsonState - JSON state
+     * @returns {boolean} Success status
+     */ importState: (jsonState)=>{
+            console.log('useIPConfig: Importing state');
+            const success = _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].importState(jsonState);
+            if (success) setState(_IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getState());
+            return success;
+        }
+    };
+    return {
+        // State
+        currentIP: state.currentIP,
+        currentPort: state.currentPort,
+        lastUpdated: state.lastUpdated,
+        updateHistory: state.updateHistory,
+        version: state.version,
+        loading,
+        error,
+        // Computed values
+        isConfigured: _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].isConfigured(),
+        formattedAddress: _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getFormattedAddress(),
+        currentURL: _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getCurrentURL(),
+        stateStats: _IPConfigStore_js__WEBPACK_IMPORTED_MODULE_1__["default"].getStateStats(),
+        // Methods
+        ...methods
+    };
+}
+/**
+ * Hook for IP input handling with ReactLynx bug workaround
+ * @returns {Object} IP input state and methods
+ */ function useIPInput() {
+    const { currentIP, currentPort, setCurrentIP, setCurrentPort, setIPAndPort, updateIPConfig } = useIPConfig();
+    const [inputIP, setInputIP] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(currentIP);
+    const [inputPort, setInputPort] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)(currentPort);
+    const [message, setMessage] = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+    // Sync input values with store values
+    (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useEffect)();
+    /**
+   * Handle IP input change (programmatic only due to ReactLynx bug)
+   * @param {string} value - New IP value
+   */ const handleIPChange = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((value)=>{
+        console.log('useIPInput: IP changed to:', value);
+        setInputIP(value);
+        setMessage('\u{1F504} IP actualizada - Presiona "Actualizar" para aplicar cambios');
+    }, []);
+    /**
+   * Handle port input change (programmatic only due to ReactLynx bug)
+   * @param {string} value - New port value
+   */ const handlePortChange = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((value)=>{
+        console.log('useIPInput: Port changed to:', value);
+        setInputPort(value);
+        setMessage('\u{1F504} Puerto actualizado - Presiona "Actualizar" para aplicar cambios');
+    }, []);
+    /**
+   * Update IP configuration with current input values
+   * @returns {boolean} Success status
+   */ const updateConfiguration = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>{
+        if (!inputIP || !inputPort) {
+            setMessage("\u274C Error: IP y puerto son requeridos");
+            return false;
+        }
+        const trimmedIP = inputIP.trim();
+        const trimmedPort = inputPort.trim();
+        if (!trimmedIP || !trimmedPort) {
+            setMessage("\u274C Error: IP y puerto no pueden estar vac\xedos");
+            return false;
+        }
+        const success = updateIPConfig(trimmedIP, trimmedPort);
+        if (success) setMessage(`\u{2705} IP actualizada: ${trimmedIP}:${trimmedPort}`);
+        else setMessage("\u274C Error: No se pudo actualizar la IP");
+        return success;
+    }, [
+        inputIP,
+        inputPort,
+        updateIPConfig
+    ]);
+    /**
+   * Set example values
+   */ const setExampleValues = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>{
+        handleIPChange('192.168.100.6');
+        handlePortChange('8080');
+        setMessage("\u{1F4DD} Ejemplo establecido - Modifica si es necesario");
+    }, [
+        handleIPChange,
+        handlePortChange
+    ]);
+    /**
+   * Set static values
+   */ const setStaticValues = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>{
+        handleIPChange('192.168.1.100');
+        handlePortChange('2233');
+        setMessage("\u{1F527} Valores est\xe1ticos establecidos: 192.168.1.100:2233");
+    }, [
+        handleIPChange,
+        handlePortChange
+    ]);
+    /**
+   * Clear message
+   */ const clearMessage = (0,_lynx_js_react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(()=>{
+        setMessage('');
+    }, []);
+    return {
+        // Input state
+        inputIP,
+        inputPort,
+        message,
+        // Store state
+        currentIP,
+        currentPort,
+        // Methods
+        handleIPChange,
+        handlePortChange,
+        updateConfiguration,
+        setExampleValues,
+        setStaticValues,
+        clearMessage,
+        setMessage
+    };
+}
+/**
+ * Hook for quick IP updates with common presets
+ * @returns {Object} Quick update methods
+ */ function useQuickIPUpdate() {
+    const { setIPAndPort, updateIPConfig } = useIPConfig();
+    const quickUpdates = {
+        /**
+     * Set common development IP
+     */ setDevIP: ()=>{
+            console.log('useQuickIPUpdate: Setting dev IP');
+            return updateIPConfig('192.168.100.6', '8080');
+        },
+        /**
+     * Set common home IP
+     */ setHomeIP: ()=>{
+            console.log('useQuickIPUpdate: Setting home IP');
+            return updateIPConfig('192.168.1.100', '2233');
+        },
+        /**
+     * Set localhost IP
+     */ setLocalhostIP: ()=>{
+            console.log('useQuickIPUpdate: Setting localhost IP');
+            return updateIPConfig('127.0.0.1', '8080');
+        },
+        /**
+     * Set custom IP
+     * @param {string} ip - IP address
+     * @param {string} port - Port number
+     */ setCustomIP: (ip, port)=>{
+            console.log('useQuickIPUpdate: Setting custom IP:', {
+                ip,
+                port
+            });
+            return updateIPConfig(ip, port);
+        }
+    };
+    return quickUpdates;
+}
+// noop fns to prevent runtime errors during initialization
+if (typeof globalThis !== "undefined") {
+    globalThis.$RefreshReg$ = function() {};
+    globalThis.$RefreshSig$ = function() {
+        return function(type) {
+            return type;
+        };
+    };
+}
+
+
+}),
 "(react:main-thread)/./src/App.css": (function (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 __webpack_require__.r(__webpack_exports__);
 
@@ -15769,7 +17922,7 @@ __webpack_require__.hu = (chunkId) => ('' + chunkId + '.' + __webpack_require__.
 })();
 // webpack/runtime/get_full_hash
 (() => {
-__webpack_require__.h = () => ("93b46081dafd5524")
+__webpack_require__.h = () => ("05fad7cc5068e7ae")
 })();
 // webpack/runtime/get_main_filename/update manifest
 (() => {
@@ -16234,7 +18387,7 @@ if (typeof globalThis !== "undefined") {
 // webpack/runtime/lynx css hot update
 (() => {
 
-__webpack_require__.cssHotUpdateList = [["main__main-thread",".rspeedy/main__main-thread/main__main-thread.ace55a1df74aa8cb.css.hot-update.json"]];
+__webpack_require__.cssHotUpdateList = [["main__main-thread",".rspeedy/main__main-thread/main__main-thread.709c48755584d965.css.hot-update.json"]];
 
 })();
 // webpack/runtime/make_namespace_object
@@ -16249,7 +18402,7 @@ __webpack_require__.r = (exports) => {
 })();
 // webpack/runtime/public_path
 (() => {
-__webpack_require__.p = "http://10.235.33.163:3000/";
+__webpack_require__.p = "http://172.16.251.28:3000/";
 })();
 // webpack/runtime/Lynx async chunks
 (() => {
@@ -16734,4 +18887,4 @@ var installedChunks = __webpack_require__.hmrS_require = __webpack_require__.hmr
 __webpack_require__("(react:main-thread)/./node_modules/@lynx-js/css-extract-webpack-plugin/runtime/hotModuleReplacement.lepus.cjs");
 var __webpack_exports__ = __webpack_require__("(react:main-thread)/./src/index.jsx");
 
-//# sourceMappingURL=http://10.235.33.163:3000/.rspeedy/main/main-thread.js.map
+//# sourceMappingURL=http://172.16.251.28:3000/.rspeedy/main/main-thread.js.map

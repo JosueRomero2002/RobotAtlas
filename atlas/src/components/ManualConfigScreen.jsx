@@ -1,12 +1,9 @@
 import { useState, useEffect } from '@lynx-js/react'
 import robotAPI from '../services/RobotAPI'
 import { useConfig } from '../services/useConfig'
+import { useIPInput, useQuickIPUpdate, useIPConfig } from '../services/useIPConfig'
 
 export function ManualConfigScreen() {
-  const [host, setHost] = useState('')
-  const [port, setPort] = useState('')
-  const [message, setMessage] = useState('')
-  
   // Estados para debug de botones
   const [examplePressed, setExamplePressed] = useState(false)
   const [refreshPressed, setRefreshPressed] = useState(false)
@@ -14,6 +11,28 @@ export function ManualConfigScreen() {
   const [testPressed, setTestPressed] = useState(false)
   const [resetPressed, setResetPressed] = useState(false)
   const [staticPressed, setStaticPressed] = useState(false)
+  
+  // Use the IP input hook for handling IP configuration
+  const {
+    inputIP,
+    inputPort,
+    message,
+    currentIP,
+    currentPort,
+    handleIPChange,
+    handlePortChange,
+    updateConfiguration,
+    setExampleValues,
+    setStaticValues,
+    clearMessage,
+    setMessage: setIPMessage
+  } = useIPInput()
+
+  // Use IP config hook for direct updates
+  const { updateIPConfig } = useIPConfig()
+
+  // Use quick IP update methods
+  const { setDevIP, setHomeIP, setLocalhostIP } = useQuickIPUpdate()
   
   // Use the configuration hook for reactive state management
   const {
@@ -27,49 +46,56 @@ export function ManualConfigScreen() {
   } = useConfig()
 
   useEffect(() => {
-    // Initialize local state with current configuration
-    setHost(serverConfig.host)
-    setPort(serverConfig.port)
-    setMessage(`Cargado: ${serverConfig.host}:${serverConfig.port} - Estado: ${connectionStatus.status}`)
+    // Initialize with current configuration
     console.log('ManualConfig loaded:', { serverConfig, connectionStatus, configStats })
   }, [serverConfig.host, serverConfig.port, connectionStatus.status, configStats])
 
   const handleSave = () => {
-    console.log('ManualConfig saving:', { host, port, hostLength: host.length })
+    // Capturar valores directamente del DOM (solución al bug de ReactLynx)
+    const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+    const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
     
-    if (!host || !port) {
-      setMessage('❌ Error: IP y puerto son requeridos')
+    const domHost = hostInput ? hostInput.value : inputIP
+    const domPort = portInput ? portInput.value : inputPort
+    
+    console.log('ManualConfig saving:', { domHost, domPort, inputIP, inputPort })
+    
+    // Usar valores del DOM si están disponibles, sino usar valores del estado
+    const finalHost = domHost || inputIP
+    const finalPort = domPort || inputPort
+    
+    if (!finalHost || !finalPort) {
+      setIPMessage('❌ Error: IP y puerto son requeridos')
       return
     }
 
-    const trimmedHost = host.trim()
-    const trimmedPort = port.trim()
+    const trimmedHost = finalHost.trim()
+    const trimmedPort = finalPort.trim()
     
     if (!trimmedHost || !trimmedPort) {
-      setMessage('❌ Error: IP y puerto no pueden estar vacíos')
+      setIPMessage('❌ Error: IP y puerto no pueden estar vacíos')
       return
     }
 
-    console.log('Guardando:', { trimmedHost, trimmedPort })
-
-    // Use the configuration hook method for saving
-    const success = updateServerConfig(trimmedHost, trimmedPort)
+    // Actualizar usando los valores capturados
+    const success = updateIPConfig(trimmedHost, trimmedPort)
     if (success) {
-      setMessage(`✅ Guardado: ${trimmedHost}:${trimmedPort}`)
-      console.log('ManualConfig saved successfully via useConfig hook')
+      setIPMessage(`✅ Configuración guardada: ${trimmedHost}:${trimmedPort}`)
+      console.log('ManualConfig saved successfully via IP store')
     } else {
-      setMessage('❌ Error: No se pudo guardar')
+      setIPMessage('❌ Error: No se pudo guardar la configuración')
     }
   }
 
   const handleTest = async () => {
-    setMessage('🔄 Probando conexión...')
+    clearMessage()
+    setIPMessage('🔄 Probando conexión...')
     
     try {
       const result = await robotAPI.pingServer()
-      setMessage(result.success ? '✅ ¡Conectado!' : `❌ Error: ${result.message}`)
+      setIPMessage(result.success ? '✅ ¡Conectado!' : `❌ Error: ${result.message}`)
     } catch (error) {
-      setMessage(`❌ Error: ${error.message}`)
+      setIPMessage(`❌ Error: ${error.message}`)
     }
   }
 
@@ -79,11 +105,7 @@ export function ManualConfigScreen() {
     
     // Get the refreshed configuration immediately
     setTimeout(() => {
-      // Update local input fields with refreshed values
-      setHost(serverConfig.host)
-      setPort(serverConfig.port)
-      
-      setMessage(`🔄 Valores actualizados: ${serverConfig.host}:${serverConfig.port} - Estado: ${connectionStatus.status}`)
+      setIPMessage(`🔄 Valores actualizados: ${serverConfig.host}:${serverConfig.port} - Estado: ${connectionStatus.status}`)
       console.log('🔍 DEBUG: handleRefresh - Valores actualizados:', { host: serverConfig.host, port: serverConfig.port })
     }, 100)
   }
@@ -92,12 +114,9 @@ export function ManualConfigScreen() {
     // Use the configuration hook method for reset
     resetToDefaults()
     
-    // Update local input fields with default values after reset
+    // Update message after reset
     setTimeout(() => {
-      setHost(serverConfig.host)
-      setPort(serverConfig.port)
-      
-      setMessage('🔄 Configuración reseteada a valores por defecto')
+      setIPMessage('🔄 Configuración reseteada a valores por defecto')
     }, 100)
   }
 
@@ -128,36 +147,40 @@ export function ManualConfigScreen() {
     }
   }
 
-  const handleHostInput = (e) => {
-    setHost(e.target.value)
-    setMessage('🔄 IP actualizada - Presiona "Guardar" para aplicar cambios')
-  }
-
-  const handlePortInput = (e) => {
-    setPort(e.target.value)
-    setMessage('🔄 Puerto actualizado - Presiona "Guardar" para aplicar cambios')
-  }
-
   const handleQuickUpdate = () => {
-    if (!host || !port) {
-      setMessage('❌ Error: IP y puerto son requeridos')
+    // Capturar valores directamente del DOM (solución al bug de ReactLynx)
+    const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+    const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
+    
+    const domHost = hostInput ? hostInput.value : inputIP
+    const domPort = portInput ? portInput.value : inputPort
+    
+    console.log('🔍 DEBUG: Valores capturados del DOM:', { domHost, domPort })
+    console.log('🔍 DEBUG: Valores del estado:', { inputIP, inputPort })
+    
+    // Usar valores del DOM si están disponibles, sino usar valores del estado
+    const finalHost = domHost || inputIP
+    const finalPort = domPort || inputPort
+    
+    if (!finalHost || !finalPort) {
+      setIPMessage('❌ Error: IP y puerto son requeridos')
       return
     }
 
-    const trimmedHost = host.trim()
-    const trimmedPort = port.trim()
+    const trimmedHost = finalHost.trim()
+    const trimmedPort = finalPort.trim()
     
     if (!trimmedHost || !trimmedPort) {
-      setMessage('❌ Error: IP y puerto no pueden estar vacíos')
+      setIPMessage('❌ Error: IP y puerto no pueden estar vacíos')
       return
     }
 
-    // Update configuration immediately
-    const success = updateServerConfig(trimmedHost, trimmedPort)
+    // Actualizar usando los valores capturados
+    const success = updateIPConfig(trimmedHost, trimmedPort)
     if (success) {
-      setMessage(`✅ IP actualizada inmediatamente: ${trimmedHost}:${trimmedPort}`)
+      setIPMessage(`✅ IP actualizada inmediatamente: ${trimmedHost}:${trimmedPort}`)
     } else {
-      setMessage('❌ Error: No se pudo actualizar la IP')
+      setIPMessage('❌ Error: No se pudo actualizar la IP')
     }
   }
 
@@ -208,9 +231,9 @@ export function ManualConfigScreen() {
             📊 Configuración Actual:
           </text>
           <text style={{ fontSize: '12px', color: '#93c5fd', fontFamily: 'monospace' }}>
-            Host: {host}{'\n'}
-            Port: {port}{'\n'}
-            URL: http://{host}:{port}/api{'\n'}
+            Host: {inputIP}{'\n'}
+            Port: {inputPort}{'\n'}
+            URL: http://{inputIP}:{inputPort}/api{'\n'}
             Versión: {configStats.configVersion || '1.0.0'}
           </text>
         </view>
@@ -229,15 +252,15 @@ export function ManualConfigScreen() {
           </text>
           <text style={{ 
             fontSize: '16px', 
-            color: host && port ? '#22c55e' : '#f59e0b', 
+            color: inputIP && inputPort ? '#22c55e' : '#f59e0b', 
             fontWeight: 'bold',
             fontFamily: 'monospace',
             display: 'block',
             marginTop: '8px'
           }}>
-            {host && port ? `http://${host}:${port}/api` : 'Completa IP y Puerto para ver la URL'}
+            {inputIP && inputPort ? `http://${inputIP}:${inputPort}/api` : 'Completa IP y Puerto para ver la URL'}
           </text>
-          {host && port && (
+          {inputIP && inputPort && (
             <text style={{ 
               fontSize: '12px', 
               color: '#22c55e',
@@ -257,11 +280,7 @@ export function ManualConfigScreen() {
           
           <input
             type="text"
-            value={host}
-            onInput={handleHostInput}
-            onChange={handleHostInput}
-            onBlur={handleHostInput}
-            onKeyUp={handleHostInput}
+            value={inputIP}
             placeholder="Ejemplo: 192.168.100.6"
             style={{
               width: '100%',
@@ -283,11 +302,7 @@ export function ManualConfigScreen() {
           
           <input
             type="text"
-            value={port}
-            onInput={handlePortInput}
-            onChange={handlePortInput}
-            onBlur={handlePortInput}
-            onKeyUp={handlePortInput}
+            value={inputPort}
             placeholder="Ejemplo: 8080"
             style={{
               width: '100%',
@@ -317,9 +332,7 @@ export function ManualConfigScreen() {
             }}
             bindtap={() => {
               setExamplePressed(true)
-              setHost('192.168.100.6')
-              setPort('8080')
-              setMessage('📝 Ejemplo establecido - Modifica si es necesario')
+              setExampleValues()
               console.log('🔍 DEBUG: Botón Ejemplo presionado')
               // Resetear el color después de 500ms
               setTimeout(() => setExamplePressed(false), 500)
@@ -340,9 +353,7 @@ export function ManualConfigScreen() {
             }}
             bindtap={() => {
               setStaticPressed(true)
-              setHost('192.168.1.100')
-              setPort('2233')
-              setMessage('🔧 Valores estáticos establecidos: 192.168.1.100:2233')
+              setStaticValues()
               console.log('🔍 DEBUG: Botón Estático presionado - Host: 192.168.1.100, Port: 2233')
               // Resetear el color después de 500ms
               setTimeout(() => setStaticPressed(false), 500)
@@ -411,6 +422,88 @@ export function ManualConfigScreen() {
           >
             <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
               ⚡ Actualizar IP Inmediatamente
+            </text>
+          </view>
+
+          <view 
+            style={{ 
+              padding: '15px',
+              backgroundColor: '#6366f1',
+              borderRadius: '8px',
+              marginBottom: '10px',
+              cursor: 'pointer'
+            }}
+            bindtap={() => {
+              // Capturar valores actuales del DOM para mostrar al usuario
+              const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+              const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
+              
+              const domHost = hostInput ? hostInput.value : 'No capturado'
+              const domPort = portInput ? portInput.value : 'No capturado'
+              
+              setIPMessage(`📋 Valores actuales en inputs: IP="${domHost}", Puerto="${domPort}"`)
+              console.log('🔍 DEBUG: Valores capturados del DOM:', { domHost, domPort })
+            }}
+          >
+            <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+              📋 Ver Valores Actuales en Inputs
+            </text>
+          </view>
+
+          <view 
+            style={{ 
+              padding: '15px',
+              backgroundColor: '#8b5cf6',
+              borderRadius: '8px',
+              marginBottom: '10px',
+              cursor: 'pointer'
+            }}
+            bindtap={() => {
+              setDevIP()
+              setIPMessage('🚀 IP de desarrollo establecida: 192.168.100.6:8080')
+              console.log('🔍 DEBUG: IP de desarrollo establecida')
+            }}
+          >
+            <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+              🚀 IP Desarrollo (192.168.100.6:8080)
+            </text>
+          </view>
+
+          <view 
+            style={{ 
+              padding: '15px',
+              backgroundColor: '#f59e0b',
+              borderRadius: '8px',
+              marginBottom: '10px',
+              cursor: 'pointer'
+            }}
+            bindtap={() => {
+              setHomeIP()
+              setIPMessage('🏠 IP de casa establecida: 192.168.1.100:2233')
+              console.log('🔍 DEBUG: IP de casa establecida')
+            }}
+          >
+            <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+              🏠 IP Casa (192.168.1.100:2233)
+            </text>
+          </view>
+
+          <view 
+            style={{ 
+              padding: '15px',
+              backgroundColor: '#06b6d4',
+              borderRadius: '8px',
+              marginBottom: '10px',
+              cursor: 'pointer'
+            }}
+            bindtap={() => {
+              setLocalhostIP()
+              setIPMessage('💻 IP localhost establecida: 127.0.0.1:8080')
+              console.log('🔍 DEBUG: IP localhost establecida')
+            }}
+          >
+            <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
+              💻 IP Localhost (127.0.0.1:8080)
             </text>
           </view>
           
@@ -507,11 +600,16 @@ export function ManualConfigScreen() {
           <text style={{ fontSize: '12px', color: '#93c5fd' }}>
             1. Ejecuta robot_gui.py en tu computadora{'\n'}
             2. Encuentra tu IP con "ipconfig" (Windows) o "ifconfig" (Mac/Linux){'\n'}
-            3. Tap "📝 Poner Ejemplo" para autocompletar{'\n'}
-            4. Modifica la IP según tu red{'\n'}
-            5. Tap "⚡ Actualizar IP Inmediatamente" para aplicar cambios{'\n'}
-            6. Tap "🚀 Probar Conexión" para verificar{'\n'}
-            7. Opcional: Tap "💾 Guardar Configuración" para persistir
+            3. MÉTODO A - Botones rápidos:{'\n'}
+               • Tap "📝 Poner Ejemplo" para autocompletar{'\n'}
+               • Tap "🚀 IP Desarrollo" para IP de desarrollo{'\n'}
+               • Tap "🏠 IP Casa" para IP de casa{'\n'}
+            4. MÉTODO B - Escritura manual:{'\n'}
+               • Escribe manualmente en los inputs{'\n'}
+               • Tap "📋 Ver Valores Actuales" para verificar{'\n'}
+               • Tap "⚡ Actualizar IP Inmediatamente" para aplicar{'\n'}
+            5. Tap "🚀 Probar Conexión" para verificar{'\n'}
+            6. Opcional: Tap "💾 Guardar Configuración" para persistir
           </text>
         </view>
       </view>

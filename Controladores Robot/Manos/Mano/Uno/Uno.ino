@@ -191,11 +191,11 @@ void abrirMano(String mano) {
 
 void cerrarMano(String mano) {
   if (mano == "derecha" || mano == "ambas") {
-    setServo(D_PULGAR, 120);
-    setServo(D_INDICE, 120);
-    setServo(D_MEDIO, 120);
-    setServo(D_ANULAR, 120);
-    setServo(D_MENIQUE, 120);
+    setServo(D_PULGAR, 160);
+    setServo(D_INDICE, 160);
+    setServo(D_MEDIO, 160);
+    setServo(D_ANULAR, 160);
+    setServo(D_MENIQUE, 160);
   }
   
   if (mano == "izquierda" || mano == "ambas") {
@@ -388,13 +388,13 @@ void procesarMuneca(String comando) {
   
   if (mano == "derecha") {
     if (angulo == -1){
-      setServo(MUNECA_DER,120);
+      setServo(MUNECA_DER,140);
       delay(250);
       setServo(MUNECA_DER,90);
     }
     else if (angulo == 1)
     {
-      setServo(MUNECA_DER,70);
+      setServo(MUNECA_DER,50);
       delay(250);
       setServo(MUNECA_DER,90);
     }

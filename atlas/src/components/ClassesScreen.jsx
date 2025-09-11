@@ -1,101 +1,40 @@
-import { useState, useCallback, useEffect } from '@lynx-js/react'
-import robotAPI from '../services/RobotAPI'
+import { useEffect } from '@lynx-js/react'
+import { useClassesState, useClassesLoader, useClassControl } from '../services/useClassesState'
 import { ClassProgressBar } from './ClassProgressBar.jsx'
 
 export function ClassesScreen() {
-  const [selectedClass, setSelectedClass] = useState(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isConnected, setIsConnected] = useState(false)
-  const [classes, setClasses] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [classProgress, setClassProgress] = useState(null)
+  // Use the new persistent state management
+  const { 
+    selectedClass, 
+    isPlaying, 
+    isConnected, 
+    classes, 
+    classProgress,
+    totalClasses,
+    runningClasses,
+    availableClasses,
+    completedClasses,
+    hasSelectedClass,
+    isClassActive,
+    setSelectedClass,
+    setClassProgress
+  } = useClassesState()
+  
+  const { loading, error, loadClassesFromAPI } = useClassesLoader()
+  const { handleStartClass, handleStopClass } = useClassControl()
 
   // Load classes from robot API
   useEffect(() => {
     'background only'
-    const loadClassesFromAPI = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        
-        const connected = await robotAPI.testConnection()
-        setIsConnected(connected.success)
-        
-        if (connected.success) {
-          const result = await robotAPI.getAvailableClasses()
-          if (result.success && result.data.classes) {
-            setClasses(result.data.classes)
-          } else {
-            setError('No se pudieron cargar las clases')
-          }
-        } else {
-          setError('No se pudo conectar con el robot')
-        }
-      } catch (error) {
-        console.error('Failed to load classes from robot:', error)
-        setError('Error al cargar las clases')
-        setIsConnected(false)
-      } finally {
-        setLoading(false)
-      }
-    }
-    
+    // Load classes on component mount
     loadClassesFromAPI()
     
     // Refresh classes every 30 seconds
     const interval = setInterval(loadClassesFromAPI, 30000)
     return () => clearInterval(interval)
-  }, [])
+  }, [loadClassesFromAPI])
 
-  const handleStartClass = useCallback(async (className) => {
-    'background only'
-    if (!isConnected) {
-      console.log('Robot not connected')
-      return
-    }
-    
-    try {
-      setIsPlaying(true)
-      setSelectedClass(className)
-      console.log(`Iniciando clase ${className}`)
-      
-      const result = await robotAPI.startClass(className)
-      if (result.success) {
-        console.log(`Clase ${className} iniciada exitosamente`)
-        // The class will run its programmed movements automatically
-      } else {
-        console.error('Failed to start class:', result.error)
-        setIsPlaying(false)
-        setSelectedClass(null)
-      }
-    } catch (error) {
-      console.error('Error starting class:', error)
-      setIsPlaying(false)
-      setSelectedClass(null)
-    }
-  }, [isConnected])
-
-  const handleStopClass = useCallback(async () => {
-    'background only'
-    if (!isConnected) {
-      console.log('Robot not connected')
-      return
-    }
-    
-    try {
-      const result = await robotAPI.stopClass()
-      if (result.success) {
-        setIsPlaying(false)
-        setSelectedClass(null)
-        console.log('Clase detenida exitosamente')
-      } else {
-        console.error('Failed to stop class:', result.error)
-      }
-    } catch (error) {
-      console.error('Error stopping class:', error)
-    }
-  }, [isConnected])
+  // handleStartClass and handleStopClass are now provided by useClassControl hook
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -225,7 +164,7 @@ export function ClassesScreen() {
           </view>
         )}
 
-        {isPlaying && (
+        {isClassActive && (
           <view className="active-class-banner">
             <view className="banner-icon">🎓</view>
             <view className="banner-content">
@@ -241,15 +180,15 @@ export function ClassesScreen() {
         {/* Progress Bar Component */}
         <ClassProgressBar 
           className={selectedClass}
-          isActive={isPlaying}
+          isActive={isClassActive}
           onProgressUpdate={setClassProgress}
         />
 
-        {selectedClass ? (
+        {hasSelectedClass ? (
           <ClassDetails classItem={classes.find(c => c.name === selectedClass)} />
         ) : (
           <view className="classes-grid">
-            {classes.length === 0 ? (
+            {totalClasses === 0 ? (
               <view className="no-classes">
                 <text className="no-classes-text">No hay clases disponibles</text>
                 <text className="no-classes-subtitle">Las clases aparecerán aquí cuando sean generadas</text>
@@ -264,15 +203,15 @@ export function ClassesScreen() {
 
         <view className="classes-stats">
           <view className="stat-item">
-            <text className="stat-number">{classes.length}</text>
+            <text className="stat-number">{totalClasses}</text>
             <text className="stat-label">Clases Totales</text>
           </view>
           <view className="stat-item">
-            <text className="stat-number">{classes.filter(c => c.status === 'running').length}</text>
+            <text className="stat-number">{runningClasses}</text>
             <text className="stat-label">En Progreso</text>
           </view>
           <view className="stat-item">
-            <text className="stat-number">{classes.filter(c => c.status === 'completed').length}</text>
+            <text className="stat-number">{completedClasses}</text>
             <text className="stat-label">Completadas</text>
           </view>
         </view>
