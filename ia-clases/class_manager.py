@@ -673,8 +673,23 @@ class ClassManager:
                     original_dir = os.getcwd()
                     os.chdir(class_folder)
                     
-                    # Usar solo el nombre del archivo ya que estamos en la carpeta de la clase
-                    file_name = os.path.basename(file_path)
+                    # Verificar si la clase usa estructura modular
+                    is_modular = self._check_if_modular_class(file_path)
+                    
+                    if is_modular:
+                        # Para clases modulares, ejecutar desde el directorio padre para acceder a modules/
+                        # class_folder está en ia-clases/clases/[nombre_clase]
+                        # Necesitamos ir a ia-clases/ para acceder a modules/
+                        parent_dir = os.path.dirname(os.path.dirname(class_folder))
+                        os.chdir(parent_dir)
+                        print(f"📁 Ejecutando clase modular desde: {parent_dir}")
+                        
+                        # Usar ruta relativa desde el directorio padre
+                        relative_path = os.path.relpath(file_path, parent_dir)
+                        file_name = relative_path.replace("\\", "/")
+                    else:
+                        # Para clases no modulares, usar solo el nombre del archivo
+                        file_name = os.path.basename(file_path)
                     
                     # Ejecutar la clase sin capturar output para permitir ventanas de OpenCV
                     self.current_process = subprocess.Popen([sys.executable, file_name], 
@@ -711,7 +726,8 @@ class ClassManager:
                         
                     except subprocess.TimeoutExpired:
                         # Process timed out
-                        self.stop_current_execution()
+                        # self.stop_current_execution()
+                        # TODO: Verificar si esto es necesario
                         error_msg = f"Timeout ejecutando clase: {class_name}"
                         print(f"⏰ {error_msg}")
                         if self.on_class_error:
@@ -926,6 +942,42 @@ class ClassManager:
             
         except Exception as e:
             print(f"❌ Error eliminando clase: {e}")
+            return False
+    
+    def _check_if_modular_class(self, file_path: str) -> bool:
+        """
+        Verificar si una clase usa la estructura modular
+        
+        Args:
+            file_path: Ruta al archivo de la clase
+            
+        Returns:
+            bool: True si la clase usa estructura modular
+        """
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                
+            # Verificar si importa de modules/
+            modular_indicators = [
+                'from modules.config import',
+                'from modules.speech import',
+                'from modules.camera import',
+                'from modules.qr import',
+                'from modules.slides import',
+                'from modules.questions import',
+                'from modules.esp32 import',
+                'from modules.utils import'
+            ]
+            
+            for indicator in modular_indicators:
+                if indicator in content:
+                    return True
+                    
+            return False
+            
+        except Exception as e:
+            print(f"⚠️ Error verificando estructura modular: {e}")
             return False
 
 # Singleton instance

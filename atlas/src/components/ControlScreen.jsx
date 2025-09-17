@@ -51,8 +51,8 @@ export function ControlScreen() {
     
     connectToRobot()
     
-    // Set up periodic status updates
-    const statusInterval = setInterval(connectToRobot, 2000) // Update every 2 seconds
+    // Set up periodic status updates (reduced frequency to prevent excessive requests)
+    const statusInterval = setInterval(connectToRobot, 15000) // Update every 15 seconds
     
     return () => clearInterval(statusInterval)
   }, [])

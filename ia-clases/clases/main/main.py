@@ -26,7 +26,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -3309,7 +3309,8 @@ def main():
             print("⚠️ Problemas detectados con la cámara.")
 
         # PDF
-        pdf_path = os.path.join(script_dir, "pdfs/Clase_Neutralizacion_Bicarbonato.pdf")
+        # pdf_path = os.path.join(script_dir, "pdfs/Clase_Neutralizacion_Bicarbonato.pdf")
+        pdf_path = os.path.join(script_dir, "pdfs/Pre1.pdf")
         pdf_text = extract_text_from_pdf(pdf_path)
         
         if not pdf_text:
@@ -3338,16 +3339,19 @@ def main():
         speak_with_animation(engine, "Perfecto. Ahora comenzaremos con la presentación sobre robots médicos.")
 
          # Explicar diapositivas con preguntas aleatorias
-        if (1 == 1):
+        # if (1 == 1):
+        if explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_users,
+                                               hand_raised_counter, current_slide_num, exit_flag, 
+                                               known_faces, current_hand_raiser):
             
             
             # Explicar diapositivas con secuencias ESP32
             sequence_mapping = {
-                1: "Rutina1",    # Después de la diapositiva 1
-                3: "Rutina1",         # Después de la diapositiva 3
-                5: "Rutina1",      # Después de la diapositiva 5
-                7: "Rutina1",          # Después de la diapositiva 7
-                9: "Rutina1"          # Después de la diapositiva 9
+                # 1: "Rutina1",    # Después de la diapositiva 1
+                3: "SecuenciaBeta1Parte1",         # Después de la diapositiva 3
+                4: "SecuenciaBeta1Parte2",      # Después de la diapositiva 5
+                # 7: "Rutina1",          # Después de la diapositiva 7
+                # 9: "Rutina1"          # Después de la diapositiva 9
             }
 
              # PDF

@@ -13,6 +13,12 @@ export function ClassProgressBar({ className, isActive, onProgressUpdate }) {
     }
 
     const fetchProgress = async () => {
+      // Prevent multiple simultaneous requests
+      if (loading) {
+        console.log('Progress already loading, skipping...')
+        return
+      }
+      
       try {
         setLoading(true)
         const result = await robotAPI.getClassProgress()
@@ -36,8 +42,8 @@ export function ClassProgressBar({ className, isActive, onProgressUpdate }) {
     // Fetch initial progress
     fetchProgress()
 
-    // Set up interval to update progress every 2 seconds
-    const interval = setInterval(fetchProgress, 2000)
+    // Set up interval to update progress every 10 seconds (reduced frequency)
+    const interval = setInterval(fetchProgress, 10000)
 
     return () => clearInterval(interval)
   }, [className, isActive, onProgressUpdate])

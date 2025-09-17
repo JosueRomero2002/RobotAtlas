@@ -29,10 +29,30 @@ export function ClassesScreen() {
     // Load classes on component mount
     loadClassesFromAPI()
     
-    // Refresh classes every 30 seconds
-    const interval = setInterval(loadClassesFromAPI, 30000)
-    return () => clearInterval(interval)
-  }, [loadClassesFromAPI])
+    // Set up a more intelligent refresh interval
+    let interval = null
+    
+    // Only refresh automatically if:
+    // 1. We're connected to the robot
+    // 2. We have classes loaded
+    // 3. No class is currently active (to avoid interrupting)
+    if (isConnected && totalClasses > 0 && !isClassActive) {
+      // Refresh classes every 2 minutes (increased to reduce frequency)
+      interval = setInterval(() => {
+        // Only refresh if not currently loading and no class is active
+        if (!loading && !isClassActive) {
+          console.log('Auto-refreshing classes...')
+          loadClassesFromAPI()
+        }
+      }, 120000) // 2 minutes
+    }
+    
+    return () => {
+      if (interval) {
+        clearInterval(interval)
+      }
+    }
+  }, [loadClassesFromAPI, isConnected, totalClasses, loading, isClassActive])
 
   // handleStartClass and handleStopClass are now provided by useClassControl hook
 
@@ -151,8 +171,17 @@ export function ClassesScreen() {
   return (
     <view className="screen">
       <view className="classes-content">
-        <text className="classes-title">Clases Disponibles</text>
-        <text className="classes-subtitle">Clases Generadas del Robot Inmoov</text>
+        <view className="classes-header">
+          <view className="header-text">
+            <text className="classes-title">Clases Disponibles</text>
+            <text className="classes-subtitle">Clases Generadas del Robot Inmoov</text>
+          </view>
+          <view className="header-actions">
+            <view className={`refresh-button ${loading ? 'loading' : ''}`} bindtap={loadClassesFromAPI}>
+              <text className="refresh-text">{loading ? '⏳ Cargando...' : '🔄 Actualizar'}</text>
+            </view>
+          </view>
+        </view>
 
         {!isConnected && (
           <view className="connection-warning">

@@ -54,7 +54,17 @@ class SequenceBuilderTab(BaseTab):
         # Button debouncing variables
         self.button_cooldowns = {}
         self.button_states = {}
-        self.COOLDOWN_TIME = 2.0  # 2 seconds cooldown
+        self.COOLDOWN_TIME = 0.5  # Reduced to 0.5 seconds cooldown
+        self.instant_buttons = {
+            "home_position": True,
+            "arm_rest_position": True,
+            "arm_up": True,
+            "arms_open": True,
+            "wave_gesture": True,
+            "hug_gesture": True,
+            "look_around": True,
+            "speak_text": True
+        }  # Buttons that can be clicked instantly
         
         # Initialize ESP32 if available
         if ESP32_AVAILABLE:
@@ -223,7 +233,19 @@ class SequenceBuilderTab(BaseTab):
         try:
             import time
 
-            # Check if button is currently on cooldown
+            # Check if this is an instant button (no cooldown needed)
+            is_instant = self.instant_buttons.get(button_name, False)
+            
+            # For instant buttons, just execute immediately
+            if is_instant:
+                try:
+                    callback(*args)
+                    print(f"⚡ Instant execution for '{button_name}'")
+                except Exception as e:
+                    print(f"❌ Error in instant button callback '{button_name}': {e}")
+                return
+
+            # For non-instant buttons, apply cooldown
             if button_name in self.button_cooldowns:
                 current_time = time.time()
                 if current_time - self.button_cooldowns[button_name] < self.COOLDOWN_TIME:
@@ -286,6 +308,119 @@ class SequenceBuilderTab(BaseTab):
             print(f"❌ Error resetting cooldowns: {e}")
             messagebox.showerror("Error", f"Failed to reset cooldowns:\n{str(e)}")
 
+    def configure_instant_buttons(self):
+        """Configure which buttons should be instant (no cooldown)"""
+        try:
+            # Create a simple dialog to configure instant buttons
+            config_window = tk.Toplevel(self.parent_gui.root)
+            config_window.title("Configure Instant Buttons")
+            config_window.geometry("400x500")
+            config_window.configure(bg='#2d2d2d')
+            config_window.resizable(False, False)
+            
+            # Center the window
+            config_window.transient(self.parent_gui.root)
+            config_window.grab_set()
+            
+            # Title
+            title_label = tk.Label(config_window, text="⚡ Configure Instant Buttons", 
+                                 font=('Arial', 14, 'bold'), bg='#2d2d2d', fg='#ffffff')
+            title_label.pack(pady=10)
+            
+            # Description
+            desc_label = tk.Label(config_window, 
+                                text="Instant buttons can be clicked without waiting for cooldown.\nSelect which buttons should be instant:",
+                                font=('Arial', 10), bg='#2d2d2d', fg='#cccccc',
+                                justify="center")
+            desc_label.pack(pady=(0, 20))
+            
+            # Checkboxes for each button
+            checkboxes = {}
+            checkbox_frame = tk.Frame(config_window, bg='#2d2d2d')
+            checkbox_frame.pack(fill="both", expand=True, padx=20)
+            
+            button_names = {
+                "home_position": "🏠 Rest Position",
+                "arm_rest_position": "🛌 Arm Rest Position", 
+                "arm_up": "💪 Arm Up",
+                "arms_open": "🙌 Arms Open",
+                "wave_gesture": "👋 Wave",
+                "hug_gesture": "🤗 Hug",
+                "look_around": "👀 Look Around",
+                "speak_text": "🗣️ Speak"
+            }
+            
+            for button_key, button_text in button_names.items():
+                var = tk.BooleanVar(value=self.instant_buttons.get(button_key, False))
+                checkboxes[button_key] = var
+                
+                cb = tk.Checkbutton(checkbox_frame, text=button_text, variable=var,
+                                  bg='#2d2d2d', fg='#ffffff', selectcolor='#4d4d4d',
+                                  activebackground='#2d2d2d', activeforeground='#ffffff',
+                                  font=('Arial', 11))
+                cb.pack(anchor="w", pady=2)
+            
+            # Buttons
+            button_frame = tk.Frame(config_window, bg='#2d2d2d')
+            button_frame.pack(fill="x", pady=20, padx=20)
+            
+            def save_config():
+                try:
+                    # Update instant buttons configuration
+                    for button_key, var in checkboxes.items():
+                        self.instant_buttons[button_key] = var.get()
+                    
+                    # Count instant buttons
+                    instant_count = sum(1 for v in self.instant_buttons.values() if v)
+                    
+                    config_window.destroy()
+                    messagebox.showinfo("Configuration Saved", 
+                                      f"Instant button configuration saved!\n\n"
+                                      f"Instant buttons: {instant_count}/{len(button_names)}\n"
+                                      f"Regular cooldown: {self.COOLDOWN_TIME}s")
+                    
+                    print(f"⚡ Updated instant buttons: {[k for k, v in self.instant_buttons.items() if v]}")
+                    
+                except Exception as e:
+                    print(f"❌ Error saving configuration: {e}")
+                    messagebox.showerror("Error", f"Failed to save configuration: {e}")
+            
+            def reset_to_defaults():
+                try:
+                    # Reset to default instant buttons
+                    default_instant = {
+                        "home_position": True,
+                        "arm_rest_position": True,
+                        "arm_up": True,
+                        "arms_open": True,
+                        "wave_gesture": True,
+                        "hug_gesture": True,
+                        "look_around": True,
+                        "speak_text": True
+                    }
+                    
+                    for button_key, var in checkboxes.items():
+                        var.set(default_instant.get(button_key, False))
+                    
+                    messagebox.showinfo("Reset", "Reset to default instant button configuration!")
+                    
+                except Exception as e:
+                    print(f"❌ Error resetting configuration: {e}")
+                    messagebox.showerror("Error", f"Failed to reset configuration: {e}")
+            
+            tk.Button(button_frame, text="💾 Save", bg='#4CAF50', fg='#ffffff',
+                     font=('Arial', 11, 'bold'), command=save_config).pack(side="left", padx=(0, 10))
+            
+            tk.Button(button_frame, text="🔄 Reset", bg='#FF9800', fg='#ffffff',
+                     font=('Arial', 11, 'bold'), command=reset_to_defaults).pack(side="left", padx=10)
+            
+            tk.Button(button_frame, text="❌ Cancel", bg='#f44336', fg='#ffffff',
+                     font=('Arial', 11, 'bold'), command=config_window.destroy).pack(side="right")
+            
+        except Exception as e:
+            print(f"❌ Error configuring instant buttons: {e}")
+            messagebox.showerror("Error", f"Failed to open configuration: {e}")
+
     def get_button_status(self):
         """Get current status of all buttons"""
         try:
@@ -293,20 +428,37 @@ class SequenceBuilderTab(BaseTab):
             current_time = time.time()
             status = []
 
+            # Count instant vs regular buttons
+            instant_count = 0
+            regular_count = 0
+            
             for button_name in self.button_states.keys():
-                if button_name in self.button_cooldowns:
-                    cooldown_time = self.button_cooldowns[button_name]
-                    remaining = max(0, self.COOLDOWN_TIME - (current_time - cooldown_time))
-                    if remaining > 0:
-                        status.append(f"⏳ {button_name}: {remaining:.1f}s remaining")
+                is_instant = self.instant_buttons.get(button_name, False)
+                
+                if is_instant:
+                    instant_count += 1
+                    status.append(f"⚡ {button_name}: INSTANT (no cooldown)")
+                else:
+                    regular_count += 1
+                    if button_name in self.button_cooldowns:
+                        cooldown_time = self.button_cooldowns[button_name]
+                        remaining = max(0, self.COOLDOWN_TIME - (current_time - cooldown_time))
+                        if remaining > 0:
+                            status.append(f"⏳ {button_name}: {remaining:.1f}s remaining")
+                        else:
+                            status.append(f"✅ {button_name}: Ready")
                     else:
                         status.append(f"✅ {button_name}: Ready")
-                else:
-                    status.append(f"✅ {button_name}: Ready")
 
             if status:
                 status_text = "\n".join(status)
-                messagebox.showinfo("Button Status", f"Button Cooldown Status:\n\n{status_text}")
+                header = f"Button Status Summary:\n"
+                header += f"⚡ Instant buttons: {instant_count}\n"
+                header += f"⏳ Regular buttons: {regular_count}\n"
+                header += f"📊 Cooldown time: {self.COOLDOWN_TIME}s\n\n"
+                header += "Detailed Status:\n" + "="*30 + "\n\n"
+                
+                messagebox.showinfo("Button Status", header + status_text)
             else:
                 messagebox.showinfo("Button Status", "No buttons with cooldown tracking found")
 
@@ -1182,6 +1334,12 @@ class SequenceBuilderTab(BaseTab):
                                     font=('Arial', 8, 'bold'),
                                     command=self.get_button_status)
                 status_btn.pack(side="left", padx=(0, 5))
+                
+                # Configure Instant Buttons Button
+                config_btn = tk.Button(utility_row, text="⚡ Configure Instant", bg='#FF5722', fg='#ffffff',
+                                     font=('Arial', 8, 'bold'),
+                                     command=self.configure_instant_buttons)
+                config_btn.pack(side="left", padx=(0, 5))
                 
             except Exception as e:
                 print(f"❌ Error creating quick actions section: {e}")

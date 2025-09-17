@@ -4,6 +4,7 @@
  */
 
 import configManager from './ConfigManager.js';
+import requestManager from './RequestManager.js';
 
 class RobotAPI {
   constructor() {
@@ -132,36 +133,38 @@ class RobotAPI {
    * @returns {Promise<Object>} Connection test result
    */
   async testConnection() {
-    try {
-      console.log('Testing connection to:', this.baseURL);
-      
-      // Make a real request to test the connection
-      const response = await this.makeRequest('/status');
-      
-      if (response.success) {
-        console.log('Connection test successful');
-        return {
-          success: true,
-          message: 'Connection successful',
-          config: this.getServerConfig(),
-          serverData: response.data
-        };
-      } else {
-        console.log('Connection test failed:', response.error);
+    return requestManager.executeRequest('testConnection', async () => {
+      try {
+        console.log('Testing connection to:', this.baseURL);
+        
+        // Make a real request to test the connection
+        const response = await this.makeRequest('/status');
+        
+        if (response.success) {
+          console.log('Connection test successful');
+          return {
+            success: true,
+            message: 'Connection successful',
+            config: this.getServerConfig(),
+            serverData: response.data
+          };
+        } else {
+          console.log('Connection test failed:', response.error);
+          return {
+            success: false,
+            message: `Connection failed: ${response.error}`,
+            config: this.getServerConfig()
+          };
+        }
+      } catch (error) {
+        console.log('Connection test error:', error);
         return {
           success: false,
-          message: `Connection failed: ${response.error}`,
+          message: `Connection error: ${error.message}`,
           config: this.getServerConfig()
         };
       }
-    } catch (error) {
-      console.log('Connection test error:', error);
-      return {
-        success: false,
-        message: `Connection error: ${error.message}`,
-        config: this.getServerConfig()
-      };
-    }
+    });
   }
 
   /**
@@ -242,7 +245,9 @@ class RobotAPI {
    * @returns {Promise<Object>} List of available classes with movements
    */
   async getAvailableClasses() {
-    return this.makeRequest('/classes');
+    return requestManager.executeRequest('getAvailableClasses', () => {
+      return this.makeRequest('/classes');
+    });
   }
 
   /**
@@ -315,7 +320,9 @@ class RobotAPI {
    * @returns {Promise<Object>} Class progress information
    */
   async getClassProgress() {
-    return this.makeRequest('/api/class/progress');
+    return requestManager.executeRequest('getClassProgress', () => {
+      return this.makeRequest('/api/class/progress');
+    });
   }
 
   /**
@@ -492,7 +499,9 @@ class RobotAPI {
    * @returns {Promise<Object>} Robot status information
    */
   async getRobotStatus() {
-    return await this.makeRequest('/api/status');
+    return requestManager.executeRequest('getRobotStatus', () => {
+      return this.makeRequest('/api/status');
+    });
   }
 
   /**

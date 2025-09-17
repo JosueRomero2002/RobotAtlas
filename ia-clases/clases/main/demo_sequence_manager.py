@@ -26,7 +26,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -2307,6 +2307,595 @@ def identify_users(engine, current_slide_num, exit_flag):
     return current_users, current_users[0] if current_users else "Estudiante 1"
 
 # ======================
+#  HAND CONTROL FUNCTIONS
+# ======================
+
+def execute_hand_gesture(hand: str, gesture: str, duration: int = 1000) -> bool:
+    """
+    Ejecuta un gesto de mano específico con la misma velocidad que el sequence builder
+    
+    Args:
+        hand: mano a controlar ('izquierda', 'derecha', 'ambas')
+        gesture: gesto a ejecutar ('abrir', 'cerrar', 'paz', 'rock', 'ok', 'senalar')
+        duration: duración del gesto en milisegundos (por defecto 1000ms como en sequence builder)
+        
+    Returns:
+        bool: True si se ejecutó correctamente, False en caso contrario
+    """
+    try:
+        print(f"🤚 Ejecutando gesto: {hand} - {gesture} (duración: {duration}ms)")
+        
+        # Importar servicios ESP32
+        try:
+            import sys
+            import os
+            
+            # Calcular la ruta correcta desde main.py a services/esp32_services
+            current_file_dir = os.path.dirname(os.path.abspath(__file__))  # clases/main/
+            project_root = os.path.dirname(os.path.dirname(current_file_dir))  # ia-clases/
+            esp32_services_path = os.path.join(project_root, "services", "esp32_services")
+            
+            if esp32_services_path not in sys.path:
+                sys.path.append(esp32_services_path)
+                print(f"✅ Agregado al path: {esp32_services_path}")
+            
+            # Ahora importar desde la ruta correcta
+            from esp32_config_binary import ESP32BinaryConfig
+            from esp32_client import ESP32Client
+            print("✅ Servicios ESP32 importados correctamente")
+
+        except ImportError as e:
+            print(f"❌ Error importando servicios ESP32: {e}")
+            return False
+        
+        # Cargar configuración ESP32
+        try:
+            esp32_config = ESP32BinaryConfig()
+            config_data = esp32_config.load_config()
+            
+            if not config_data:
+                print("⚠️ No se encontró configuración ESP32, usando valores por defecto")
+                host = "192.168.1.100"
+                port = 80
+            else:
+                host = config_data.host
+                port = config_data.port
+                print(f"✅ Configuración ESP32 cargada: {host}:{port}")
+                
+        except Exception as e:
+            print(f"⚠️ Error cargando configuración ESP32: {e}")
+            host = "192.168.1.100"
+            port = 80
+        
+        # Conectar al ESP32
+        try:
+            esp32_client = ESP32Client()
+            esp32_client.host = host
+            esp32_client.port = port
+            success = esp32_client.connect()
+            
+            if not success:
+                print(f"❌ No se pudo conectar al ESP32 en {host}:{port}")
+                return False
+            
+            print(f"✅ Conectado al ESP32 en {host}:{port}")
+            
+        except Exception as e:
+            print(f"❌ Error conectando al ESP32: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+        
+        # Ejecutar gesto
+        try:
+            # Mapear nombres de manos a formato ESP32
+            hand_map = {
+                'izquierda': 'izquierda',
+                'left': 'izquierda',
+                'derecha': 'derecha', 
+                'right': 'derecha',
+                'ambas': 'ambas',
+                'both': 'ambas'
+            }
+            
+            esp32_hand = hand_map.get(hand.lower(), hand.lower())
+            
+            # Enviar comando de gesto al ESP32
+            response = esp32_client.send_gesture(esp32_hand, gesture.upper())
+            
+            if response:
+                print(f"      ✅ Gesto {gesture} ejecutado en mano {esp32_hand}")
+                
+                # Esperar la duración del gesto (igual que en sequence builder)
+                wait_time = duration / 1000.0  # Convertir a segundos
+                print(f"      ⏱️ Esperando {wait_time}s para completar el gesto...")
+                time.sleep(wait_time)
+            else:
+                print(f"      ❌ Error ejecutando gesto {gesture}")
+            
+        except Exception as e:
+            print(f"❌ Error ejecutando gesto: {e}")
+            return False
+        
+        # Desconectar del ESP32
+        try:
+            esp32_client.disconnect()
+            print("🔌 Desconectado del ESP32")
+        except Exception as e:
+            print(f"⚠️ Error desconectando del ESP32: {e}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error general en execute_hand_gesture: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+def execute_finger_control(hand: str, finger: str, angle: int, duration: int = 1000) -> bool:
+    """
+    Ejecuta control individual de dedos con la misma velocidad que el sequence builder
+    
+    Args:
+        hand: mano a controlar ('izquierda', 'derecha')
+        finger: dedo a controlar ('pulgar', 'indice', 'medio', 'anular', 'menique')
+        angle: ángulo del dedo (0-180)
+        duration: duración del movimiento en milisegundos (por defecto 1000ms como en sequence builder)
+        
+    Returns:
+        bool: True si se ejecutó correctamente, False en caso contrario
+    """
+    try:
+        print(f"👆 Control de dedo: {hand} - {finger} - {angle}° (duración: {duration}ms)")
+        
+        # Importar servicios ESP32
+        try:
+            import sys
+            import os
+            
+            # Calcular la ruta correcta desde main.py a services/esp32_services
+            current_file_dir = os.path.dirname(os.path.abspath(__file__))  # clases/main/
+            project_root = os.path.dirname(os.path.dirname(current_file_dir))  # ia-clases/
+            esp32_services_path = os.path.join(project_root, "services", "esp32_services")
+            
+            if esp32_services_path not in sys.path:
+                sys.path.append(esp32_services_path)
+                print(f"✅ Agregado al path: {esp32_services_path}")
+            
+            # Ahora importar desde la ruta correcta
+            from esp32_config_binary import ESP32BinaryConfig
+            from esp32_client import ESP32Client
+            print("✅ Servicios ESP32 importados correctamente")
+
+        except ImportError as e:
+            print(f"❌ Error importando servicios ESP32: {e}")
+            return False
+        
+        # Cargar configuración ESP32
+        try:
+            esp32_config = ESP32BinaryConfig()
+            config_data = esp32_config.load_config()
+            
+            if not config_data:
+                print("⚠️ No se encontró configuración ESP32, usando valores por defecto")
+                host = "192.168.1.100"
+                port = 80
+            else:
+                host = config_data.host
+                port = config_data.port
+                print(f"✅ Configuración ESP32 cargada: {host}:{port}")
+                
+        except Exception as e:
+            print(f"⚠️ Error cargando configuración ESP32: {e}")
+            host = "192.168.1.100"
+            port = 80
+        
+        # Conectar al ESP32
+        try:
+            esp32_client = ESP32Client()
+            esp32_client.host = host
+            esp32_client.port = port
+            success = esp32_client.connect()
+            
+            if not success:
+                print(f"❌ No se pudo conectar al ESP32 en {host}:{port}")
+                return False
+            
+            print(f"✅ Conectado al ESP32 en {host}:{port}")
+            
+        except Exception as e:
+            print(f"❌ Error conectando al ESP32: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+        
+        # Ejecutar control de dedo
+        try:
+            # Mapear nombres de manos a formato ESP32
+            hand_map = {
+                'izquierda': 'izquierda',
+                'left': 'izquierda',
+                'derecha': 'derecha', 
+                'right': 'derecha'
+            }
+            
+            # Mapear nombres de dedos a formato ESP32
+            finger_map = {
+                'thumb': 'pulgar',
+                'pulgar': 'pulgar',
+                'index': 'indice',
+                'indice': 'indice',
+                'middle': 'medio',
+                'medio': 'medio',
+                'ring': 'anular',
+                'anular': 'anular',
+                'pinky': 'menique',
+                'menique': 'menique'
+            }
+            
+            esp32_hand = hand_map.get(hand.lower(), hand.lower())
+            esp32_finger = finger_map.get(finger.lower(), finger.lower())
+            
+            # Enviar comando de control de dedo al ESP32
+            response = esp32_client.send_finger_control(esp32_hand, esp32_finger, angle)
+            
+            if response:
+                print(f"      ✅ Dedo {esp32_finger} de mano {esp32_hand} movido a {angle}°")
+                
+                # Esperar la duración del movimiento (igual que en sequence builder)
+                wait_time = duration / 1000.0  # Convertir a segundos
+                print(f"      ⏱️ Esperando {wait_time}s para completar el movimiento...")
+                time.sleep(wait_time)
+            else:
+                print(f"      ❌ Error moviendo dedo {esp32_finger}")
+            
+        except Exception as e:
+            print(f"❌ Error ejecutando control de dedo: {e}")
+            return False
+        
+        # Desconectar del ESP32
+        try:
+            esp32_client.disconnect()
+            print("🔌 Desconectado del ESP32")
+        except Exception as e:
+            print(f"⚠️ Error desconectando del ESP32: {e}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error general en execute_finger_control: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+def execute_wrist_control(hand: str, angle: int, duration: int = 1000) -> bool:
+    """
+    Ejecuta control de muñeca con la misma velocidad que el sequence builder
+    
+    Args:
+        hand: mano a controlar ('izquierda', 'derecha')
+        angle: ángulo de la muñeca (0-180)
+        duration: duración del movimiento en milisegundos (por defecto 1000ms como en sequence builder)
+        
+    Returns:
+        bool: True si se ejecutó correctamente, False en caso contrario
+    """
+    try:
+        print(f"🤏 Control de muñeca: {hand} - {angle}° (duración: {duration}ms)")
+        
+        # Importar servicios ESP32
+        try:
+            import sys
+            import os
+            
+            # Calcular la ruta correcta desde main.py a services/esp32_services
+            current_file_dir = os.path.dirname(os.path.abspath(__file__))  # clases/main/
+            project_root = os.path.dirname(os.path.dirname(current_file_dir))  # ia-clases/
+            esp32_services_path = os.path.join(project_root, "services", "esp32_services")
+            
+            if esp32_services_path not in sys.path:
+                sys.path.append(esp32_services_path)
+                print(f"✅ Agregado al path: {esp32_services_path}")
+            
+            # Ahora importar desde la ruta correcta
+            from esp32_config_binary import ESP32BinaryConfig
+            from esp32_client import ESP32Client
+            print("✅ Servicios ESP32 importados correctamente")
+
+        except ImportError as e:
+            print(f"❌ Error importando servicios ESP32: {e}")
+            return False
+        
+        # Cargar configuración ESP32
+        try:
+            esp32_config = ESP32BinaryConfig()
+            config_data = esp32_config.load_config()
+            
+            if not config_data:
+                print("⚠️ No se encontró configuración ESP32, usando valores por defecto")
+                host = "192.168.1.100"
+                port = 80
+            else:
+                host = config_data.host
+                port = config_data.port
+                print(f"✅ Configuración ESP32 cargada: {host}:{port}")
+                
+        except Exception as e:
+            print(f"⚠️ Error cargando configuración ESP32: {e}")
+            host = "192.168.1.100"
+            port = 80
+        
+        # Conectar al ESP32
+        try:
+            esp32_client = ESP32Client()
+            esp32_client.host = host
+            esp32_client.port = port
+            success = esp32_client.connect()
+            
+            if not success:
+                print(f"❌ No se pudo conectar al ESP32 en {host}:{port}")
+                return False
+            
+            print(f"✅ Conectado al ESP32 en {host}:{port}")
+            
+        except Exception as e:
+            print(f"❌ Error conectando al ESP32: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
+        
+        # Ejecutar control de muñeca
+        try:
+            # Mapear nombres de manos a formato ESP32
+            hand_map = {
+                'izquierda': 'izquierda',
+                'left': 'izquierda',
+                'derecha': 'derecha', 
+                'right': 'derecha'
+            }
+            
+            esp32_hand = hand_map.get(hand.lower(), hand.lower())
+            
+            # Enviar comando de control de muñeca al ESP32
+            response = esp32_client.send_wrist_control(esp32_hand, angle)
+            
+            if response:
+                print(f"      ✅ Muñeca {esp32_hand} movida a {angle}°")
+                
+                # Esperar la duración del movimiento (igual que en sequence builder)
+                wait_time = duration / 1000.0  # Convertir a segundos
+                print(f"      ⏱️ Esperando {wait_time}s para completar el movimiento...")
+                time.sleep(wait_time)
+            else:
+                print(f"      ❌ Error moviendo muñeca {esp32_hand}")
+            
+        except Exception as e:
+            print(f"❌ Error ejecutando control de muñeca: {e}")
+            return False
+        
+        # Desconectar del ESP32
+        try:
+            esp32_client.disconnect()
+            print("🔌 Desconectado del ESP32")
+        except Exception as e:
+            print(f"⚠️ Error desconectando del ESP32: {e}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error general en execute_wrist_control: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+# ======================
+#  CONVENIENCE FUNCTIONS FOR HAND CONTROL
+# ======================
+
+def robot_hand_open(hand="derecha", duration=1000):
+    """Abre la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "abrir", duration)
+
+def robot_hand_close(hand="derecha", duration=1000):
+    """Cierra la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "cerrar", duration)
+
+def robot_hand_peace(hand="derecha", duration=1000):
+    """Hace gesto de paz con la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "paz", duration)
+
+def robot_hand_rock(hand="derecha", duration=1000):
+    """Hace gesto de rock con la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "rock", duration)
+
+def robot_hand_ok(hand="derecha", duration=1000):
+    """Hace gesto de OK con la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "ok", duration)
+
+def robot_hand_point(hand="derecha", duration=1000):
+    """Hace gesto de señalar con la mano del robot con duración específica"""
+    return execute_hand_gesture(hand, "senalar", duration)
+
+def robot_finger_control(hand="derecha", finger="indice", angle=90, duration=1000):
+    """Controla un dedo específico de la mano del robot con duración específica"""
+    return execute_finger_control(hand, finger, angle, duration)
+
+def robot_wrist_control(hand="derecha", angle=90, duration=1000):
+    """Controla la muñeca de la mano del robot con duración específica"""
+    return execute_wrist_control(hand, angle, duration)
+
+def robot_wave_both_hands(duration=1000):
+    """Hace gesto de saludo con ambas manos con duración específica"""
+    return execute_hand_gesture("ambas", "saludo", duration)
+
+def robot_hug_gesture(duration=1000):
+    """Hace gesto de abrazo con ambas manos con duración específica"""
+    return execute_hand_gesture("ambas", "abrazar", duration)
+
+# ======================
+#  SEQUENCE BUILDER COMPATIBLE EXECUTION
+# ======================
+
+def execute_sequence_like_builder(sequence_data, esp32_client=None):
+    """
+    Ejecuta una secuencia exactamente como lo hace el Sequence Builder
+    
+    Args:
+        sequence_data: Datos de la secuencia (movements/actions)
+        esp32_client: Cliente ESP32 ya conectado (opcional)
+        
+    Returns:
+        bool: True si se ejecutó correctamente, False en caso contrario
+    """
+    try:
+        print("🚀 Ejecutando secuencia como Sequence Builder...")
+        
+        # Si no se proporciona cliente, crear uno
+        if not esp32_client:
+            # Importar servicios ESP32
+            try:
+                import sys
+                import os
+                
+                current_file_dir = os.path.dirname(os.path.abspath(__file__))
+                project_root = os.path.dirname(os.path.dirname(current_file_dir))
+                esp32_services_path = os.path.join(project_root, "services", "esp32_services")
+                
+                if esp32_services_path not in sys.path:
+                    sys.path.append(esp32_services_path)
+                
+                from esp32_config_binary import ESP32BinaryConfig
+                from esp32_client import ESP32Client
+                
+                # Cargar configuración y conectar
+                esp32_config = ESP32BinaryConfig()
+                config_data = esp32_config.load_config()
+                
+                if not config_data:
+                    host = "192.168.1.100"
+                    port = 80
+                else:
+                    host = config_data.host
+                    port = config_data.port
+                
+                esp32_client = ESP32Client()
+                esp32_client.host = host
+                esp32_client.port = port
+                success = esp32_client.connect()
+                
+                if not success:
+                    print(f"❌ No se pudo conectar al ESP32 en {host}:{port}")
+                    return False
+                    
+            except Exception as e:
+                print(f"❌ Error preparando cliente ESP32: {e}")
+                return False
+        
+        # Obtener acciones de la secuencia (igual que en sequence builder)
+        movements = sequence_data.get('movements', [])
+        actions = []
+
+        # Si no hay movements pero sí hay actions directamente (compatibilidad)
+        if not movements:
+            actions = sequence_data.get('actions', [])
+        else:
+            # Extraer todas las actions de todos los movements
+            for movement in movements:
+                movement_actions = movement.get('actions', [])
+                actions.extend(movement_actions)
+
+        print(f"📋 Total movimientos encontrados: {len(movements)}")
+        print(f"📋 Total acciones extraídas: {len(actions)}")
+
+        # Ejecutar secuencia EXACTAMENTE como el Sequence Builder
+        for movement in movements:
+            print(f"🎬 Ejecutando movimiento con {len(movement.get('actions', []))} acciones...")
+            
+            for action in movement.get('actions', []):
+                print(f"   Acción: {action.get('command', 'Unknown')}")
+                
+                # Ejecutar acción usando la misma lógica que _execute_action del sequence builder
+                _execute_action_like_builder(action, esp32_client)
+                
+                # Wait between actions (EXACTAMENTE como en sequence builder)
+                time.sleep(1.0)
+            
+            # Wait between movements (EXACTAMENTE como en sequence builder)
+            time.sleep(2.0)
+        
+        print("✅ Secuencia ejecutada completamente como Sequence Builder")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error ejecutando secuencia como builder: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+def _execute_action_like_builder(action, esp32_client):
+    """
+    Ejecuta una acción EXACTAMENTE como lo hace el Sequence Builder
+    
+    Args:
+        action: Acción a ejecutar
+        esp32_client: Cliente ESP32 conectado
+    """
+    try:
+        command = action.get('command', '')
+        parameters = action.get('parameters', {})
+        
+        if command == 'BRAZOS':
+            bi = parameters.get('BI', 0)
+            bd = parameters.get('BD', 0)
+            fi = parameters.get('FI', 0)
+            fd = parameters.get('FD', 0)
+            hi = parameters.get('HI', 0)
+            hd = parameters.get('HD', 0)
+            pd = parameters.get('PD', 0)
+            
+            if esp32_client:
+                esp32_client.send_movement(bi, bd, fi, fd, hi, hd, pd)
+        
+        elif command == 'MANO':
+            mano = parameters.get('M', '')
+            gesto = parameters.get('GESTO', '')
+            dedo = parameters.get('DEDO', '')
+            angulo = parameters.get('ANG', 0)
+            
+            if esp32_client:
+                if gesto:
+                    esp32_client.send_gesture(mano, gesto)
+                elif dedo:
+                    esp32_client.send_finger_control(mano, dedo, angulo)
+        
+        elif command == 'MUNECA':
+            # Handle wrist movements with new relative positioning system
+            mano = parameters.get('mano', '')
+            angulo = parameters.get('angulo', 80)
+            
+            if esp32_client:
+                # Send wrist control command to ESP32
+                esp32_client.send_wrist_control(mano, angulo)
+                print(f"🎯 Executing wrist command: {mano} wrist to {angulo}°")
+        
+        elif command == 'CUELLO':
+            l = parameters.get('L', 0)
+            i = parameters.get('I', 0)
+            s = parameters.get('S', 0)
+            
+            if esp32_client:
+                esp32_client.send_neck_movement(l, i, s)
+        
+        elif command == 'HABLAR':
+            texto = parameters.get('texto', '')
+            
+            if esp32_client:
+                esp32_client.send_speech(texto)
+                
+    except Exception as e:
+        print(f"❌ Error executing action: {e}")
+
+# ======================
 #  ESP32 ACTION RESOLVER
 # ======================
 def esp32_action_resolver(sequence_name: str) -> bool:
@@ -2459,8 +3048,54 @@ def esp32_action_resolver(sequence_name: str) -> bool:
                     else:
                         print(f"      ❌ Error ejecutando comando")
                     
+                elif command == "MANO":
+                    # Comando de control de mano (gesto o dedo individual)
+                    mano = parameters.get('M', '')
+                    gesto = parameters.get('GESTO', '')
+                    dedo = parameters.get('DEDO', '')
+                    angulo = parameters.get('ANG', 0)
+                    
+                    if gesto:
+                        # Ejecutar gesto de mano
+                        print(f"      Ejecutando gesto de mano: {mano} - {gesto}")
+                        
+                        # Enviar comando de gesto al ESP32
+                        response = esp32_client.send_gesture(mano, gesto)
+                        
+                        if response:
+                            print(f"      ✅ Gesto {gesto} ejecutado en mano {mano}")
+                        else:
+                            print(f"      ❌ Error ejecutando gesto {gesto}")
+                            
+                    elif dedo:
+                        # Ejecutar control de dedo individual
+                        print(f"      Control de dedo: {mano} - {dedo} - {angulo}°")
+                        
+                        # Enviar comando de control de dedo al ESP32
+                        response = esp32_client.send_finger_control(mano, dedo, angulo)
+                        
+                        if response:
+                            print(f"      ✅ Dedo {dedo} de mano {mano} movido a {angulo}°")
+                        else:
+                            print(f"      ❌ Error moviendo dedo {dedo}")
+                    
+                elif command == "MUNECA":
+                    # Comando de control de muñeca
+                    mano = parameters.get('mano', '')
+                    angulo = parameters.get('angulo', 80)
+                    
+                    print(f"      Control de muñeca: {mano} - {angulo}°")
+                    
+                    # Enviar comando de control de muñeca al ESP32
+                    response = esp32_client.send_wrist_control(mano, angulo)
+                    
+                    if response:
+                        print(f"      ✅ Muñeca {mano} movida a {angulo}°")
+                    else:
+                        print(f"      ❌ Error moviendo muñeca {mano}")
+                    
                 elif command == "GESTO":
-                    # Comando de gesto
+                    # Comando de gesto (compatibilidad con versiones anteriores)
                     gesture = parameters.get('gesture', '')
                     print(f"      Ejecutando gesto: {gesture}")
                     
@@ -2523,7 +3158,7 @@ def esp32_action_resolver(sequence_name: str) -> bool:
 # ======================
 def execute_esp32_sequence(sequence_name: str) -> bool:
     """
-    Ejecuta una secuencia en el ESP32 del robot
+    Ejecuta una secuencia en el ESP32 del robot usando el método del Sequence Builder
     
     Args:
         sequence_name: Nombre de la secuencia a ejecutar
@@ -2532,6 +3167,50 @@ def execute_esp32_sequence(sequence_name: str) -> bool:
         bool: True si se ejecutó correctamente, False en caso contrario
     """
     try:
+        print(f"🤖 Ejecutando secuencia ESP32 con método Sequence Builder: {sequence_name}")
+        
+        # Buscar y cargar la secuencia
+        try:
+            import os
+            sequences_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "sequences")
+            sequence_file = None
+            
+            # Buscar archivo de secuencia
+            for file in os.listdir(sequences_dir):
+                if file.endswith('.json') and sequence_name.lower() in file.lower():
+                    sequence_file = os.path.join(sequences_dir, file)
+                    break
+            
+            if not sequence_file:
+                print(f"❌ No se encontró secuencia: {sequence_name}")
+                return False
+            
+            print(f"📁 Cargando secuencia: {sequence_file}")
+            
+            # Cargar archivo JSON de la secuencia
+            with open(sequence_file, 'r', encoding='utf-8') as f:
+                sequence_data = json.load(f)
+            
+            print(f"✅ Secuencia cargada: {len(sequence_data.get('movements', []))} movimientos")
+            
+        except Exception as e:
+            print(f"❌ Error cargando secuencia: {e}")
+            return False
+        
+        # Ejecutar usando el método del Sequence Builder
+        try:
+            success = execute_sequence_like_builder(sequence_data)
+            return success
+                
+        except Exception as e:
+            print(f"❌ Error ejecutando secuencia: {e}")
+            return False
+        
+    except Exception as e:
+        print(f"❌ Error general en execute_esp32_sequence: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
         print(f"🤖 Ejecutando secuencia ESP32: {sequence_name}")
         
         # Importar servicios ESP32
@@ -2670,8 +3349,54 @@ def execute_esp32_sequence(sequence_name: str) -> bool:
                     else:
                         print(f"      ❌ Error ejecutando comando")
                     
+                elif command == "MANO":
+                    # Comando de control de mano (gesto o dedo individual)
+                    mano = parameters.get('M', '')
+                    gesto = parameters.get('GESTO', '')
+                    dedo = parameters.get('DEDO', '')
+                    angulo = parameters.get('ANG', 0)
+                    
+                    if gesto:
+                        # Ejecutar gesto de mano
+                        print(f"      Ejecutando gesto de mano: {mano} - {gesto}")
+                        
+                        # Enviar comando de gesto al ESP32
+                        response = esp32_client.send_gesture(mano, gesto)
+                        
+                        if response:
+                            print(f"      ✅ Gesto {gesto} ejecutado en mano {mano}")
+                        else:
+                            print(f"      ❌ Error ejecutando gesto {gesto}")
+                            
+                    elif dedo:
+                        # Ejecutar control de dedo individual
+                        print(f"      Control de dedo: {mano} - {dedo} - {angulo}°")
+                        
+                        # Enviar comando de control de dedo al ESP32
+                        response = esp32_client.send_finger_control(mano, dedo, angulo)
+                        
+                        if response:
+                            print(f"      ✅ Dedo {dedo} de mano {mano} movido a {angulo}°")
+                        else:
+                            print(f"      ❌ Error moviendo dedo {dedo}")
+                    
+                elif command == "MUNECA":
+                    # Comando de control de muñeca
+                    mano = parameters.get('mano', '')
+                    angulo = parameters.get('angulo', 80)
+                    
+                    print(f"      Control de muñeca: {mano} - {angulo}°")
+                    
+                    # Enviar comando de control de muñeca al ESP32
+                    response = esp32_client.send_wrist_control(mano, angulo)
+                    
+                    if response:
+                        print(f"      ✅ Muñeca {mano} movida a {angulo}°")
+                    else:
+                        print(f"      ❌ Error moviendo muñeca {mano}")
+                    
                 elif command == "GESTO":
-                    # Comando de gesto
+                    # Comando de gesto (compatibilidad con versiones anteriores)
                     gesture = parameters.get('gesture', '')
                     print(f"      Ejecutando gesto: {gesture}")
                     
@@ -2892,7 +3617,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
 # ======================
 def execute_esp32_sequence(sequence_name: str) -> bool:
     """
-    Ejecuta una secuencia en el ESP32 del robot
+    Ejecuta una secuencia en el ESP32 del robot usando el método del Sequence Builder
     
     Args:
         sequence_name: Nombre de la secuencia a ejecutar
@@ -2901,6 +3626,50 @@ def execute_esp32_sequence(sequence_name: str) -> bool:
         bool: True si se ejecutó correctamente, False en caso contrario
     """
     try:
+        print(f"🤖 Ejecutando secuencia ESP32 con método Sequence Builder: {sequence_name}")
+        
+        # Buscar y cargar la secuencia
+        try:
+            import os
+            sequences_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "sequences")
+            sequence_file = None
+            
+            # Buscar archivo de secuencia
+            for file in os.listdir(sequences_dir):
+                if file.endswith('.json') and sequence_name.lower() in file.lower():
+                    sequence_file = os.path.join(sequences_dir, file)
+                    break
+            
+            if not sequence_file:
+                print(f"❌ No se encontró secuencia: {sequence_name}")
+                return False
+            
+            print(f"📁 Cargando secuencia: {sequence_file}")
+            
+            # Cargar archivo JSON de la secuencia
+            with open(sequence_file, 'r', encoding='utf-8') as f:
+                sequence_data = json.load(f)
+            
+            print(f"✅ Secuencia cargada: {len(sequence_data.get('movements', []))} movimientos")
+            
+        except Exception as e:
+            print(f"❌ Error cargando secuencia: {e}")
+            return False
+        
+        # Ejecutar usando el método del Sequence Builder
+        try:
+            success = execute_sequence_like_builder(sequence_data)
+            return success
+                
+        except Exception as e:
+            print(f"❌ Error ejecutando secuencia: {e}")
+            return False
+        
+    except Exception as e:
+        print(f"❌ Error general en execute_esp32_sequence: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
         print(f"🤖 Ejecutando secuencia ESP32: {sequence_name}")
         
         # Importar servicios ESP32
@@ -3039,8 +3808,54 @@ def execute_esp32_sequence(sequence_name: str) -> bool:
                     else:
                         print(f"      ❌ Error ejecutando comando")
                     
+                elif command == "MANO":
+                    # Comando de control de mano (gesto o dedo individual)
+                    mano = parameters.get('M', '')
+                    gesto = parameters.get('GESTO', '')
+                    dedo = parameters.get('DEDO', '')
+                    angulo = parameters.get('ANG', 0)
+                    
+                    if gesto:
+                        # Ejecutar gesto de mano
+                        print(f"      Ejecutando gesto de mano: {mano} - {gesto}")
+                        
+                        # Enviar comando de gesto al ESP32
+                        response = esp32_client.send_gesture(mano, gesto)
+                        
+                        if response:
+                            print(f"      ✅ Gesto {gesto} ejecutado en mano {mano}")
+                        else:
+                            print(f"      ❌ Error ejecutando gesto {gesto}")
+                            
+                    elif dedo:
+                        # Ejecutar control de dedo individual
+                        print(f"      Control de dedo: {mano} - {dedo} - {angulo}°")
+                        
+                        # Enviar comando de control de dedo al ESP32
+                        response = esp32_client.send_finger_control(mano, dedo, angulo)
+                        
+                        if response:
+                            print(f"      ✅ Dedo {dedo} de mano {mano} movido a {angulo}°")
+                        else:
+                            print(f"      ❌ Error moviendo dedo {dedo}")
+                    
+                elif command == "MUNECA":
+                    # Comando de control de muñeca
+                    mano = parameters.get('mano', '')
+                    angulo = parameters.get('angulo', 80)
+                    
+                    print(f"      Control de muñeca: {mano} - {angulo}°")
+                    
+                    # Enviar comando de control de muñeca al ESP32
+                    response = esp32_client.send_wrist_control(mano, angulo)
+                    
+                    if response:
+                        print(f"      ✅ Muñeca {mano} movida a {angulo}°")
+                    else:
+                        print(f"      ❌ Error moviendo muñeca {mano}")
+                    
                 elif command == "GESTO":
-                    # Comando de gesto
+                    # Comando de gesto (compatibilidad con versiones anteriores)
                     gesture = parameters.get('gesture', '')
                     print(f"      Ejecutando gesto: {gesture}")
                     
@@ -3309,7 +4124,9 @@ def main():
             print("⚠️ Problemas detectados con la cámara.")
 
         # PDF
-        pdf_path = os.path.join(script_dir, "pdfs/Clase_Neutralizacion_Bicarbonato.pdf")
+        # pdf_path = os.path.join(script_dir, "pdfs/Clase_Neutralizacion_Bicarbonato.pdf")
+        pdf_path = os.path.join(script_dir, "pdfs/Pre2.pdf")
+
         pdf_text = extract_text_from_pdf(pdf_path)
         
         if not pdf_text:
@@ -3339,15 +4156,18 @@ def main():
 
          # Explicar diapositivas con preguntas aleatorias
         if (1 == 1):
+        # if explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_users,
+        #                                        hand_raised_counter, current_slide_num, exit_flag, 
+        #                                        known_faces, current_hand_raiser):
             
             
             # Explicar diapositivas con secuencias ESP32
             sequence_mapping = {
-                1: "Rutina1",    # Después de la diapositiva 1
-                3: "Rutina1",         # Después de la diapositiva 3
-                5: "Rutina1",      # Después de la diapositiva 5
-                7: "Rutina1",          # Después de la diapositiva 7
-                9: "Rutina1"          # Después de la diapositiva 9
+                # 1: "Rutina1",    # Después de la diapositiva 1
+                1: "SecuenciaBeta1Parte1",         # Después de la diapositiva 3
+                2: "SecuenciaBeta1Parte2",      # Después de la diapositiva 5
+                # 7: "Rutina1",          # Después de la diapositiva 7
+                # 9: "Rutina1"          # Después de la diapositiva 9
             }
 
              # PDF

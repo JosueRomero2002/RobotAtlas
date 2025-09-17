@@ -705,7 +705,7 @@ class ClassBuilderTab(BaseTab):
             messagebox.showerror("Error", f"Error generando clase: {e}")
 
     def _generate_class_code(self):
-        """Generate class code based on main.py structure"""
+        """Generate class code using modular structure"""
         class_title = self.class_title_var.get().strip()
         class_subject = self.class_subject_var.get()
         
@@ -743,6 +743,11 @@ class ClassBuilderTab(BaseTab):
         demo_pdf = self.demo_pdf_path.get() if self.demo_enabled.get() else ""
         final_exam_qr = self.final_exam_qr_path.get() or selected_subject["final_exam"]
         
+        # Generate demo sequences code if demo is enabled
+        demo_sequences_code = ""
+        if self.demo_enabled.get() and hasattr(self, 'demo_sequences') and self.demo_sequences:
+            demo_sequences_code = self._generate_demo_sequences_code()
+        
         return f'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -750,498 +755,326 @@ class ClassBuilderTab(BaseTab):
 Materia: {class_subject}
 Generado por ADAI Class Builder el {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-Clase automática basada en el flujo de main.py
+Clase automática usando estructura modular
 """
 
 import cv2
-import numpy as np
-import pyttsx3
-import speech_recognition as sr
 import os
-import fitz
-import openai
 import time
 import multiprocessing
-from multiprocessing import Process, Value, Event
-import random
-import winsound
+from multiprocessing import Process, Value
+
+# Agregar el directorio de módulos al path
 import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Los módulos están en el directorio padre (ia-clases/modules)
+parent_dir = os.path.dirname(current_dir)
+modules_dir = os.path.join(parent_dir, "modules")
+if modules_dir not in sys.path:
+    sys.path.insert(0, modules_dir)
 
-# Configurar codificación para Windows
-if sys.platform.startswith('win'):
-    import codecs
-    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach())
-    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.detach())
+# Import modular functions
+from modules.config import client, script_dir, faces_dir, QR_PATHS, QUESTION_BANK, QUESTION_BANK_CHEM
+from modules.speech import initialize_tts, speak_with_animation, listen
+from modules.camera import verify_camera_for_iriun, camera_process, identify_users, load_known_faces
+from modules.qr import show_diagnostic_qr, show_final_exam_qr
+from modules.slides import show_pdf_page_in_opencv, extract_text_from_pdf, explain_slides_with_random_questions, explain_slides_with_sequences
+from modules.questions import RandomQuestionManager, evaluate_student_answer, process_question
+from modules.esp32 import execute_esp32_sequence
+from modules.utils import summarize_text, ask_openai
 
 # ======================
-#  CONFIGURACIÓN OPENAI
+#  CONFIGURACIÓN DE LA CLASE
 # ======================
-try:
-    client = openai.OpenAI(api_key="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")
-except Exception as e:
-    print(f"WARNING: OpenAI no disponible: {{e}}")
-    client = None
-
-# Obtener directorio actual
-script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# ======================
-#  RUTAS DE ARCHIVOS
-# ======================
-QR_PATHS = {{
-    'diagnostic': os.path.join(script_dir, "{diagnostic_qr}"),
-    'final_exam': os.path.join(script_dir, "{final_exam_qr}")
+CLASS_CONFIG = {{
+    "name": "{clean_name}",
+    "title": "{class_title}",
+    "subject": "{class_subject}",
+    "diagnostic_qr": "{diagnostic_qr}",
+    "pdf_path": "{class_pdf}",
+    "demo_pdf_path": "{demo_pdf}",
+    "final_exam_qr": "{final_exam_qr}",
+    "use_diagnostic": True,
+    "use_pdf": True,
+    "use_demo": {str(self.demo_enabled.get()).lower()},
+    "use_final_exam": True
 }}
 
-PDF_PATH = os.path.join(script_dir, "{class_pdf}")
+{demo_sequences_code}
 
 class {clean_name}:
-    """Clase generada automáticamente por ADAI Class Builder"""
+    """
+    {class_title}
+    
+    Materia: {class_subject}
+    Generado por ADAI Class Builder
+    """
     
     def __init__(self):
-        print("="*60)
-        print(f"ADAI - {class_title}")
-        print(f"Materia: {class_subject}")
-        print("="*60)
+        self.config = CLASS_CONFIG
+        self.engine = None
+        self.current_users = []
+        self.known_faces = {{}}
+        self.hand_raised_counter = None
+        self.current_slide_num = None
+        self.exit_flag = None
+        self.current_hand_raiser = None
+        self.camera_proc = None
         
-        self.class_title = "{class_title}"
-        self.class_subject = "{class_subject}"
-        self.diagnostic_qr = QR_PATHS['diagnostic']
-        self.class_pdf = PDF_PATH
-        self.final_exam_qr = QR_PATHS['final_exam']
+    def initialize_systems(self):
+        """Initialize TTS and other systems"""
+        print("🚀 Inicializando sistemas de {{self.config['name']}}")
         
-        # Variables para simulación
+        # Create multiprocessing variables
         self.hand_raised_counter = multiprocessing.Value('i', 0)
         self.current_slide_num = multiprocessing.Value('i', 1)
         self.exit_flag = multiprocessing.Value('i', 0)
         self.current_hand_raiser = multiprocessing.Value('i', -1)
         
-        # Inicializar TTS
-        self.engine = self.initialize_tts()
-        
-        # Inicializar ESP32 communication
-        self.esp32_connected = False
-        self.esp32_ip = "192.168.1.100"
-        self.esp32_port = 80
-        
-    def initialize_tts(self):
-        """Inicializar motor de texto a voz"""
-        try:
-            engine = pyttsx3.init()
-            engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\\\\SOFTWARE\\\\Microsoft\\\\Speech\\\\Voices\\\\Tokens\\\\TTS_MS_ES-MX_SABINA_11.0')
-            return engine
-        except Exception as e:
-            print(f"ERROR: Error al inicializar TTS: {{e}}")
-            return None
+        # Initialize TTS
+        self.engine = initialize_tts()
+        if not self.engine:
+            print("❌ No se pudo inicializar el motor TTS")
+            return False
+            
+        # Create faces directory
+        if not os.path.exists(faces_dir):
+            os.makedirs(faces_dir)
+            
+        return True
     
-    def speak_with_animation(self, text):
-        """Hablar texto con animación simple"""
-        print(f"ADAI dice: {{text}}")
-        if self.engine:
-            try:
-                self.engine.say(text)
-                self.engine.runAndWait()
-            except Exception as e:
-                print(f"ERROR en TTS: {{e}}")
-        time.sleep(1)
-    
-    def send_esp32_command(self, command, parameters=None):
-        """Enviar comando al ESP32"""
-        try:
-            import requests
-            import json
-            
-            # Construir URL del comando
-            url = f"http://{{self.esp32_ip}}:{{self.esp32_port}}/{{command}}"
-            
-            # Preparar datos
-            data = {{}}
-            if parameters:
-                data.update(parameters)
-            
-            # Enviar comando
-            response = requests.post(url, json=data, timeout=5)
-            
-            if response.status_code == 200:
-                print(f"✅ ESP32 Command: {{command}} - Success")
-                result = response.json()
-                
-                # Intentar registrar en el log del robot_gui si está disponible
-                try:
-                    # Buscar el robot_gui en el contexto global
-                    import sys
-                    for module_name in sys.modules:
-                        if 'robot_gui' in module_name:
-                            module = sys.modules[module_name]
-                            if hasattr(module, 'log_esp32_command_from_class'):
-                                module.log_esp32_command_from_class(command, parameters, result)
-                                break
-                except:
-                    pass  # Si no se puede registrar, continuar normalmente
-                
-                return result
-            else:
-                print(f"❌ ESP32 Command: {{command}} - Error: {{response.status_code}}")
-                return None
-                
-        except Exception as e:
-            print(f"⚠️ ESP32 Command: {{command}} - Connection error: {{e}}")
-            return None
-    
-    def esp32_robot_gesture(self, gesture_type):
-        """Realizar gesto del robot via ESP32"""
-        gestures = {{
-            "saludo": "wave",
-            "aplauso": "clap", 
-            "punto": "point",
-            "ok": "ok_gesture",
-            "pensar": "think",
-            "explicar": "explain"
-        }}
-        
-        command = gestures.get(gesture_type, "wave")
-        return self.send_esp32_command("gesture", {{"type": command}})
-    
-    def esp32_robot_movement(self, movement_type):
-        """Realizar movimiento del robot via ESP32"""
-        movements = {{
-            "centrar": "center",
-            "mirar_izquierda": "look_left",
-            "mirar_derecha": "look_right", 
-            "mirar_arriba": "look_up",
-            "mirar_abajo": "look_down",
-            "saludar": "wave_gesture",
-            "abrazar": "hug_gesture"
-        }}
-        
-        command = movements.get(movement_type, "center")
-        return self.send_esp32_command("movement", {{"type": command}})
-    
-    def esp32_robot_speech(self, text):
-        """Hacer que el robot hable via ESP32"""
-        return self.send_esp32_command("speak", {{"text": text}})
-    
-    def show_diagnostic_qr(self, display_time=15):
-        """Mostrar QR de evaluación diagnóstica"""
-        try:
-            print("Mostrando código QR para evaluación diagnóstica...")
-            
-            if not os.path.exists(self.diagnostic_qr):
-                print(f"WARNING: No se encontró el QR diagnóstico: {{self.diagnostic_qr}}")
-                return False
-            
-            # Cargar imagen del QR
-            qr_image = cv2.imread(self.diagnostic_qr)
-            if qr_image is None:
-                print(f"ERROR: No se pudo cargar la imagen QR")
-                return False
-            
-            # Crear ventana y mostrar QR
-            cv2.namedWindow("Evaluación Diagnóstica", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("Evaluación Diagnóstica", 800, 600)
-            
-            # Redimensionar QR para visualización
-            qr_resized = cv2.resize(qr_image, (600, 600))
-            
-            # Crear canvas con información
-            canvas = np.full((700, 800, 3), (240, 240, 240), dtype=np.uint8)
-            
-            # Insertar QR en el centro
-            start_x = (800 - 600) // 2
-            start_y = 50
-            canvas[start_y:start_y + 600, start_x:start_x + 600] = qr_resized
-            
-            # Añadir texto
-            cv2.putText(canvas, self.class_title, (50, 30), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
-            cv2.putText(canvas, "Escanea el codigo QR para la evaluacion diagnostica", 
-                       (50, 680), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-            
-            # Mostrar por el tiempo especificado
-            start_time = time.time()
-            while time.time() - start_time < display_time:
-                cv2.imshow("Evaluación Diagnóstica", canvas)
-                if cv2.waitKey(1000) & 0xFF == ord('q'):
-                    break
-            
-            cv2.destroyWindow("Evaluación Diagnóstica")
-            print("QR diagnóstico mostrado exitosamente")
+    def run_diagnostic_phase(self):
+        """Run diagnostic test phase if enabled"""
+        if not self.config['use_diagnostic'] or not self.config['diagnostic_qr']:
             return True
             
-        except Exception as e:
-            print(f"ERROR mostrando QR diagnóstico: {{e}}")
-            return False
+        print("\\n" + "="*50)
+        print("📱 FASE 1: EVALUACIÓN DIAGNÓSTICA")
+        print("="*50)
+        
+        diagnostic_qr = self.config['diagnostic_qr']
+        print(f"🔍 Mostrando QR diagnóstico: {{diagnostic_qr}}")
+        
+        if os.path.exists(diagnostic_qr):
+            return show_diagnostic_qr(diagnostic_qr, display_time=40)
+        else:
+            print(f"⚠️ No se encontró: {{diagnostic_qr}}")
+            return True
     
-    def show_final_exam_qr(self, display_time=20):
-        """Mostrar QR de examen final"""
-        try:
-            print("Mostrando código QR para examen final...")
-            
-            if not os.path.exists(self.final_exam_qr):
-                print(f"WARNING: No se encontró el QR de examen: {{self.final_exam_qr}}")
-                return False
-            
-            # Cargar imagen del QR
-            qr_image = cv2.imread(self.final_exam_qr)
-            if qr_image is None:
-                print(f"ERROR: No se pudo cargar la imagen QR del examen")
-                return False
-            
-            # Crear ventana y mostrar QR
-            cv2.namedWindow("Examen Final", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("Examen Final", 800, 600)
-            
-            # Redimensionar QR para visualización
-            qr_resized = cv2.resize(qr_image, (600, 600))
-            
-            # Crear canvas con información
-            canvas = np.full((700, 800, 3), (245, 245, 255), dtype=np.uint8)
-            
-            # Insertar QR en el centro
-            start_x = (800 - 600) // 2
-            start_y = 50
-            canvas[start_y:start_y + 600, start_x:start_x + 600] = qr_resized
-            
-            # Añadir texto
-            cv2.putText(canvas, f"EXAMEN FINAL - " + self.class_subject.upper(), (50, 30), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-            cv2.putText(canvas, "Escanea el codigo QR para acceder al examen final", 
-                       (50, 680), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)
-            
-            # Mostrar por el tiempo especificado
-            start_time = time.time()
-            while time.time() - start_time < display_time:
-                cv2.imshow("Examen Final", canvas)
-                if cv2.waitKey(1000) & 0xFF == ord('q'):
-                    break
-            
-            cv2.destroyWindow("Examen Final")
-            print("QR examen final mostrado exitosamente")
+    def run_class_initialization(self):
+        """Initialize class and identify users"""
+        print("\\n" + "="*50)
+        print("🤖 FASE 2: INICIO DE CLASE")
+        print("="*50)
+        
+        # Create window for animated face
+        cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("ADAI Robot Face", 600, 400)
+        
+        # Initial greeting
+        speak_with_animation(self.engine, f"Hola, soy ADAI. Bienvenidos a la clase: {{self.config['title']}}")
+        
+        # Verify camera
+        if not verify_camera_for_iriun():
+            print("⚠️ Problemas detectados con la cámara.")
+        
+        # Identify users
+        print("🔍 Identificando usuarios de izquierda a derecha...")
+        self.current_users, _ = identify_users(self.engine, self.current_slide_num, self.exit_flag)
+        
+        # Load known faces
+        self.known_faces = load_known_faces()
+        
+        # Start camera process
+        self.camera_proc = Process(
+            target=camera_process,
+            args=(self.hand_raised_counter, self.current_slide_num, self.exit_flag, self.current_hand_raiser, self.current_users)
+        )
+        self.camera_proc.daemon = True
+        self.camera_proc.start()
+        
+        print("⏳ Esperando a que la cámara se inicialice...")
+        time.sleep(3)
+        
+        return True
+    
+    def run_pdf_phase(self):
+        """Run PDF presentation phase if enabled"""
+        if not self.config['use_pdf'] or not self.config['pdf_path']:
             return True
             
-        except Exception as e:
-            print(f"ERROR mostrando QR examen: {{e}}")
-            return False
+        print("\\n" + "="*50)
+        print("📚 FASE 3: PRESENTACIÓN DE CONTENIDO")
+        print("="*50)
+        
+        pdf_path = self.config['pdf_path']
+        if not os.path.exists(pdf_path):
+            print(f"❌ No se encontró el PDF: {{pdf_path}}")
+                return False
+            
+        # Extract text from PDF
+        pdf_text = extract_text_from_pdf(pdf_path)
+        if not pdf_text:
+            print("❌ No se pudo leer el PDF")
+                return False
+            
+        # Start presentation
+        speak_with_animation(self.engine, f"Ahora comenzaremos con la presentación sobre {{self.config['subject']}}.")
+        
+        # Explain slides with random questions
+        return explain_slides_with_random_questions(
+            self.engine, pdf_path, pdf_text, self.current_users,
+            self.hand_raised_counter, self.current_slide_num, self.exit_flag, 
+            self.known_faces, self.current_hand_raiser
+        )
     
-    def extract_text_from_pdf(self):
-        """Extraer texto del PDF de la clase"""
-        try:
-            if not os.path.exists(self.class_pdf):
-                print(f"WARNING: No se encontró el PDF: {{self.class_pdf}}")
-                return f"Contenido de la clase sobre {{self.class_subject}}"
+    def run_demo_phase(self):
+        """Run demo phase if enabled"""
+        if not self.config['use_demo'] or not self.config['demo_pdf_path']:
+            return True
             
-            text = ""
-            with fitz.open(self.class_pdf) as doc:
-                for page in doc:
-                    text += page.get_text()
+        print("\\n" + "="*50)
+        print("🎬 FASE 4: DEMOSTRACIÓN PRÁCTICA")
+        print("="*50)
+        
+        demo_pdf_path = self.config['demo_pdf_path']
+        if not os.path.exists(demo_pdf_path):
+            print(f"❌ No se encontró el PDF de demo: {{demo_pdf_path}}")
+                return False
             
-            print(f"PDF cargado: {{len(text)}} caracteres")
-            return text
+        # Extract text from demo PDF
+        demo_pdf_text = extract_text_from_pdf(demo_pdf_path)
+        if not demo_pdf_text:
+            print("❌ No se pudo leer el PDF de demo")
+                return False
             
-        except Exception as e:
-            print(f"ERROR al leer PDF: {{e}}")
-            return f"Contenido de la clase sobre {{self.class_subject}}"
+        # Start demo presentation
+        speak_with_animation(self.engine, "Ahora realizaremos una demostración práctica paso a paso.")
+        
+        # Generate sequence mapping from demo sequences
+        sequence_mapping = {{}}
+        if hasattr(self, 'demo_sequences') and self.demo_sequences:
+            for seq in self.demo_sequences:
+                page = seq.get('page', 1)
+                sequence_name = seq.get('sequence_name', 'Rutina1')
+                sequence_mapping[page] = sequence_name
+        
+        # Explain slides with sequences
+        return explain_slides_with_sequences(
+            self.engine, demo_pdf_path, demo_pdf_text, self.current_users,
+            self.hand_raised_counter, self.current_slide_num, self.exit_flag, 
+            self.known_faces, self.current_hand_raiser, sequence_mapping
+        )
     
-    def show_pdf_slides(self, pdf_text):
-        """Mostrar diapositivas del PDF y explicar"""
-        try:
-            if not os.path.exists(self.class_pdf):
-                print(f"PDF no encontrado, simulando presentación...")
-                self.simulate_presentation()
+    def run_final_exam_phase(self):
+        """Run final exam phase if enabled"""
+        if not self.config['use_final_exam'] or not self.config['final_exam_qr']:
+            return True
+            
+        print("\\n" + "="*60)
+        print("🎓 FASE FINAL: EXAMEN")
+        print("="*60)
+        
+        final_exam_qr = self.config['final_exam_qr']
+        print(f"🔍 Mostrando QR examen: {{final_exam_qr}}")
+        
+        if os.path.exists(final_exam_qr):
+            # Message from ADAI
+            speak_with_animation(self.engine, "Excelente trabajo. Ahora es momento del examen final.")
+            speak_with_animation(self.engine, "Por favor, escanea el código QR que aparecerá en pantalla.")
+            
+            # Show exam QR
+            show_final_exam_qr(final_exam_qr, display_time=40)
+            
+            # Final message
+            speak_with_animation(self.engine, "Perfecto. ¡Mucha suerte en el examen!")
+            speak_with_animation(self.engine, f"Gracias por participar en la clase: {{self.config['title']}}. ¡Hasta la próxima!")
                 return True
-            
-            print("Iniciando presentación...")
-            
-            # Crear ventana para presentación
-            cv2.namedWindow("Presentacion", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("Presentacion", 800, 600)
-            
-            with fitz.open(self.class_pdf) as doc:
-                total_slides = len(doc)
-                
-                for slide_num in range(total_slides):
-                    self.current_slide_num.value = slide_num + 1
-                    print(f"Diapositiva {{slide_num + 1}} de {{total_slides}}")
-                    
-                    # Obtener página
-                    page = doc[slide_num]
-                    
-                    # Convertir página a imagen
-                    pix = page.get_pixmap()
-                    img_data = np.frombuffer(pix.samples, dtype=np.uint8)
-                    img = img_data.reshape((pix.h, pix.w, pix.n))
-                    
-                    if pix.n == 4:  # RGBA
-                        img_bgr = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)
-                    elif pix.n == 3:  # RGB
-                        img_bgr = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-                    else:  # Escala de grises
-                        img_bgr = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-                    
-                    # Mostrar diapositiva
-                    cv2.imshow("Presentacion", img_bgr)
-                    cv2.waitKey(100)
-                    
-                    # Obtener texto de la página
-                    page_text = page.get_text()
-                    
-                    # Explicar diapositiva
-                    if page_text.strip():
-                        explanation = f"Diapositiva {{slide_num + 1}}: {{page_text[:200]}}..."
                     else:
-                        explanation = f"Diapositiva {{slide_num + 1}} contiene elementos visuales sobre {{self.class_subject}}"
-                    
-                    # Gesto de explicación para cada diapositiva
-                    if slide_num % 2 == 0:
-                        self.esp32_robot_gesture("explicar")
-                    else:
-                        self.esp32_robot_movement("mirar_izquierda")
-                        time.sleep(0.3)
-                        self.esp32_robot_movement("mirar_derecha")
-                        time.sleep(0.3)
-                        self.esp32_robot_movement("centrar")
-                    
-                    self.speak_with_animation(explanation)
-                    
-                    # Pausa entre diapositivas
-                    time.sleep(2)
-            
-            cv2.destroyWindow("Presentacion")
+            print(f"⚠️ No se encontró: {{final_exam_qr}}")
+            speak_with_animation(self.engine, "La clase ha terminado. ¡Gracias por participar!")
             return True
             
-        except Exception as e:
-            print(f"ERROR mostrando PDF: {{e}}")
-            self.simulate_presentation()
-            return True
-    
-    def simulate_presentation(self):
-        """Simular presentación cuando no hay PDF"""
-        print("Simulando presentación...")
+    def cleanup(self):
+        """Clean up resources"""
+        print("🛑 Finalizando clase")
+        if self.exit_flag:
+            self.exit_flag.value = 1
         
-        slides_content = [
-            f"Introducción a {{self.class_subject}}",
-            f"Conceptos fundamentales de {{self.class_subject}}",
-            f"Aplicaciones prácticas en {{self.class_subject}}",
-            f"Casos de estudio en {{self.class_subject}}",
-            f"Futuro y tendencias en {{self.class_subject}}",
-            f"Conclusiones sobre {{self.class_subject}}"
-        ]
+        if self.camera_proc and self.camera_proc.is_alive():
+            print("⏳ Esperando procesos...")
+            self.camera_proc.join(timeout=3)
+            
+            if self.camera_proc.is_alive():
+                self.camera_proc.terminate()
+                self.camera_proc.join(timeout=1)
         
-        for i, content in enumerate(slides_content):
-            self.current_slide_num.value = i + 1
-            print(f"Diapositiva simulada {{i + 1}}/{{len(slides_content)}}")
-            self.speak_with_animation(content)
-            time.sleep(3)
+        cv2.destroyAllWindows()
+        print("✅ Clase finalizada")
     
-    def run(self):
-        """Ejecutar la clase completa siguiendo el flujo de main.py"""
+    def run_complete_class(self):
+        """Run the complete class workflow"""
         try:
-            print("\\n" + "="*60)
-            print("FASE 1: EVALUACIÓN DIAGNÓSTICA")
-            print("="*60)
+            print(f"🚀 Iniciando clase: {{self.config['title']}}")
             
-            # Inicializar ESP32 y hacer gesto de saludo
-            print("🤖 Inicializando comunicación con ESP32...")
-            self.esp32_robot_movement("centrar")
-            time.sleep(1)
-            self.esp32_robot_gesture("saludo")
+            # Initialize systems
+            if not self.initialize_systems():
+                return False
             
-            # Mostrar evaluación diagnóstica
-            self.speak_with_animation("Bienvenidos a la clase. Comenzaremos con una evaluación diagnóstica.")
-            self.show_diagnostic_qr(display_time=15)
+            # Run diagnostic phase
+            if not self.run_diagnostic_phase():
+                print("⚠️ Error en fase diagnóstica, continuando...")
             
-            print("\\n" + "="*60)
-            print("FASE 2: INICIO DE CLASE")
-            print("="*60)
+            # Run class initialization
+            if not self.run_class_initialization():
+                print("❌ Error en inicialización de clase")
+                return False
             
-            # Saludo e introducción
-            self.speak_with_animation(f"Hola, soy ADAI. Hoy estudiaremos {{self.class_subject}}.")
+            # Run PDF phase
+            if not self.run_pdf_phase():
+                print("⚠️ Error en fase de presentación, continuando...")
             
-            # Gesto de explicación
-            self.esp32_robot_gesture("explicar")
+            # Run demo phase
+            if not self.run_demo_phase():
+                print("⚠️ Error en fase de demo, continuando...")
             
-            # Extraer texto del PDF
-            pdf_text = self.extract_text_from_pdf()
+            # Run final exam phase
+            if not self.run_final_exam_phase():
+                print("⚠️ Error en fase de examen, continuando...")
             
-            # Introducción al tema
-            self.speak_with_animation(f"En esta clase exploraremos los aspectos fundamentales de {{self.class_subject}}.")
-            
-            # Movimiento de cabeza para enfatizar
-            self.esp32_robot_movement("mirar_izquierda")
-            time.sleep(0.5)
-            self.esp32_robot_movement("mirar_derecha")
-            time.sleep(0.5)
-            self.esp32_robot_movement("centrar")
-            
-            print("\\n" + "="*60)
-            print("FASE 3: CONTENIDO PRINCIPAL")
-            print("="*60)
-            
-            # Mostrar presentación
-            self.speak_with_animation("Ahora comenzaremos con la presentación principal.")
-            
-            # Gesto de preparación
-            self.esp32_robot_gesture("pensar")
-            time.sleep(1)
-            
-            self.show_pdf_slides(pdf_text)
-            
-            print("\\n" + "="*60)
-            print("FASE 4: EXAMEN FINAL")  
-            print("="*60)
-            
-            # Examen final
-            self.speak_with_animation("Excelente trabajo. Ahora es momento del examen final.")
-            
-            # Gesto de aprobación
-            self.esp32_robot_gesture("ok")
-            
-            self.speak_with_animation("Por favor, escanea el código QR que aparecerá en pantalla.")
-            self.show_final_exam_qr(display_time=20)
-            
-            # Mensaje final
-            self.speak_with_animation("Perfecto. Mucha suerte en el examen.")
-            
-            # Gesto de despedida
-            self.esp32_robot_gesture("saludo")
-            time.sleep(1)
-            
-            self.speak_with_animation("Gracias por participar en esta clase con ADAI. Hasta la próxima.")
-            
-            # Movimiento final
-            self.esp32_robot_movement("centrar")
-            
-            print("\\n" + "="*60)
-            print("CLASE COMPLETADA EXITOSAMENTE")
-            print("="*60)
+            return True
             
         except Exception as e:
-            print(f"ERROR durante la ejecución: {{e}}")
+            print(f"❌ Error ejecutando clase: {{e}}")
             import traceback
             traceback.print_exc()
+            return False
         finally:
-            # Limpiar recursos
-            cv2.destroyAllWindows()
-            print("Recursos liberados")
+            self.cleanup()
 
 def main():
-    """Función principal"""
-    print("Iniciando clase generada por ADAI Class Builder...")
-    
+    """Main function to run the class"""
     try:
-        # Crear y ejecutar la clase
-        clase = {clean_name}()
-        clase.run()
+        # Create and run the class
+        class_instance = {clean_name}()
+        success = class_instance.run_complete_class()
         
-    except KeyboardInterrupt:
-        print("\\nClase interrumpida por el usuario")
+        if success:
+            print("✅ Clase completada exitosamente")
+        else:
+            print("❌ La clase tuvo errores")
+            
     except Exception as e:
-        print(f"ERROR fatal: {{e}}")
+        print(f"❌ Error en main: {{e}}")
         import traceback
         traceback.print_exc()
     finally:
         cv2.destroyAllWindows()
-        print("Fin de la clase")
+
+if __name__ == "__main__":
+    multiprocessing.freeze_support()
+    main()
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

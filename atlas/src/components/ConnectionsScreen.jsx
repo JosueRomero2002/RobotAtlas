@@ -99,8 +99,8 @@ export function ConnectionsScreen() {
     
     checkConnections()
     
-    // Check every 5 seconds
-    const interval = setInterval(checkConnections, 5000)
+    // Check every 10 seconds (reduced frequency)
+    const interval = setInterval(checkConnections, 10000)
     return () => clearInterval(interval)
   }, [])
 
