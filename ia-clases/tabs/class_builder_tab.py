@@ -8,8 +8,12 @@ from tkinter import ttk, messagebox, filedialog
 from .base_tab import BaseTab
 import os
 import datetime
+import time
 
-class ClassBuilderTab(BaseTab):
+# Import the final version
+from .class_builder_tab_final import ClassBuilderTabFinal
+
+class ClassBuilderTab(ClassBuilderTabFinal):
     """Simplified class builder tab based on main.py workflow"""
     
     def __init__(self, parent_gui, notebook):
@@ -705,381 +709,9 @@ class ClassBuilderTab(BaseTab):
             messagebox.showerror("Error", f"Error generando clase: {e}")
 
     def _generate_class_code(self):
-        """Generate class code using modular structure"""
-        class_title = self.class_title_var.get().strip()
-        class_subject = self.class_subject_var.get()
-        
-        clean_name = "".join(c for c in class_title if c.isalnum() or c in " _-").replace(" ", "_")
-        
-        # Mapear las materias a los QR codes correspondientes
-        subject_qr_mapping = {
-            "Robots Médicos": {
-                "diagnostic": "RobotsMedicosExamen/pruebadiagnosticaRobotsMedicos.jpeg",
-                "pdf": "RobotMedico.pdf",
-                "final_exam": "RobotsMedicosExamen/RobotsMedicosExamenI.jpeg"
-            },
-            "Exoesqueletos": {
-                "diagnostic": "ExoesqueletosExamen/pruebadiagnosticaExoesqueletos.jpeg", 
-                "pdf": "ExoesqueletosDeRehabilitacion.pdf",
-                "final_exam": "ExoesqueletosExamen/ExoesqueletosExamenI.jpeg"
-            },
-            "IoMT": {
-                "diagnostic": "DesafiosIoMTExamen/pruebadiagnosticaDesafiosIoMT.jpeg",
-                "pdf": "DesafiosDeIoMT.pdf", 
-                "final_exam": "DesafiosIoMTExamen/DesafiosIoMTExamenI.png"
-            },
-            "Robótica Industrial": {
-                "diagnostic": "RobotsMedicosExamen/pruebadiagnosticaRobotsMedicos.jpeg",
-                "pdf": "RobotMedico.pdf",
-                "final_exam": "RobotsMedicosExamen/RobotsMedicosExamenI.jpeg"
-            }
-        }
-        
-        # Obtener rutas según la materia seleccionada
-        selected_subject = subject_qr_mapping.get(class_subject, subject_qr_mapping["Robots Médicos"])
-        
-        diagnostic_qr = self.diagnostic_qr_path.get() or selected_subject["diagnostic"]
-        class_pdf = self.class_pdf_path.get() or selected_subject["pdf"] 
-        demo_pdf = self.demo_pdf_path.get() if self.demo_enabled.get() else ""
-        final_exam_qr = self.final_exam_qr_path.get() or selected_subject["final_exam"]
-        
-        # Generate demo sequences code if demo is enabled
-        demo_sequences_code = ""
-        if self.demo_enabled.get() and hasattr(self, 'demo_sequences') and self.demo_sequences:
-            demo_sequences_code = self._generate_demo_sequences_code()
-        
-        return f'''#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-{class_title}
-Materia: {class_subject}
-Generado por ADAI Class Builder el {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
-Clase automática usando estructura modular
-"""
-
-import cv2
-import os
-import time
-import multiprocessing
-from multiprocessing import Process, Value
-
-# Agregar el directorio de módulos al path
-import sys
-import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-# Los módulos están en el directorio padre (ia-clases/modules)
-parent_dir = os.path.dirname(current_dir)
-modules_dir = os.path.join(parent_dir, "modules")
-if modules_dir not in sys.path:
-    sys.path.insert(0, modules_dir)
-
-# Import modular functions
-from modules.config import client, script_dir, faces_dir, QR_PATHS, QUESTION_BANK, QUESTION_BANK_CHEM
-from modules.speech import initialize_tts, speak_with_animation, listen
-from modules.camera import verify_camera_for_iriun, camera_process, identify_users, load_known_faces
-from modules.qr import show_diagnostic_qr, show_final_exam_qr
-from modules.slides import show_pdf_page_in_opencv, extract_text_from_pdf, explain_slides_with_random_questions, explain_slides_with_sequences
-from modules.questions import RandomQuestionManager, evaluate_student_answer, process_question
-from modules.esp32 import execute_esp32_sequence
-from modules.utils import summarize_text, ask_openai
-
-# ======================
-#  CONFIGURACIÓN DE LA CLASE
-# ======================
-CLASS_CONFIG = {{
-    "name": "{clean_name}",
-    "title": "{class_title}",
-    "subject": "{class_subject}",
-    "diagnostic_qr": "{diagnostic_qr}",
-    "pdf_path": "{class_pdf}",
-    "demo_pdf_path": "{demo_pdf}",
-    "final_exam_qr": "{final_exam_qr}",
-    "use_diagnostic": True,
-    "use_pdf": True,
-    "use_demo": {str(self.demo_enabled.get()).lower()},
-    "use_final_exam": True
-}}
-
-{demo_sequences_code}
-
-class {clean_name}:
-    """
-    {class_title}
-    
-    Materia: {class_subject}
-    Generado por ADAI Class Builder
-    """
-    
-    def __init__(self):
-        self.config = CLASS_CONFIG
-        self.engine = None
-        self.current_users = []
-        self.known_faces = {{}}
-        self.hand_raised_counter = None
-        self.current_slide_num = None
-        self.exit_flag = None
-        self.current_hand_raiser = None
-        self.camera_proc = None
-        
-    def initialize_systems(self):
-        """Initialize TTS and other systems"""
-        print("🚀 Inicializando sistemas de {{self.config['name']}}")
-        
-        # Create multiprocessing variables
-        self.hand_raised_counter = multiprocessing.Value('i', 0)
-        self.current_slide_num = multiprocessing.Value('i', 1)
-        self.exit_flag = multiprocessing.Value('i', 0)
-        self.current_hand_raiser = multiprocessing.Value('i', -1)
-        
-        # Initialize TTS
-        self.engine = initialize_tts()
-        if not self.engine:
-            print("❌ No se pudo inicializar el motor TTS")
-            return False
-            
-        # Create faces directory
-        if not os.path.exists(faces_dir):
-            os.makedirs(faces_dir)
-            
-        return True
-    
-    def run_diagnostic_phase(self):
-        """Run diagnostic test phase if enabled"""
-        if not self.config['use_diagnostic'] or not self.config['diagnostic_qr']:
-            return True
-            
-        print("\\n" + "="*50)
-        print("📱 FASE 1: EVALUACIÓN DIAGNÓSTICA")
-        print("="*50)
-        
-        diagnostic_qr = self.config['diagnostic_qr']
-        print(f"🔍 Mostrando QR diagnóstico: {{diagnostic_qr}}")
-        
-        if os.path.exists(diagnostic_qr):
-            return show_diagnostic_qr(diagnostic_qr, display_time=40)
-        else:
-            print(f"⚠️ No se encontró: {{diagnostic_qr}}")
-            return True
-    
-    def run_class_initialization(self):
-        """Initialize class and identify users"""
-        print("\\n" + "="*50)
-        print("🤖 FASE 2: INICIO DE CLASE")
-        print("="*50)
-        
-        # Create window for animated face
-        cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("ADAI Robot Face", 600, 400)
-        
-        # Initial greeting
-        speak_with_animation(self.engine, f"Hola, soy ADAI. Bienvenidos a la clase: {{self.config['title']}}")
-        
-        # Verify camera
-        if not verify_camera_for_iriun():
-            print("⚠️ Problemas detectados con la cámara.")
-        
-        # Identify users
-        print("🔍 Identificando usuarios de izquierda a derecha...")
-        self.current_users, _ = identify_users(self.engine, self.current_slide_num, self.exit_flag)
-        
-        # Load known faces
-        self.known_faces = load_known_faces()
-        
-        # Start camera process
-        self.camera_proc = Process(
-            target=camera_process,
-            args=(self.hand_raised_counter, self.current_slide_num, self.exit_flag, self.current_hand_raiser, self.current_users)
-        )
-        self.camera_proc.daemon = True
-        self.camera_proc.start()
-        
-        print("⏳ Esperando a que la cámara se inicialice...")
-        time.sleep(3)
-        
-        return True
-    
-    def run_pdf_phase(self):
-        """Run PDF presentation phase if enabled"""
-        if not self.config['use_pdf'] or not self.config['pdf_path']:
-            return True
-            
-        print("\\n" + "="*50)
-        print("📚 FASE 3: PRESENTACIÓN DE CONTENIDO")
-        print("="*50)
-        
-        pdf_path = self.config['pdf_path']
-        if not os.path.exists(pdf_path):
-            print(f"❌ No se encontró el PDF: {{pdf_path}}")
-                return False
-            
-        # Extract text from PDF
-        pdf_text = extract_text_from_pdf(pdf_path)
-        if not pdf_text:
-            print("❌ No se pudo leer el PDF")
-                return False
-            
-        # Start presentation
-        speak_with_animation(self.engine, f"Ahora comenzaremos con la presentación sobre {{self.config['subject']}}.")
-        
-        # Explain slides with random questions
-        return explain_slides_with_random_questions(
-            self.engine, pdf_path, pdf_text, self.current_users,
-            self.hand_raised_counter, self.current_slide_num, self.exit_flag, 
-            self.known_faces, self.current_hand_raiser
-        )
-    
-    def run_demo_phase(self):
-        """Run demo phase if enabled"""
-        if not self.config['use_demo'] or not self.config['demo_pdf_path']:
-            return True
-            
-        print("\\n" + "="*50)
-        print("🎬 FASE 4: DEMOSTRACIÓN PRÁCTICA")
-        print("="*50)
-        
-        demo_pdf_path = self.config['demo_pdf_path']
-        if not os.path.exists(demo_pdf_path):
-            print(f"❌ No se encontró el PDF de demo: {{demo_pdf_path}}")
-                return False
-            
-        # Extract text from demo PDF
-        demo_pdf_text = extract_text_from_pdf(demo_pdf_path)
-        if not demo_pdf_text:
-            print("❌ No se pudo leer el PDF de demo")
-                return False
-            
-        # Start demo presentation
-        speak_with_animation(self.engine, "Ahora realizaremos una demostración práctica paso a paso.")
-        
-        # Generate sequence mapping from demo sequences
-        sequence_mapping = {{}}
-        if hasattr(self, 'demo_sequences') and self.demo_sequences:
-            for seq in self.demo_sequences:
-                page = seq.get('page', 1)
-                sequence_name = seq.get('sequence_name', 'Rutina1')
-                sequence_mapping[page] = sequence_name
-        
-        # Explain slides with sequences
-        return explain_slides_with_sequences(
-            self.engine, demo_pdf_path, demo_pdf_text, self.current_users,
-            self.hand_raised_counter, self.current_slide_num, self.exit_flag, 
-            self.known_faces, self.current_hand_raiser, sequence_mapping
-        )
-    
-    def run_final_exam_phase(self):
-        """Run final exam phase if enabled"""
-        if not self.config['use_final_exam'] or not self.config['final_exam_qr']:
-            return True
-            
-        print("\\n" + "="*60)
-        print("🎓 FASE FINAL: EXAMEN")
-        print("="*60)
-        
-        final_exam_qr = self.config['final_exam_qr']
-        print(f"🔍 Mostrando QR examen: {{final_exam_qr}}")
-        
-        if os.path.exists(final_exam_qr):
-            # Message from ADAI
-            speak_with_animation(self.engine, "Excelente trabajo. Ahora es momento del examen final.")
-            speak_with_animation(self.engine, "Por favor, escanea el código QR que aparecerá en pantalla.")
-            
-            # Show exam QR
-            show_final_exam_qr(final_exam_qr, display_time=40)
-            
-            # Final message
-            speak_with_animation(self.engine, "Perfecto. ¡Mucha suerte en el examen!")
-            speak_with_animation(self.engine, f"Gracias por participar en la clase: {{self.config['title']}}. ¡Hasta la próxima!")
-                return True
-                    else:
-            print(f"⚠️ No se encontró: {{final_exam_qr}}")
-            speak_with_animation(self.engine, "La clase ha terminado. ¡Gracias por participar!")
-            return True
-            
-    def cleanup(self):
-        """Clean up resources"""
-        print("🛑 Finalizando clase")
-        if self.exit_flag:
-            self.exit_flag.value = 1
-        
-        if self.camera_proc and self.camera_proc.is_alive():
-            print("⏳ Esperando procesos...")
-            self.camera_proc.join(timeout=3)
-            
-            if self.camera_proc.is_alive():
-                self.camera_proc.terminate()
-                self.camera_proc.join(timeout=1)
-        
-        cv2.destroyAllWindows()
-        print("✅ Clase finalizada")
-    
-    def run_complete_class(self):
-        """Run the complete class workflow"""
-        try:
-            print(f"🚀 Iniciando clase: {{self.config['title']}}")
-            
-            # Initialize systems
-            if not self.initialize_systems():
-                return False
-            
-            # Run diagnostic phase
-            if not self.run_diagnostic_phase():
-                print("⚠️ Error en fase diagnóstica, continuando...")
-            
-            # Run class initialization
-            if not self.run_class_initialization():
-                print("❌ Error en inicialización de clase")
-                return False
-            
-            # Run PDF phase
-            if not self.run_pdf_phase():
-                print("⚠️ Error en fase de presentación, continuando...")
-            
-            # Run demo phase
-            if not self.run_demo_phase():
-                print("⚠️ Error en fase de demo, continuando...")
-            
-            # Run final exam phase
-            if not self.run_final_exam_phase():
-                print("⚠️ Error en fase de examen, continuando...")
-            
-            return True
-            
-        except Exception as e:
-            print(f"❌ Error ejecutando clase: {{e}}")
-            import traceback
-            traceback.print_exc()
-            return False
-        finally:
-            self.cleanup()
-
-def main():
-    """Main function to run the class"""
-    try:
-        # Create and run the class
-        class_instance = {clean_name}()
-        success = class_instance.run_complete_class()
-        
-        if success:
-            print("✅ Clase completada exitosamente")
-        else:
-            print("❌ La clase tuvo errores")
-            
-    except Exception as e:
-        print(f"❌ Error en main: {{e}}")
-        import traceback
-        traceback.print_exc()
-    finally:
-        cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    multiprocessing.freeze_support()
-    main()
-
-if __name__ == "__main__":
-    multiprocessing.freeze_support()
-    main()
-'''
+        """Generate class code using the final corrected version"""
+        # Use the final version's method
+        return self._generate_final_class_code()
 
     def save_generated_class(self):
         """Save the generated class to its own folder"""
@@ -1098,63 +730,144 @@ if __name__ == "__main__":
             description = self.class_description_var.get()
             duration = self.class_duration_var.get()
             
-            # Usar el ClassManager para guardar la clase
-            if hasattr(self.parent_gui, 'class_manager') and self.parent_gui.class_manager:
-                success = self.parent_gui.class_manager.save_class_file(
-                    class_name=suggested_name,
-                    content=self.generated_class_code,
-                    title=title,
-                    subject=subject,
-                    description=description,
-                    duration=duration
-                )
-                
-                if success:
-                    self.update_class_status(f"✅ Clase guardada en su carpeta: {clean_name}")
-                    messagebox.showinfo("Éxito", f"Clase guardada en carpeta: {clean_name}")
-                    
-                    # Agregar recursos si están seleccionados
-                    self.add_selected_resources_to_class(suggested_name)
-                else:
-                    messagebox.showerror("Error", "Error guardando la clase")
-            else:
-                messagebox.showerror("Error", "Class Manager no disponible")
+            # Crear directorio para la clase
+            classes_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "clases")
+            class_folder = os.path.join(classes_dir, f"{clean_name}_clase")
+            
+            if not os.path.exists(class_folder):
+                os.makedirs(class_folder)
+            
+            # Guardar archivo de la clase
+            class_file_path = os.path.join(class_folder, suggested_name)
+            with open(class_file_path, 'w', encoding='utf-8') as f:
+                f.write(self.generated_class_code)
+            
+            # Crear class_config.json
+            config_data = {
+                "title": title,
+                "subject": subject,
+                "description": description,
+                "duration": duration,
+                "created_at": datetime.datetime.now().isoformat(),
+                "main_file": suggested_name,
+                "folder_name": f"{clean_name}_clase"
+            }
+            
+            config_file_path = os.path.join(class_folder, "class_config.json")
+            with open(config_file_path, 'w', encoding='utf-8') as f:
+                import json
+                json.dump(config_data, f, indent=2, ensure_ascii=False)
+            
+            # Copiar recursos si están seleccionados
+            self.copy_selected_resources_to_class(class_folder)
+            
+            # Actualizar metadata
+            self.update_classes_metadata(class_file_path, clean_name, config_data)
+            
+            self.update_class_status(f"✅ Clase guardada en: {class_folder}")
+            messagebox.showinfo("Éxito", f"Clase guardada exitosamente en:\n{class_folder}")
                 
         except Exception as e:
+            self.update_class_status(f"❌ Error: {e}")
             messagebox.showerror("Error", f"Error guardando: {e}")
     
-    def add_selected_resources_to_class(self, class_name):
-        """Agregar recursos seleccionados a la clase"""
+    def copy_selected_resources_to_class(self, class_folder):
+        """Copiar recursos seleccionados a la carpeta de la clase"""
         try:
-            if not hasattr(self.parent_gui, 'class_manager') or not self.parent_gui.class_manager:
-                return
+            import shutil
             
-            # Agregar QR diagnóstico si está seleccionado
-            if self.diagnostic_qr_path.get():
-                self.parent_gui.class_manager.add_resource_to_class(
-                    class_name, 
-                    self.diagnostic_qr_path.get(), 
-                    "qrs"
-                )
+            # Crear subdirectorios
+            qrs_dir = os.path.join(class_folder, "qrs")
+            pdfs_dir = os.path.join(class_folder, "pdfs")
             
-            # Agregar PDF si está seleccionado
-            if self.class_pdf_path.get():
-                self.parent_gui.class_manager.add_resource_to_class(
-                    class_name, 
-                    self.class_pdf_path.get(), 
-                    "pdfs"
-                )
+            if not os.path.exists(qrs_dir):
+                os.makedirs(qrs_dir)
+            if not os.path.exists(pdfs_dir):
+                os.makedirs(pdfs_dir)
             
-            # Agregar QR examen final si está seleccionado
-            if self.final_exam_qr_path.get():
-                self.parent_gui.class_manager.add_resource_to_class(
-                    class_name, 
-                    self.final_exam_qr_path.get(), 
-                    "qrs"
-                )
+            # Copiar QR diagnóstico si está seleccionado
+            if self.diagnostic_qr_path.get() and os.path.exists(self.diagnostic_qr_path.get()):
+                src = self.diagnostic_qr_path.get()
+                dst = os.path.join(qrs_dir, os.path.basename(src))
+                shutil.copy2(src, dst)
+                print(f"✅ QR diagnóstico copiado: {dst}")
+            
+            # Copiar PDF de clase si está seleccionado
+            if self.class_pdf_path.get() and os.path.exists(self.class_pdf_path.get()):
+                src = self.class_pdf_path.get()
+                dst = os.path.join(pdfs_dir, os.path.basename(src))
+                shutil.copy2(src, dst)
+                print(f"✅ PDF de clase copiado: {dst}")
+            
+            # Copiar PDF de demo si está seleccionado
+            if self.demo_pdf_path.get() and os.path.exists(self.demo_pdf_path.get()):
+                src = self.demo_pdf_path.get()
+                dst = os.path.join(pdfs_dir, f"demo_{os.path.basename(src)}")
+                shutil.copy2(src, dst)
+                print(f"✅ PDF de demo copiado: {dst}")
+            
+            # Copiar QR examen final si está seleccionado
+            if self.final_exam_qr_path.get() and os.path.exists(self.final_exam_qr_path.get()):
+                src = self.final_exam_qr_path.get()
+                dst = os.path.join(qrs_dir, f"final_{os.path.basename(src)}")
+                shutil.copy2(src, dst)
+                print(f"✅ QR examen final copiado: {dst}")
                 
         except Exception as e:
-            print(f"⚠️ Error agregando recursos: {e}")
+            print(f"⚠️ Error copiando recursos: {e}")
+    
+    def update_classes_metadata(self, class_file_path, clean_name, config_data):
+        """Actualizar el archivo de metadata de clases"""
+        try:
+            import json
+            
+            # Ruta al archivo de metadata
+            classes_dir = os.path.dirname(os.path.dirname(class_file_path))
+            metadata_file = os.path.join(classes_dir, "classes_metadata.json")
+            
+            # Cargar metadata existente o crear nueva
+            if os.path.exists(metadata_file):
+                with open(metadata_file, 'r', encoding='utf-8') as f:
+                    metadata = json.load(f)
+            else:
+                metadata = {"classes": []}
+            
+            # Crear entrada para la nueva clase
+            class_entry = {
+                "name": f"{clean_name}_clase.py",
+                "folder": f"{clean_name}_clase",
+                "file_path": class_file_path.replace("\\", "/"),
+                "folder_path": os.path.dirname(class_file_path).replace("\\", "/"),
+                "modified": datetime.datetime.now().isoformat(),
+                "size": os.path.getsize(class_file_path),
+                "title": config_data["title"],
+                "subject": config_data["subject"],
+                "description": config_data["description"],
+                "duration": config_data["duration"],
+                "created_at": config_data["created_at"],
+                "resources": {
+                    "files": [{"name": f"{clean_name}_clase.py", "path": class_file_path.replace("\\", "/"), "size": os.path.getsize(class_file_path), "modified": datetime.datetime.now().isoformat()}],
+                    "images": [],
+                    "pdfs": [],
+                    "qrs": [],
+                    "demo": [],
+                    "other": [{"name": "class_config.json", "path": os.path.join(os.path.dirname(class_file_path), "class_config.json").replace("\\", "/"), "size": 0, "modified": datetime.datetime.now().isoformat()}]
+                },
+                "config": config_data
+            }
+            
+            # Agregar nueva clase
+            metadata["classes"].append(class_entry)
+            metadata["last_scan"] = datetime.datetime.now().isoformat()
+            
+            # Guardar metadata actualizada
+            with open(metadata_file, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, indent=2, ensure_ascii=False)
+            
+            print(f"✅ Metadata actualizada para: {clean_name}")
+            
+        except Exception as e:
+            print(f"⚠️ Error actualizando metadata: {e}")
     
     def notify_new_class_created(self, file_path, class_name):
         """Notificar al sistema que se creó una nueva clase"""
@@ -1204,30 +917,32 @@ if __name__ == "__main__":
                 
             self.update_class_status("🚀 Ejecutando...")
             
-            # Save the generated code to a temporary file and execute it
-            import tempfile
-            import subprocess
-            import sys
-            
-            # Create a temporary file with the generated code
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as temp_file:
-                temp_file.write(self.generated_class_code)
-                temp_file_path = temp_file.name
+            # Crear archivo temporal en el directorio de clases
+            classes_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "clases")
+            temp_class_name = f"temp_class_{int(time.time())}.py"
+            temp_file_path = os.path.join(classes_dir, temp_class_name)
             
             try:
-                # Execute the class in a separate process to ensure proper OpenCV window display
+                # Guardar código generado en archivo temporal
+                with open(temp_file_path, 'w', encoding='utf-8') as f:
+                    f.write(self.generated_class_code)
+                
+                # Ejecutar en proceso separado
                 def execute_process():
                     try:
-                        # Run the class in a separate Python process
+                        import subprocess
+                        import sys
+                        
+                        # Cambiar al directorio de clases para que los imports funcionen
                         result = subprocess.run([
                             sys.executable, 
                             temp_file_path
                         ], 
-                        capture_output=False,  # Don't capture output to allow OpenCV windows
+                        capture_output=False,  # No capturar output para permitir ventanas OpenCV
                         text=True,
-                        cwd=os.getcwd())
+                        cwd=classes_dir)
                         
-                        # Update status after execution
+                        # Actualizar estado después de la ejecución
                         self.parent_gui.root.after(0, lambda: self.update_class_status("✅ Ejecutado exitosamente"))
                         
                     except Exception as e:
@@ -1235,20 +950,22 @@ if __name__ == "__main__":
                         self.parent_gui.root.after(0, lambda: self.update_class_status(error_msg))
                         self.parent_gui.root.after(0, lambda: messagebox.showerror("Error de Ejecución", f"Error ejecutando la clase:\n{str(e)}"))
                     finally:
-                        # Clean up temporary file
+                        # Limpiar archivo temporal
                         try:
-                            os.unlink(temp_file_path)
+                            if os.path.exists(temp_file_path):
+                                os.unlink(temp_file_path)
                         except:
                             pass
                 
-                # Execute in a separate thread to avoid blocking UI
+                # Ejecutar en hilo separado para no bloquear UI
                 import threading
                 threading.Thread(target=execute_process, daemon=True).start()
                 
             except Exception as e:
-                # Clean up temporary file on error
+                # Limpiar archivo temporal en caso de error
                 try:
-                    os.unlink(temp_file_path)
+                    if os.path.exists(temp_file_path):
+                        os.unlink(temp_file_path)
                 except:
                     pass
                 raise e

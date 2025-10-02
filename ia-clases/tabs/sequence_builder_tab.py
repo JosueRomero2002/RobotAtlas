@@ -579,8 +579,7 @@ class SequenceBuilderTab(BaseTab):
     def on_arm_change(self, arm_part, value):
         """Handle arm control changes"""
         try:
-            if not self.esp32_connected:
-                return
+            print(f"💪 [ARM] on_arm_change called: {arm_part} = {value}")
             
             # Get current arm positions
             bi = self.left_brazo_var.get()
@@ -591,17 +590,23 @@ class SequenceBuilderTab(BaseTab):
             hd = self.right_high_var.get()
             pd = self.right_pollo_var.get()
             
-            # Send movement command to ESP32
-            if self.esp32_client and not self.debug_mode:
+            print(f"💪 [ARM] Current positions: BI={bi}, FI={fi}, HI={hi}, BD={bd}, FD={fd}, HD={hd}, PD={pd}")
+            
+            # Send movement command to ESP32 (only if connected)
+            if self.esp32_connected and self.esp32_client and not self.debug_mode:
                 self.esp32_client.send_movement(bi, bd, fi, fd, hi, hd, pd)
             
             # Log command in debug mode
             if self.debug_mode:
                 print(f"🐛 [DEBUG] ESP32 Movement Command: bi={bi}, bd={bd}, fi={fi}, fd={fd}, hi={hi}, hd={hd}, pd={pd}")
             
-            # If recording, add to current movement
+            # If recording, add to current movement (always update when recording)
             if self.is_recording:
+                print(f"💪 [ARM] Recording is active, calling update_current_movement")
                 self.update_current_movement()
+                print(f"📝 [RECORDING] Arm position captured: BI={bi}, FI={fi}, HI={hi}, BD={bd}, FD={fd}, HD={hd}, PD={pd}")
+            else:
+                print(f"💪 [ARM] Not recording, skipping update")
 
             # Update simulator if enabled
             if hasattr(self, 'sim_enabled_var') and self.sim_enabled_var.get():
@@ -610,6 +615,42 @@ class SequenceBuilderTab(BaseTab):
 
         except Exception as e:
             print(f"❌ Error handling arm change: {e}")
+    
+    def on_neck_change(self, neck_part, value):
+        """Handle neck control changes"""
+        try:
+            print(f"🦴 [NECK] on_neck_change called: {neck_part} = {value}")
+            
+            # Get current neck positions
+            lateral = self.cuello_lateral_var.get()
+            inferior = self.cuello_inferior_var.get()
+            superior = self.cuello_superior_var.get()
+            
+            print(f"🦴 [NECK] Current positions: L={lateral}, I={inferior}, S={superior}")
+            
+            # Send neck movement command to ESP32 (only if connected)
+            if self.esp32_connected and self.esp32_client and not self.debug_mode:
+                self.esp32_client.send_neck_movement(lateral, inferior, superior)
+            
+            # Log command in debug mode
+            if self.debug_mode:
+                print(f"🐛 [DEBUG] ESP32 Neck Command: lateral={lateral}, inferior={inferior}, superior={superior}")
+            
+            # If recording, add to current movement (always update when recording)
+            if self.is_recording:
+                print(f"🦴 [NECK] Recording is active, calling update_current_movement")
+                self.update_current_movement()
+                print(f"📝 [RECORDING] Neck position captured: L={lateral}, I={inferior}, S={superior}")
+            else:
+                print(f"🦴 [NECK] Not recording, skipping update")
+
+            # Update simulator if enabled
+            if hasattr(self, 'sim_enabled_var') and self.sim_enabled_var.get():
+                if hasattr(self, 'realtime_update_var') and self.realtime_update_var.get():
+                    self.update_simulator_position()
+
+        except Exception as e:
+            print(f"❌ Error handling neck change: {e}")
     
     def on_finger_change(self, hand, finger, value):
         """Handle finger control changes"""
@@ -739,6 +780,10 @@ class SequenceBuilderTab(BaseTab):
                 self.right_frente_var = tk.IntVar(value=90)
                 self.right_high_var = tk.IntVar(value=80)
                 self.right_pollo_var = tk.IntVar(value=45)
+                # Variables de cuello
+                self.cuello_lateral_var = tk.IntVar(value=155)
+                self.cuello_inferior_var = tk.IntVar(value=95)
+                self.cuello_superior_var = tk.IntVar(value=110)
 
             tk.Label(left_arm_frame, text="Brazo:", bg='#4d4d4d', fg='#ffffff',
                     font=('Arial', 9)).pack(anchor="w")
@@ -795,6 +840,37 @@ class SequenceBuilderTab(BaseTab):
                                     highlightthickness=0, command=lambda v: self.on_arm_change('right_pollo', v))
             right_pollo_scale.pack(fill="x", pady=(0, 5))
             
+        # Neck Control Section
+            neck_frame = tk.LabelFrame(self.controls_container, text="🦴 Neck Control",
+                                  font=('Arial', 12, 'bold'),
+                                  bg='#3d3d3d', fg='#ffffff')
+            neck_frame.pack(fill="x", pady=(0, 10))
+            
+            neck_content = tk.Frame(neck_frame, bg='#3d3d3d')
+            neck_content.pack(fill="x", padx=10, pady=10)
+            
+            # Neck controls
+            tk.Label(neck_content, text="Lateral:", bg='#3d3d3d', fg='#ffffff',
+                    font=('Arial', 9)).pack(anchor="w")
+            cuello_lateral_scale = tk.Scale(neck_content, from_=0, to=180, orient="horizontal",
+                                          variable=self.cuello_lateral_var, bg='#3d3d3d', fg='#ffffff',
+                                          highlightthickness=0, command=lambda v: self.on_neck_change('lateral', v))
+            cuello_lateral_scale.pack(fill="x", pady=(0, 5))
+            
+            tk.Label(neck_content, text="Inferior:", bg='#3d3d3d', fg='#ffffff',
+                    font=('Arial', 9)).pack(anchor="w")
+            cuello_inferior_scale = tk.Scale(neck_content, from_=0, to=180, orient="horizontal",
+                                           variable=self.cuello_inferior_var, bg='#3d3d3d', fg='#ffffff',
+                                           highlightthickness=0, command=lambda v: self.on_neck_change('inferior', v))
+            cuello_inferior_scale.pack(fill="x", pady=(0, 5))
+            
+            tk.Label(neck_content, text="Superior:", bg='#3d3d3d', fg='#ffffff',
+                    font=('Arial', 9)).pack(anchor="w")
+            cuello_superior_scale = tk.Scale(neck_content, from_=0, to=180, orient="horizontal",
+                                           variable=self.cuello_superior_var, bg='#3d3d3d', fg='#ffffff',
+                                           highlightthickness=0, command=lambda v: self.on_neck_change('superior', v))
+            cuello_superior_scale.pack(fill="x", pady=(0, 5))
+            
         # Hands Control Section
             hands_frame = tk.LabelFrame(self.controls_container, text="✋ Hands Control",
                                   font=('Arial', 12, 'bold'),
@@ -838,6 +914,10 @@ class SequenceBuilderTab(BaseTab):
                 self.right_frente_var = tk.IntVar(value=90)
                 self.right_high_var = tk.IntVar(value=80)
                 self.right_pollo_var = tk.IntVar(value=45)
+                # Variables de cuello
+                self.cuello_lateral_var = tk.IntVar(value=155)
+                self.cuello_inferior_var = tk.IntVar(value=95)
+                self.cuello_superior_var = tk.IntVar(value=110)
 
         # Left arm arrows
             left_arm_frame = tk.LabelFrame(arms_content, text="Left Arm",
@@ -859,6 +939,20 @@ class SequenceBuilderTab(BaseTab):
             self.create_arm_arrow_control(right_arm_frame, "Frente", self.right_frente_var, 0, 180, 'right_frente')
             self.create_arm_arrow_control(right_arm_frame, "High", self.right_high_var, 0, 180, 'right_high')
             self.create_arm_arrow_control(right_arm_frame, "Pollo", self.right_pollo_var, 0, 90, 'right_pollo')
+
+        # Neck Control Section
+            neck_frame = tk.LabelFrame(self.controls_container, text="🦴 Neck Control",
+                                  font=('Arial', 12, 'bold'),
+                                  bg='#3d3d3d', fg='#ffffff')
+            neck_frame.pack(fill="x", pady=(0, 10))
+            
+            neck_content = tk.Frame(neck_frame, bg='#3d3d3d')
+            neck_content.pack(fill="x", padx=10, pady=10)
+            
+            # Neck arrow controls
+            self.create_neck_arrow_control(neck_content, "Lateral", self.cuello_lateral_var, 0, 180, 'lateral')
+            self.create_neck_arrow_control(neck_content, "Inferior", self.cuello_inferior_var, 0, 180, 'inferior')
+            self.create_neck_arrow_control(neck_content, "Superior", self.cuello_superior_var, 0, 180, 'superior')
 
             # Hands Control Section
             hands_frame = tk.LabelFrame(self.controls_container, text="✋ Hands Control",
@@ -928,6 +1022,38 @@ class SequenceBuilderTab(BaseTab):
         increase_btn = tk.Button(arrows_frame, text="➡️", bg='#28a745', fg='#ffffff',
                                 font=('Arial', 10, 'bold'), width=3,
                                 command=lambda: self.adjust_arm_value(variable, step, min_val, max_val, arm_type))
+        increase_btn.pack(side="right", padx=2)
+
+    def create_neck_arrow_control(self, parent, label, variable, min_val, max_val, neck_type):
+        """Create arrow control for neck joints"""
+        control_frame = tk.Frame(parent, bg='#3d3d3d')
+        control_frame.pack(fill="x", pady=2)
+
+        # Label and current value
+        label_frame = tk.Frame(control_frame, bg='#3d3d3d')
+        label_frame.pack(fill="x")
+
+        tk.Label(label_frame, text=f"{label}:", bg='#3d3d3d', fg='#ffffff',
+            font=('Arial', 8)).pack(side="left")
+
+        value_label = tk.Label(label_frame, textvariable=variable, bg='#3d3d3d', fg='#00ff00',
+                          font=('Arial', 8, 'bold'))
+        value_label.pack(side="right")
+
+        # Arrow buttons
+        arrows_frame = tk.Frame(control_frame, bg='#3d3d3d')
+        arrows_frame.pack(fill="x")
+
+        step = 5  # Step size for neck movements
+
+        decrease_btn = tk.Button(arrows_frame, text="⬅️", bg='#dc3545', fg='#ffffff',
+                                font=('Arial', 10, 'bold'), width=3,
+                                command=lambda: self.adjust_neck_value(variable, -step, min_val, max_val, neck_type))
+        decrease_btn.pack(side="left", padx=2)
+
+        increase_btn = tk.Button(arrows_frame, text="➡️", bg='#28a745', fg='#ffffff',
+                                font=('Arial', 10, 'bold'), width=3,
+                                command=lambda: self.adjust_neck_value(variable, step, min_val, max_val, neck_type))
         increase_btn.pack(side="right", padx=2)
 
     def create_hand_slider_controls(self, parent):
@@ -1208,6 +1334,13 @@ class SequenceBuilderTab(BaseTab):
             new_value = max(min_val, min(max_val, current + delta))
             variable.set(new_value)
             self.on_arm_change(arm_type, new_value)
+
+    def adjust_neck_value(self, variable, delta, min_val, max_val, neck_type):
+            """Adjust neck joint value and trigger command"""
+            current = variable.get()
+            new_value = max(min_val, min(max_val, current + delta))
+            variable.set(new_value)
+            self.on_neck_change(neck_type, new_value)
 
     def adjust_finger_value(self, variable, delta, hand, finger):
             """Adjust finger value and trigger command"""
@@ -2829,7 +2962,10 @@ class SequenceBuilderTab(BaseTab):
         """Update current movement with current arm positions"""
         try:
             if not self.is_recording:
+                print("⚠️ [DEBUG] update_current_movement called but not recording")
                 return
+            
+            print("🔄 [DEBUG] update_current_movement called - updating positions")
             
             # Get current arm positions
             bi = self.left_brazo_var.get()
@@ -2839,6 +2975,11 @@ class SequenceBuilderTab(BaseTab):
             fd = self.right_frente_var.get()
             hd = self.right_high_var.get()
             pd = self.right_pollo_var.get()
+            
+            # Get current neck positions
+            lateral = self.cuello_lateral_var.get()
+            inferior = self.cuello_inferior_var.get()
+            superior = self.cuello_superior_var.get()
             
             # Update current movement
             if self.current_movement is None:
@@ -2874,6 +3015,18 @@ class SequenceBuilderTab(BaseTab):
                     "description": f"Arm movement {self.movement_counter}",
                     "timestamp": time.time()
                 })
+            
+            # Always create new CUELLO action (like BRAZOS)
+            self.current_movement["actions"].append({
+                "command": "CUELLO",
+                "parameters": {
+                    "L": lateral, "I": inferior, "S": superior
+                },
+                "duration": 1000,
+                "description": f"Captured Position {len(self.current_movement['actions']) + 1}",
+                "timestamp": time.time()
+            })
+            print(f"➕ [CREATE] New neck action created: L={lateral}, I={inferior}, S={superior}")
             
             # Update sequence display
             self.update_sequence_display()

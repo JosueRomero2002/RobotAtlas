@@ -1,9 +1,0 @@
-{
-  "title": "Clase de Prueba Modular",
-  "subject": "Robótica",
-  "description": "Clase de prueba para verificar estructura modular",
-  "duration": "10 minutos",
-  "created_at": "2025-09-15T09:10:46.372251",
-  "main_file": "TestModularClass",
-  "folder_name": "testmodularclass"
-}
