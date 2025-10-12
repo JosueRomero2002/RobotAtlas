@@ -28,7 +28,35 @@ class ClassBuilderTabFinal(BaseTab):
         self.class_pdf_path = tk.StringVar()
         self.final_exam_qr_path = tk.StringVar()
         
+        # Question bank variables
+        self.selected_question_bank = tk.StringVar(value="Preguntas Generales de Química")
+        self.available_question_banks = {}
+        
         self.generated_class_code = ""
+        
+        # Cargar bancos de preguntas disponibles
+        self.load_question_banks()
+        
+    def load_question_banks(self):
+        """Cargar bancos de preguntas desde demo_sequence_manager.py"""
+        try:
+            # Importar el extractor de preguntas
+            import sys
+            import os
+            current_dir = os.path.dirname(os.path.dirname(__file__))
+            extractor_path = os.path.join(current_dir, "question_bank_extractor.py")
+            
+            if os.path.exists(extractor_path):
+                sys.path.insert(0, current_dir)
+                from question_bank_extractor import get_available_question_banks
+                self.available_question_banks = get_available_question_banks()
+                print(f"✅ Cargados {len(self.available_question_banks)} bancos de preguntas")
+            else:
+                print("⚠️ No se encontró question_bank_extractor.py")
+                self.available_question_banks = {}
+        except Exception as e:
+            print(f"❌ Error cargando bancos de preguntas: {e}")
+            self.available_question_banks = {}
         
     def setup_tab_content(self):
         """Setup the class builder tab content"""
@@ -55,8 +83,9 @@ class ClassBuilderTabFinal(BaseTab):
         self.setup_step_1_basic_info(workflow_frame)
         self.setup_step_2_diagnostic_test(workflow_frame)
         self.setup_step_3_class_content(workflow_frame)
-        self.setup_step_4_final_exam(workflow_frame)
-        self.setup_step_5_class_generation(workflow_frame)
+        self.setup_step_4_question_bank(workflow_frame)
+        self.setup_step_5_final_exam(workflow_frame)
+        self.setup_step_6_class_generation(workflow_frame)
         
     def setup_step_1_basic_info(self, parent):
         """Step 1: Basic class information"""
@@ -143,16 +172,121 @@ class ClassBuilderTabFinal(BaseTab):
         
         tk.Button(qr_input_frame, text="📁 Seleccionar QR", bg='#9C27B0', fg='#ffffff',
                  font=('Arial', 9, 'bold'), 
-                 command=lambda: self.select_qr_file(self.final_exam_qr_path)).pack(side="right", padx=(10, 0))
+                   command=lambda: self.select_qr_file(self.final_exam_qr_path)).pack(side="right", padx=(10, 0))
         
-    def setup_step_5_class_generation(self, parent):
-        """Step 5: Class generation and execution"""
-        step5_frame = tk.LabelFrame(parent, text="🚀 Paso 5: Generación y Ejecución", 
+    def setup_step_4_question_bank(self, parent):
+        """Step 4: Question bank selection"""
+        step4_frame = tk.LabelFrame(parent, text="❓ Paso 4: Banco de Preguntas", 
                                    font=('Arial', 14, 'bold'),
                                    bg='#2d2d2d', fg='#ffffff')
-        step5_frame.pack(fill="both", expand=True)
+        step4_frame.pack(fill="x", pady=(0, 15))
+        
+        content_frame = tk.Frame(step4_frame, bg='#2d2d2d')
+        content_frame.pack(fill="x", padx=20, pady=15)
+        
+        # Question bank selection
+        selection_frame = tk.Frame(content_frame, bg='#2d2d2d')
+        selection_frame.pack(fill="x", pady=(0, 10))
+        
+        tk.Label(selection_frame, text="Seleccionar Banco de Preguntas:", 
+                bg='#2d2d2d', fg='#ffffff', font=('Arial', 10, 'bold')).pack(anchor="w")
+        
+        # Dropdown for question bank selection
+        bank_options = list(self.available_question_banks.keys()) if self.available_question_banks else ["Sin bancos disponibles"]
+        if not self.available_question_banks:
+            bank_options = ["Preguntas Generales de Química", "Preguntas Específicas de Química"]
+        
+        bank_dropdown = ttk.Combobox(selection_frame, textvariable=self.selected_question_bank,
+                                   values=bank_options, state="readonly", width=40)
+        bank_dropdown.pack(fill="x", pady=(5, 0))
+        
+        # Question preview
+        preview_frame = tk.Frame(content_frame, bg='#2d2d2d')
+        preview_frame.pack(fill="both", expand=True, pady=(10, 0))
+        
+        tk.Label(preview_frame, text="Vista Previa de Preguntas:", 
+                bg='#2d2d2d', fg='#ffffff', font=('Arial', 10, 'bold')).pack(anchor="w")
+        
+        # Listbox for question preview
+        listbox_frame = tk.Frame(preview_frame, bg='#2d2d2d')
+        listbox_frame.pack(fill="both", expand=True, pady=(5, 0))
+        
+        self.questions_preview = tk.Listbox(listbox_frame, bg='#3d3d3d', fg='#ffffff',
+                                          font=('Arial', 9), height=4)
+        self.questions_preview.pack(side="left", fill="both", expand=True)
+        
+        # Scrollbar for listbox
+        scrollbar = tk.Scrollbar(listbox_frame, orient="vertical")
+        scrollbar.pack(side="right", fill="y")
+        self.questions_preview.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.questions_preview.yview)
+        
+        # Update preview when selection changes
+        bank_dropdown.bind('<<ComboboxSelected>>', self.update_questions_preview)
+        
+        # Load initial preview
+        self.update_questions_preview()
+        
+    def update_questions_preview(self, event=None):
+        """Update the questions preview listbox"""
+        try:
+            # Clear current preview
+            self.questions_preview.delete(0, tk.END)
+            
+            # Get selected bank
+            selected_bank = self.selected_question_bank.get()
+            
+            if selected_bank in self.available_question_banks:
+                questions = self.available_question_banks[selected_bank]
+                
+                # Add questions to preview (limit to first 10)
+                for i, question in enumerate(questions[:10]):
+                    self.questions_preview.insert(tk.END, f"{i+1}. {question}")
+                
+                if len(questions) > 10:
+                    self.questions_preview.insert(tk.END, f"... y {len(questions) - 10} preguntas más")
+            else:
+                self.questions_preview.insert(tk.END, "No hay preguntas disponibles")
+                
+        except Exception as e:
+            print(f"❌ Error actualizando vista previa: {e}")
+            self.questions_preview.insert(tk.END, "Error cargando preguntas")
+        
+    def setup_step_5_final_exam(self, parent):
+        """Step 5: Final exam configuration"""
+        step5_frame = tk.LabelFrame(parent, text="🎓 Paso 5: Examen Final", 
+                                   font=('Arial', 14, 'bold'),
+                                   bg='#2d2d2d', fg='#ffffff')
+        step5_frame.pack(fill="x", pady=(0, 15))
         
         content_frame = tk.Frame(step5_frame, bg='#2d2d2d')
+        content_frame.pack(fill="x", padx=20, pady=15)
+        
+        # Final exam QR selection
+        qr_frame = tk.Frame(content_frame, bg='#2d2d2d')
+        qr_frame.pack(fill="x")
+        
+        tk.Label(qr_frame, text="QR Examen Final:", 
+                bg='#2d2d2d', fg='#ffffff', font=('Arial', 10, 'bold')).pack(anchor="w")
+        
+        path_frame = tk.Frame(qr_frame, bg='#2d2d2d')
+        path_frame.pack(fill="x", pady=(5, 0))
+        
+        tk.Entry(path_frame, textvariable=self.final_exam_qr_path, 
+                bg='#3d3d3d', fg='#ffffff', font=('Arial', 9), width=50).pack(side="left", fill="x", expand=True)
+        
+        tk.Button(path_frame, text="📁 Seleccionar", bg='#2196F3', fg='#ffffff',
+                 font=('Arial', 9, 'bold'),
+                 command=lambda: self.select_qr_file(self.final_exam_qr_path)).pack(side="right", padx=(10, 0))
+        
+    def setup_step_6_class_generation(self, parent):
+        """Step 6: Class generation and execution"""
+        step6_frame = tk.LabelFrame(parent, text="🚀 Paso 6: Generación y Ejecución", 
+                                   font=('Arial', 14, 'bold'),
+                                   bg='#2d2d2d', fg='#ffffff')
+        step6_frame.pack(fill="both", expand=True)
+        
+        content_frame = tk.Frame(step6_frame, bg='#2d2d2d')
         content_frame.pack(fill="both", expand=True, padx=20, pady=15)
         
         # Left side - Controls
@@ -301,6 +435,15 @@ class ClassBuilderTabFinal(BaseTab):
         class_pdf = self.class_pdf_path.get() or selected_subject["pdf"] 
         final_exam_qr = self.final_exam_qr_path.get() or selected_subject["final_exam"]
         
+        # Asegurar que las rutas estén correctamente formateadas
+        diagnostic_qr = diagnostic_qr.replace("\\", "/") if diagnostic_qr else ""
+        class_pdf = class_pdf.replace("\\", "/") if class_pdf else ""
+        final_exam_qr = final_exam_qr.replace("\\", "/") if final_exam_qr else ""
+        
+        # Obtener banco de preguntas seleccionado
+        selected_bank_name = self.selected_question_bank.get()
+        selected_questions = self.available_question_banks.get(selected_bank_name, [])
+        
         # Generar código Python completamente funcional
         return f'''#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -345,7 +488,7 @@ try:
         show_pdf_page_in_opencv, extract_text_from_pdf, 
         explain_slides_with_random_questions, explain_slides_with_sequences,
         RandomQuestionManager, evaluate_student_answer, process_question,
-        execute_esp32_sequence, summarize_text, ask_openai
+        execute_esp32_sequence, summarize_text, ask_openai, QUESTION_BANK
     )
     print("✅ Funciones importadas desde demo_sequence_manager")
 except ImportError as e:
@@ -354,11 +497,21 @@ except ImportError as e:
     print(f"🔍 Buscando en: {{main_dir}}")
     sys.exit(1)
 
+# ======================
+#  BANCO DE PREGUNTAS PERSONALIZADAS
+# ======================
+CUSTOM_QUESTION_BANK = {selected_questions}
+
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
         print("🚀 Iniciando clase: {class_title}")
         print("📚 Materia: {class_subject}")
+        
+        # Definir rutas de archivos
+        diagnostic_qr = "{diagnostic_qr}"
+        class_pdf = "{class_pdf}"
+        final_exam_qr = "{final_exam_qr}"
         
         # Inicializar TTS
         engine = initialize_tts()
@@ -408,7 +561,7 @@ def main():
             speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
             show_diagnostic_qr(diagnostic_qr, display_time=40)
         else:
-            print(f"⚠️ No se encontró QR diagnóstico: {{diagnostic_qr}}")
+            print(f"⚠️ No se encontró QR diagnóstico: {diagnostic_qr}")
             speak_with_animation(engine, "Continuaremos sin evaluación diagnóstica.")
         
         # FASE 2: Inicio de Clase
@@ -430,16 +583,36 @@ def main():
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
-                # Explicar diapositivas con preguntas aleatorias
-                explain_slides_with_random_questions(
-                    engine, class_pdf, pdf_text, current_users,
-                    hand_raised_counter, current_slide_num, exit_flag, 
-                    known_faces, current_hand_raiser
-                )
+                # Usar preguntas personalizadas si están disponibles
+                if CUSTOM_QUESTION_BANK:
+                    print("🎯 Usando preguntas personalizadas")
+                    # Temporalmente reemplazar QUESTION_BANK con preguntas personalizadas
+                    original_question_bank = QUESTION_BANK.copy()
+                    QUESTION_BANK.clear()
+                    QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
+                    
+                    # Explicar diapositivas con preguntas personalizadas
+                    explain_slides_with_random_questions(
+                        engine, class_pdf, pdf_text, current_users,
+                        hand_raised_counter, current_slide_num, exit_flag, 
+                        known_faces, current_hand_raiser
+                    )
+                    
+                    # Restaurar QUESTION_BANK original
+                    QUESTION_BANK.clear()
+                    QUESTION_BANK.extend(original_question_bank)
+                else:
+                    print("🎯 Usando preguntas por defecto")
+                    # Explicar diapositivas con preguntas aleatorias por defecto
+                    explain_slides_with_random_questions(
+                        engine, class_pdf, pdf_text, current_users,
+                        hand_raised_counter, current_slide_num, exit_flag, 
+                        known_faces, current_hand_raiser
+                    )
             else:
                 print("❌ No se pudo leer el PDF")
         else:
-            print(f"⚠️ No se encontró PDF: {{class_pdf}}")
+            print(f"⚠️ No se encontró PDF: {class_pdf}")
             speak_with_animation(engine, "Continuaremos sin presentación de PDF.")
         
         # FASE 4: Examen Final
@@ -455,7 +628,7 @@ def main():
             
             speak_with_animation(engine, "Perfecto. ¡Mucha suerte en el examen!")
         else:
-            print(f"⚠️ No se encontró QR examen: {{final_exam_qr}}")
+            print(f"⚠️ No se encontró QR examen: {final_exam_qr}")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización

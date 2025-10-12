@@ -28,8 +28,10 @@ export function ClassesScreen() {
     'background only'
     // Load classes on component mount
     loadClassesFromAPI()
-    
-    // Set up a more intelligent refresh interval
+  }, []) // Solo ejecutar una vez al montar el componente
+
+  // Set up auto-refresh interval separately
+  useEffect(() => {
     let interval = null
     
     // Only refresh automatically if:
@@ -52,7 +54,7 @@ export function ClassesScreen() {
         clearInterval(interval)
       }
     }
-  }, [loadClassesFromAPI, isConnected, totalClasses, loading, isClassActive])
+  }, [isConnected, totalClasses, loading, isClassActive, loadClassesFromAPI])
 
   // handleStartClass and handleStopClass are now provided by useClassControl hook
 

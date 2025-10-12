@@ -24,7 +24,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))

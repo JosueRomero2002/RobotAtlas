@@ -272,7 +272,7 @@ export function useIPInput() {
    * Set example values
    */
   const setExampleValues = useCallback(() => {
-    handleIPChange('10.246.209.163')
+    handleIPChange('192.168.100.6')
     handlePortChange('8080')
     setMessage('📝 Ejemplo establecido - Modifica si es necesario')
   }, [handleIPChange, handlePortChange])

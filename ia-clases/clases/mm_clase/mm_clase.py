@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-mm
-Materia: Robots Médicos
-Generado por ADAI Class Builder el 2025-10-02 14:55:18
+MM
+Materia: IoMT
+Generado por ADAI Class Builder el 2025-10-03 15:53:24
 
 Clase automática usando demo_sequence_manager
 """
@@ -41,7 +41,7 @@ try:
         show_pdf_page_in_opencv, extract_text_from_pdf, 
         explain_slides_with_random_questions, explain_slides_with_sequences,
         RandomQuestionManager, evaluate_student_answer, process_question,
-        execute_esp32_sequence, summarize_text, ask_openai
+        execute_esp32_sequence, summarize_text, ask_openai, QUESTION_BANK
     )
     print("✅ Funciones importadas desde demo_sequence_manager")
 except ImportError as e:
@@ -50,11 +50,21 @@ except ImportError as e:
     print(f"🔍 Buscando en: {main_dir}")
     sys.exit(1)
 
+# ======================
+#  BANCO DE PREGUNTAS PERSONALIZADAS
+# ======================
+CUSTOM_QUESTION_BANK = ['La neutralización produce siempre agua y una sal. Verdadero o falso?', 'El bicarbonato de sodio reacciona con ácidos liberando dióxido de carbono (CO₂). Verdadero o falso?', 'El jugo de limón contiene ácido cítrico. Verdadero o falso?', 'El papel tornasol cambia de color según el pH. Verdadero o falso?', 'Un pH menor que 7 indica una sustancia ácida. Verdadero o falso?', 'El cambio de color de la col morada se debe a pigmentos llamados antocianinas. Verdadero o falso?', 'La efervescencia en la reacción ácido + bicarbonato se debe a la liberación de nitrógeno. Verdadero o falso?']
+
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
-        print("🚀 Iniciando clase: mm")
-        print("📚 Materia: Robots Médicos")
+        print("🚀 Iniciando clase: MM")
+        print("📚 Materia: IoMT")
+        
+        # Definir rutas de archivos
+        diagnostic_qr = "C:/Users/josue/Downloads/Examen Quimica.png"
+        class_pdf = "C:/Users/josue/Downloads/Clase_Neutralizacion_Bicarbonato.pdf"
+        final_exam_qr = "C:/Users/josue/Downloads/ChatGPT Image 18 sept 2025, 13_14_36.png"
         
         # Inicializar TTS
         engine = initialize_tts()
@@ -104,7 +114,7 @@ def main():
             speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
             show_diagnostic_qr(diagnostic_qr, display_time=40)
         else:
-            print(f"⚠️ No se encontró QR diagnóstico: {diagnostic_qr}")
+            print(f"⚠️ No se encontró QR diagnóstico: C:/Users/josue/Downloads/Examen Quimica.png")
             speak_with_animation(engine, "Continuaremos sin evaluación diagnóstica.")
         
         # FASE 2: Inicio de Clase
@@ -112,8 +122,8 @@ def main():
         print("🤖 FASE 2: INICIO DE CLASE")
         print("="*50)
         
-        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: mm")
-        speak_with_animation(engine, f"Vamos a aprender sobre Robots Médicos")
+        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: MM")
+        speak_with_animation(engine, f"Vamos a aprender sobre IoMT")
         
         # FASE 3: Contenido Principal
         print("\n" + "="*50)
@@ -121,21 +131,41 @@ def main():
         print("="*50)
         
         if class_pdf and os.path.exists(class_pdf):
-            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Robots Médicos.")
+            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre IoMT.")
             
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
-                # Explicar diapositivas con preguntas aleatorias
-                explain_slides_with_random_questions(
-                    engine, class_pdf, pdf_text, current_users,
-                    hand_raised_counter, current_slide_num, exit_flag, 
-                    known_faces, current_hand_raiser
-                )
+                # Usar preguntas personalizadas si están disponibles
+                if CUSTOM_QUESTION_BANK:
+                    print("🎯 Usando preguntas personalizadas")
+                    # Temporalmente reemplazar QUESTION_BANK con preguntas personalizadas
+                    original_question_bank = QUESTION_BANK.copy()
+                    QUESTION_BANK.clear()
+                    QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
+                    
+                    # Explicar diapositivas con preguntas personalizadas
+                    explain_slides_with_random_questions(
+                        engine, class_pdf, pdf_text, current_users,
+                        hand_raised_counter, current_slide_num, exit_flag, 
+                        known_faces, current_hand_raiser
+                    )
+                    
+                    # Restaurar QUESTION_BANK original
+                    QUESTION_BANK.clear()
+                    QUESTION_BANK.extend(original_question_bank)
+                else:
+                    print("🎯 Usando preguntas por defecto")
+                    # Explicar diapositivas con preguntas aleatorias por defecto
+                    explain_slides_with_random_questions(
+                        engine, class_pdf, pdf_text, current_users,
+                        hand_raised_counter, current_slide_num, exit_flag, 
+                        known_faces, current_hand_raiser
+                    )
             else:
                 print("❌ No se pudo leer el PDF")
         else:
-            print(f"⚠️ No se encontró PDF: {class_pdf}")
+            print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase_Neutralizacion_Bicarbonato.pdf")
             speak_with_animation(engine, "Continuaremos sin presentación de PDF.")
         
         # FASE 4: Examen Final
@@ -151,11 +181,11 @@ def main():
             
             speak_with_animation(engine, "Perfecto. ¡Mucha suerte en el examen!")
         else:
-            print(f"⚠️ No se encontró QR examen: {final_exam_qr}")
+            print(f"⚠️ No se encontró QR examen: C:/Users/josue/Downloads/ChatGPT Image 18 sept 2025, 13_14_36.png")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización
-        speak_with_animation(engine, f"Gracias por participar en la clase: mm. ¡Hasta la próxima!")
+        speak_with_animation(engine, f"Gracias por participar en la clase: MM. ¡Hasta la próxima!")
         
         # Limpiar recursos
         print("🛑 Finalizando clase")

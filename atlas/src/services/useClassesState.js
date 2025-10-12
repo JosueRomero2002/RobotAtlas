@@ -221,9 +221,7 @@ export function useClassesState() {
 export function useClassesLoader() {
   const { 
     classes, 
-    isConnected, 
-    setClasses, 
-    setIsConnected
+    isConnected
   } = useClassesState()
   
   const [loading, setLoading] = useState(false)
@@ -246,12 +244,12 @@ export function useClassesLoader() {
       console.log('Loading classes from robot API...')
       
       const connected = await robotAPI.testConnection()
-      setIsConnected(connected.success)
+      classesStateManager.setIsConnected(connected.success)
       
       if (connected.success) {
         const result = await robotAPI.getAvailableClasses()
         if (result.success && result.data.classes) {
-          setClasses(result.data.classes)
+          classesStateManager.setClasses(result.data.classes)
           console.log('Classes loaded successfully:', result.data.classes.length)
         } else {
           const errorMsg = 'No se pudieron cargar las clases'
@@ -265,11 +263,11 @@ export function useClassesLoader() {
       console.error('Failed to load classes from robot:', error)
       const errorMsg = 'Error al cargar las clases'
       setError(errorMsg)
-      setIsConnected(false)
+      classesStateManager.setIsConnected(false)
     } finally {
       setLoading(false)
     }
-  }, [setClasses, setIsConnected])
+  }, [loading])
 
   /**
    * Start a class

@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FACES_DIR = os.path.join(BASE_DIR, "data", "faces")
 
 # Configuración de OpenAI
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "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"
 OPENAI_CLIENT = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 # Configuración de Tesseract OCR

@@ -1,6 +1,94 @@
 {
   "classes": [
     {
+      "name": "awdawd_clase.py",
+      "folder": "awdawd_clase",
+      "file_path": "clases\\awdawd_clase\\awdawd_clase.py",
+      "folder_path": "clases\\awdawd_clase",
+      "modified": "2025-10-03T14:44:47.016006",
+      "size": 7226,
+      "title": "awdawd",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T14:44:47.016005",
+      "resources": {
+        "files": [
+          {
+            "name": "awdawd_clase.py",
+            "path": "clases\\awdawd_clase\\awdawd_clase.py",
+            "size": 7226,
+            "modified": "2025-10-03T14:44:47.016006"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\awdawd_clase\\class_config.json",
+            "size": 259,
+            "modified": "2025-10-03T14:44:47.017006"
+          }
+        ]
+      },
+      "config": {
+        "title": "awdawd",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T14:44:47.016005",
+        "main_file": "awdawd_clase.py",
+        "folder_name": "awdawd_clase"
+      }
+    },
+    {
+      "name": "BB_clase.py",
+      "folder": "BB_clase",
+      "file_path": "clases\\BB_clase\\BB_clase.py",
+      "folder_path": "clases\\BB_clase",
+      "modified": "2025-10-03T15:07:04.987847",
+      "size": 7498,
+      "title": "BB",
+      "subject": "IoMT",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T15:07:04.987847",
+      "resources": {
+        "files": [
+          {
+            "name": "BB_clase.py",
+            "path": "clases\\BB_clase\\BB_clase.py",
+            "size": 7498,
+            "modified": "2025-10-03T15:07:04.987847"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\BB_clase\\class_config.json",
+            "size": 236,
+            "modified": "2025-10-03T15:07:04.988849"
+          }
+        ]
+      },
+      "config": {
+        "title": "BB",
+        "subject": "IoMT",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T15:07:04.987847",
+        "main_file": "BB_clase.py",
+        "folder_name": "BB_clase"
+      }
+    },
+    {
       "name": "DD_clase.py",
       "folder": "DD_clase",
       "file_path": "clases\\DD_clase\\DD_clase.py",
@@ -133,6 +221,138 @@
       }
     },
     {
+      "name": "JJ_clase.py",
+      "folder": "JJ_clase",
+      "file_path": "clases\\JJ_clase\\JJ_clase.py",
+      "folder_path": "clases\\JJ_clase",
+      "modified": "2025-10-03T15:42:05.438150",
+      "size": 9369,
+      "title": "JJ",
+      "subject": "IoMT",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T15:42:05.438149",
+      "resources": {
+        "files": [
+          {
+            "name": "JJ_clase.py",
+            "path": "clases\\JJ_clase\\JJ_clase.py",
+            "size": 9369,
+            "modified": "2025-10-03T15:42:05.438150"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\JJ_clase\\class_config.json",
+            "size": 236,
+            "modified": "2025-10-03T15:42:05.439150"
+          }
+        ]
+      },
+      "config": {
+        "title": "JJ",
+        "subject": "IoMT",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T15:42:05.438149",
+        "main_file": "JJ_clase.py",
+        "folder_name": "JJ_clase"
+      }
+    },
+    {
+      "name": "KK_clase.py",
+      "folder": "KK_clase",
+      "file_path": "clases\\KK_clase\\KK_clase.py",
+      "folder_path": "clases\\KK_clase",
+      "modified": "2025-10-03T14:55:34.281712",
+      "size": 7134,
+      "title": "KK",
+      "subject": "Exoesqueletos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T14:55:34.281712",
+      "resources": {
+        "files": [
+          {
+            "name": "KK_clase.py",
+            "path": "clases\\KK_clase\\KK_clase.py",
+            "size": 7134,
+            "modified": "2025-10-03T14:55:34.281712"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\KK_clase\\class_config.json",
+            "size": 245,
+            "modified": "2025-10-03T14:55:34.282708"
+          }
+        ]
+      },
+      "config": {
+        "title": "KK",
+        "subject": "Exoesqueletos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T14:55:34.281712",
+        "main_file": "KK_clase.py",
+        "folder_name": "KK_clase"
+      }
+    },
+    {
+      "name": "LL_clase.py",
+      "folder": "LL_clase",
+      "file_path": "clases\\LL_clase\\LL_clase.py",
+      "folder_path": "clases\\LL_clase",
+      "modified": "2025-10-03T15:30:43.596765",
+      "size": 9154,
+      "title": "LL",
+      "subject": "IoMT",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T15:30:43.597765",
+      "resources": {
+        "files": [
+          {
+            "name": "LL_clase.py",
+            "path": "clases\\LL_clase\\LL_clase.py",
+            "size": 9154,
+            "modified": "2025-10-03T15:30:43.596765"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\LL_clase\\class_config.json",
+            "size": 236,
+            "modified": "2025-10-03T15:30:43.597765"
+          }
+        ]
+      },
+      "config": {
+        "title": "LL",
+        "subject": "IoMT",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T15:30:43.597765",
+        "main_file": "LL_clase.py",
+        "folder_name": "LL_clase"
+      }
+    },
+    {
       "name": "demo_sequence_manager copy.py",
       "folder": "main",
       "file_path": "clases\\main\\demo_sequence_manager copy.py",
@@ -155,8 +375,8 @@
           {
             "name": "demo_sequence_manager.py",
             "path": "clases\\main\\demo_sequence_manager.py",
-            "size": 189713,
-            "modified": "2025-09-19T16:43:59.319856"
+            "size": 185469,
+            "modified": "2025-10-03T15:46:42.075635"
           },
           {
             "name": "main.py",
@@ -244,20 +464,20 @@
       "folder": "mm_clase",
       "file_path": "clases\\mm_clase\\mm_clase.py",
       "folder_path": "clases\\mm_clase",
-      "modified": "2025-10-02T14:55:20.130761",
-      "size": 7142,
-      "title": "mm",
-      "subject": "Robots Médicos",
+      "modified": "2025-10-03T15:53:25.442283",
+      "size": 9393,
+      "title": "MM",
+      "subject": "IoMT",
       "description": "Una clase sobre robots en medicina",
       "duration": "45 minutos",
-      "created_at": "2025-10-02T14:55:20.130761",
+      "created_at": "2025-10-03T15:53:25.442283",
       "resources": {
         "files": [
           {
             "name": "mm_clase.py",
             "path": "clases\\mm_clase\\mm_clase.py",
-            "size": 7142,
-            "modified": "2025-10-02T14:55:20.130761"
+            "size": 9393,
+            "modified": "2025-10-03T15:53:25.442283"
           }
         ],
         "images": [],
@@ -268,19 +488,19 @@
           {
             "name": "class_config.json",
             "path": "clases\\mm_clase\\class_config.json",
-            "size": 247,
-            "modified": "2025-10-02T14:55:20.131748"
+            "size": 236,
+            "modified": "2025-10-03T15:53:25.443788"
           }
         ]
       },
       "config": {
-        "title": "mm",
-        "subject": "Robots Médicos",
+        "title": "MM",
+        "subject": "IoMT",
         "description": "Una clase sobre robots en medicina",
         "duration": "45 minutos",
-        "created_at": "2025-10-02T14:55:20.130761",
-        "main_file": "mm_clase.py",
-        "folder_name": "mm_clase"
+        "created_at": "2025-10-03T15:53:25.442283",
+        "main_file": "MM_clase.py",
+        "folder_name": "MM_clase"
       }
     },
     {
@@ -415,7 +635,51 @@
         "folder_name": "test_simple_class",
         "migrated_at": "2025-08-30T21:26:56.302644"
       }
+    },
+    {
+      "name": "VV_clase.py",
+      "folder": "VV_clase",
+      "file_path": "clases\\VV_clase\\VV_clase.py",
+      "folder_path": "clases\\VV_clase",
+      "modified": "2025-10-03T14:52:38.531336",
+      "size": 7146,
+      "title": "VV",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-03T14:52:38.531335",
+      "resources": {
+        "files": [
+          {
+            "name": "VV_clase.py",
+            "path": "clases\\VV_clase\\VV_clase.py",
+            "size": 7146,
+            "modified": "2025-10-03T14:52:38.531336"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\VV_clase\\class_config.json",
+            "size": 247,
+            "modified": "2025-10-03T14:52:38.531336"
+          }
+        ]
+      },
+      "config": {
+        "title": "VV",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-03T14:52:38.531335",
+        "main_file": "VV_clase.py",
+        "folder_name": "VV_clase"
+      }
     }
   ],
-  "last_scan": "2025-10-02T15:25:22.405250"
+  "last_scan": "2025-10-11T15:32:16.879910"
 }

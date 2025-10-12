@@ -286,18 +286,8 @@ class MobileAPIHandler(BaseHTTPRequestHandler):
             if hasattr(self.robot_gui, 'get_available_classes_for_mobile'):
                 return self.robot_gui.get_available_classes_for_mobile()
             else:
-                return {
-                    "classes": [
-                        {
-                            "id": 1,
-                            "title": "Introducción a la Robótica",
-                            "duration": "45 min",
-                            "level": "Básico",
-                            "subject": "Tecnología",
-                            "description": "Conceptos fundamentales de robótica y automatización"
-                        }
-                    ]
-                }
+                # Fallback: return empty classes list
+                return {"classes": []}
         except Exception as e:
             return {
                 "classes": [],
@@ -332,10 +322,11 @@ class MobileAPIHandler(BaseHTTPRequestHandler):
     def get_connection_status(self):
         """Get connection status"""
         return {
-            "mainServer": "connected",
+            "mainServer": "connected" if self.robot_gui.mobile_server_running else "disconnected",
             "robotServer": "connected" if hasattr(self.robot_gui, 'esp32') and self.robot_gui.esp32 and self.robot_gui.esp32.connected else "disconnected",
             "database": "connected",
-            "camera": "connected" if hasattr(self.robot_gui, 'camera_running') and self.robot_gui.camera_running else "disconnected"
+            "camera": "connected" if hasattr(self.robot_gui, 'camera_running') and self.robot_gui.camera_running else "disconnected",
+            "mobileAPI": "connected" if self.robot_gui.mobile_server_running else "disconnected"
         }
     
     def get_movement_presets(self):
@@ -957,6 +948,8 @@ class RobotGUI:
                 self.mobile_server_running = True
                 self.mobile_start_time = time.time()
                 print(f"✅ Mobile API server started on {local_ip}:{self.api_port}")
+                # Update mobile status
+                self.update_mobile_status()
         except Exception as e:
             print(f"❌ Error starting mobile server: {e}")
     
@@ -968,8 +961,20 @@ class RobotGUI:
                 self.mobile_server_running = False
                 self.mobile_start_time = None
                 print("✅ Mobile API server stopped")
+                # Update mobile status
+                self.update_mobile_status()
         except Exception as e:
             print(f"❌ Error stopping mobile server: {e}")
+    
+    def update_mobile_status(self):
+        """Update mobile server status indicators"""
+        try:
+            # Update mobile tab status if it exists
+            if hasattr(self, 'mobile_tab') and self.mobile_tab:
+                if hasattr(self.mobile_tab, 'update_mobile_status'):
+                    self.mobile_tab.update_mobile_status()
+        except Exception as e:
+            print(f"Error updating mobile status: {e}")
 
     # ===============================
     # PLACEHOLDER METHODS FOR TABS

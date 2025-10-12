@@ -42,8 +42,36 @@ class ClassBuilderTab(ClassBuilderTabFinal):
         self.demo_pdf_loaded = False
         self.demo_pdf_pages = 0
         
+        # Question bank variables
+        self.selected_question_bank = tk.StringVar(value="Preguntas Generales de Química")
+        self.available_question_banks = {}
+        
         self.generated_class_code = ""
         self.class_execution_active = False
+        
+        # Cargar bancos de preguntas disponibles
+        self.load_question_banks()
+        
+    def load_question_banks(self):
+        """Cargar bancos de preguntas desde demo_sequence_manager.py"""
+        try:
+            # Importar el extractor de preguntas
+            import sys
+            import os
+            current_dir = os.path.dirname(os.path.dirname(__file__))
+            extractor_path = os.path.join(current_dir, "question_bank_extractor.py")
+            
+            if os.path.exists(extractor_path):
+                sys.path.insert(0, current_dir)
+                from question_bank_extractor import get_available_question_banks
+                self.available_question_banks = get_available_question_banks()
+                print(f"✅ Cargados {len(self.available_question_banks)} bancos de preguntas")
+            else:
+                print("⚠️ No se encontró question_bank_extractor.py")
+                self.available_question_banks = {}
+        except Exception as e:
+            print(f"❌ Error cargando bancos de preguntas: {e}")
+            self.available_question_banks = {}
         
     def setup_tab_content(self):
         """Setup the class builder tab content"""
@@ -70,9 +98,10 @@ class ClassBuilderTab(ClassBuilderTabFinal):
         self.setup_step_1_basic_info(workflow_frame)
         self.setup_step_2_diagnostic_test(workflow_frame)
         self.setup_step_3_class_content(workflow_frame)
-        self.setup_step_4_demo_configuration(workflow_frame)
-        self.setup_step_5_final_exam(workflow_frame)
-        self.setup_step_6_class_generation(workflow_frame)
+        self.setup_step_4_question_bank(workflow_frame)
+        self.setup_step_5_demo_configuration(workflow_frame)
+        self.setup_step_6_final_exam(workflow_frame)
+        self.setup_step_7_class_generation(workflow_frame)
         
     def setup_step_1_basic_info(self, parent):
         """Step 1: Basic class information"""
@@ -210,14 +239,92 @@ class ClassBuilderTab(ClassBuilderTabFinal):
         # Initially hide demo sequence frame
         self.demo_sequence_frame.pack_forget()
         
-    def setup_step_4_demo_configuration(self, parent):
-        """Step 4: Demo configuration"""
-        step4_frame = tk.LabelFrame(parent, text="🎬 Paso 4: Configuración de Demo", 
+    def setup_step_4_question_bank(self, parent):
+        """Step 4: Question bank selection"""
+        step4_frame = tk.LabelFrame(parent, text="❓ Paso 4: Banco de Preguntas", 
                                    font=('Arial', 14, 'bold'),
                                    bg='#2d2d2d', fg='#ffffff')
         step4_frame.pack(fill="x", pady=(0, 15))
         
         content_frame = tk.Frame(step4_frame, bg='#2d2d2d')
+        content_frame.pack(fill="x", padx=20, pady=15)
+        
+        # Question bank selection
+        selection_frame = tk.Frame(content_frame, bg='#2d2d2d')
+        selection_frame.pack(fill="x", pady=(0, 10))
+        
+        tk.Label(selection_frame, text="Seleccionar Banco de Preguntas:", 
+                bg='#2d2d2d', fg='#ffffff', font=('Arial', 10, 'bold')).pack(anchor="w")
+        
+        # Dropdown for question bank selection
+        bank_options = list(self.available_question_banks.keys()) if self.available_question_banks else ["Sin bancos disponibles"]
+        if not self.available_question_banks:
+            bank_options = ["Preguntas Generales de Química", "Preguntas Específicas de Química"]
+        
+        bank_dropdown = ttk.Combobox(selection_frame, textvariable=self.selected_question_bank,
+                                   values=bank_options, state="readonly", width=40)
+        bank_dropdown.pack(fill="x", pady=(5, 0))
+        
+        # Question preview
+        preview_frame = tk.Frame(content_frame, bg='#2d2d2d')
+        preview_frame.pack(fill="both", expand=True, pady=(10, 0))
+        
+        tk.Label(preview_frame, text="Vista Previa de Preguntas:", 
+                bg='#2d2d2d', fg='#ffffff', font=('Arial', 10, 'bold')).pack(anchor="w")
+        
+        # Listbox for question preview
+        listbox_frame = tk.Frame(preview_frame, bg='#2d2d2d')
+        listbox_frame.pack(fill="both", expand=True, pady=(5, 0))
+        
+        self.questions_preview = tk.Listbox(listbox_frame, bg='#3d3d3d', fg='#ffffff',
+                                          font=('Arial', 9), height=4)
+        self.questions_preview.pack(side="left", fill="both", expand=True)
+        
+        # Scrollbar for listbox
+        scrollbar = tk.Scrollbar(listbox_frame, orient="vertical")
+        scrollbar.pack(side="right", fill="y")
+        self.questions_preview.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.questions_preview.yview)
+        
+        # Update preview when selection changes
+        bank_dropdown.bind('<<ComboboxSelected>>', self.update_questions_preview)
+        
+        # Load initial preview
+        self.update_questions_preview()
+        
+    def update_questions_preview(self, event=None):
+        """Update the questions preview listbox"""
+        try:
+            # Clear current preview
+            self.questions_preview.delete(0, tk.END)
+            
+            # Get selected bank
+            selected_bank = self.selected_question_bank.get()
+            
+            if selected_bank in self.available_question_banks:
+                questions = self.available_question_banks[selected_bank]
+                
+                # Add questions to preview (limit to first 10)
+                for i, question in enumerate(questions[:10]):
+                    self.questions_preview.insert(tk.END, f"{i+1}. {question}")
+                
+                if len(questions) > 10:
+                    self.questions_preview.insert(tk.END, f"... y {len(questions) - 10} preguntas más")
+            else:
+                self.questions_preview.insert(tk.END, "No hay preguntas disponibles")
+                
+        except Exception as e:
+            print(f"❌ Error actualizando vista previa: {e}")
+            self.questions_preview.insert(tk.END, "Error cargando preguntas")
+        
+    def setup_step_5_demo_configuration(self, parent):
+        """Step 5: Demo configuration"""
+        step5_frame = tk.LabelFrame(parent, text="🎬 Paso 5: Configuración de Demo", 
+                                   font=('Arial', 14, 'bold'),
+                                   bg='#2d2d2d', fg='#ffffff')
+        step5_frame.pack(fill="x", pady=(0, 15))
+        
+        content_frame = tk.Frame(step5_frame, bg='#2d2d2d')
         content_frame.pack(fill="x", padx=20, pady=15)
         
         # Demo enable checkbox
@@ -286,14 +393,14 @@ class ClassBuilderTab(ClassBuilderTabFinal):
         # Initially hide demo sequence frame
         self.demo_sequence_frame.pack_forget()
         
-    def setup_step_5_final_exam(self, parent):
-        """Step 4: Final exam configuration"""
-        step5_frame = tk.LabelFrame(parent, text="🎓 Paso 5: Examen Final", 
+    def setup_step_6_final_exam(self, parent):
+        """Step 6: Final exam configuration"""
+        step6_frame = tk.LabelFrame(parent, text="🎓 Paso 6: Examen Final", 
                                    font=('Arial', 14, 'bold'),
                                    bg='#2d2d2d', fg='#ffffff')
-        step5_frame.pack(fill="x", pady=(0, 15))
+        step6_frame.pack(fill="x", pady=(0, 15))
         
-        content_frame = tk.Frame(step5_frame, bg='#2d2d2d')
+        content_frame = tk.Frame(step6_frame, bg='#2d2d2d')
         content_frame.pack(fill="x", padx=20, pady=15)
         
         # QR selection
@@ -307,14 +414,14 @@ class ClassBuilderTab(ClassBuilderTabFinal):
                  font=('Arial', 9, 'bold'), 
                  command=lambda: self.select_qr_file(self.final_exam_qr_path)).pack(side="right", padx=(10, 0))
         
-    def setup_step_6_class_generation(self, parent):
-        """Step 6: Class generation and execution"""
-        step6_frame = tk.LabelFrame(parent, text="🚀 Paso 6: Generación y Ejecución", 
+    def setup_step_7_class_generation(self, parent):
+        """Step 7: Class generation and execution"""
+        step7_frame = tk.LabelFrame(parent, text="🚀 Paso 7: Generación y Ejecución", 
                                    font=('Arial', 14, 'bold'),
                                    bg='#2d2d2d', fg='#ffffff')
-        step6_frame.pack(fill="both", expand=True)
+        step7_frame.pack(fill="both", expand=True)
         
-        content_frame = tk.Frame(step6_frame, bg='#2d2d2d')
+        content_frame = tk.Frame(step7_frame, bg='#2d2d2d')
         content_frame.pack(fill="both", expand=True, padx=20, pady=15)
         
         # Left side - Controls

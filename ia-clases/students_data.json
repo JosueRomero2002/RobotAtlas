@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "nombre": "Ana",
+    "apellido": "García",
+    "grado": "5°",
+    "estado": "Activo",
+    "email": "ana.garcia@email.com"
+  },
+  {
+    "id": 2,
+    "nombre": "Carlos",
+    "apellido": "López",
+    "grado": "4°",
+    "estado": "Activo",
+    "email": "carlos.lopez@email.com"
+  },
+  {
+    "id": 3,
+    "nombre": "María",
+    "apellido": "Rodríguez",
+    "grado": "6°",
+    "estado": "Graduado",
+    "email": "maria.rodriguez@email.com"
+  },
+  {
+    "id": 4,
+    "nombre": "ever",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "ever@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  },
+  {
+    "id": 5,
+    "nombre": "jajaja",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "jajaja@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  },
+  {
+    "id": 6,
+    "nombre": "Laura",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "laura@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  },
+  {
+    "id": 7,
+    "nombre": "Pedro",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "pedro@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  },
+  {
+    "id": 8,
+    "nombre": "va por la maÃ±ana",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "va por la maã±ana@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  },
+  {
+    "id": 9,
+    "nombre": "vamos por la maÃ±ana dijo",
+    "apellido": "",
+    "grado": "No especificado",
+    "estado": "Activo",
+    "email": "vamos por la maã±ana dijo@email.com",
+    "detected_in_class": true,
+    "detection_date": "2025-10-03T14:26:26.141472"
+  }
+]

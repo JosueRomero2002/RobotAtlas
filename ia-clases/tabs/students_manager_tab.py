@@ -10,6 +10,14 @@ import json
 import os
 import datetime
 
+# Import student sync manager
+try:
+    from student_sync_manager import StudentSyncManager
+    SYNC_MANAGER_AVAILABLE = True
+except ImportError:
+    SYNC_MANAGER_AVAILABLE = False
+    print("⚠️ Student Sync Manager no disponible")
+
 class StudentsManagerTab(BaseTab):
     """Students management tab"""
     
@@ -31,6 +39,11 @@ class StudentsManagerTab(BaseTab):
         self.students_tree = None
         self.student_detail_frame = None
         self.stats_labels = {}
+        
+        # Initialize sync manager
+        self.sync_manager = None
+        if SYNC_MANAGER_AVAILABLE:
+            self.sync_manager = StudentSyncManager()
         
     def setup_tab_content(self):
         """Setup the students manager tab content"""
@@ -126,7 +139,15 @@ class StudentsManagerTab(BaseTab):
                  font=('Arial', 10, 'bold'), command=self.export_students).pack(side="left", padx=(0, 10))
         
         tk.Button(buttons_frame, text="📁 Importar", bg='#9C27B0', fg='#ffffff',
-                 font=('Arial', 10, 'bold'), command=self.import_students).pack(side="left")
+                 font=('Arial', 10, 'bold'), command=self.import_students).pack(side="left", padx=(0, 10))
+        
+        # Sync buttons (if sync manager available)
+        if SYNC_MANAGER_AVAILABLE:
+            tk.Button(buttons_frame, text="🔄 Sincronizar", bg='#607D8B', fg='#ffffff',
+                     font=('Arial', 10, 'bold'), command=self.sync_students).pack(side="left", padx=(0, 10))
+            
+            tk.Button(buttons_frame, text="📊 Estadísticas", bg='#795548', fg='#ffffff',
+                     font=('Arial', 10, 'bold'), command=self.show_sync_statistics).pack(side="left")
         
     def setup_students_list(self, parent):
         """Setup students list with treeview"""
@@ -466,3 +487,99 @@ class StudentsManagerTab(BaseTab):
                 messagebox.showwarning("Sin Email", "Este estudiante no tiene email registrado")
         else:
             messagebox.showwarning("Sin Selección", "Por favor selecciona un estudiante")
+    
+    def sync_students(self):
+        """Sincronizar estudiantes detectados en clases con el registro administrativo"""
+        if not SYNC_MANAGER_AVAILABLE or not self.sync_manager:
+            messagebox.showerror("Error", "Sistema de sincronización no disponible")
+            return
+        
+        try:
+            # Mostrar diálogo de confirmación
+            result = messagebox.askyesno("Sincronizar Estudiantes", 
+                "¿Deseas sincronizar los estudiantes detectados en las clases con el registro administrativo?\n\n"
+                "Esto agregará automáticamente los nuevos estudiantes detectados.")
+            
+            if result:
+                # Ejecutar sincronización
+                sync_result = self.sync_manager.sync_detected_to_registered()
+                
+                if sync_result['success']:
+                    new_students = sync_result['new_students']
+                    
+                    if new_students:
+                        # Recargar datos
+                        self.load_students_data()
+                        
+                        message = f"✅ Sincronización exitosa!\n\n"
+                        message += f"📊 Estadísticas:\n"
+                        message += f"• Nuevos estudiantes agregados: {len(new_students)}\n"
+                        message += f"• Total detectados en clases: {sync_result['total_detected']}\n"
+                        message += f"• Total registrados: {sync_result['total_registered']}\n\n"
+                        message += f"Estudiantes agregados:\n"
+                        for student in new_students:
+                            message += f"• {student['nombre']} ({student['email']})\n"
+                        
+                        messagebox.showinfo("Sincronización Completada", message)
+                        self.log_message(f"Sincronización completada: {len(new_students)} nuevos estudiantes")
+                    else:
+                        messagebox.showinfo("Sincronización", 
+                            "No se encontraron nuevos estudiantes para sincronizar.\n"
+                            "Todos los estudiantes detectados ya están registrados.")
+                else:
+                    messagebox.showerror("Error de Sincronización", 
+                        f"Error durante la sincronización:\n{sync_result.get('error', 'Error desconocido')}")
+        
+        except Exception as e:
+            messagebox.showerror("Error", f"Error ejecutando sincronización: {e}")
+            self.log_message(f"Error en sincronización: {e}")
+    
+    def show_sync_statistics(self):
+        """Mostrar estadísticas de sincronización"""
+        if not SYNC_MANAGER_AVAILABLE or not self.sync_manager:
+            messagebox.showerror("Error", "Sistema de sincronización no disponible")
+            return
+        
+        try:
+            stats = self.sync_manager.get_sync_statistics()
+            
+            message = f"📊 Estadísticas de Sincronización\n\n"
+            message += f"👥 Estudiantes Registrados: {stats['registered_total']}\n"
+            message += f"✅ Activos: {stats['registered_active']}\n"
+            message += f"🎯 Detectados en Clases: {stats['detected_in_classes']}\n"
+            message += f"🔄 Estado: {stats['sync_status']}\n\n"
+            
+            if stats['detected_in_classes'] > stats['registered_active']:
+                message += "💡 Recomendación: Ejecuta 'Sincronizar' para agregar los estudiantes detectados."
+            elif stats['detected_in_classes'] == stats['registered_active']:
+                message += "✅ Sistema sincronizado correctamente."
+            else:
+                message += "ℹ️ Hay más estudiantes registrados que detectados en clases."
+            
+            messagebox.showinfo("Estadísticas de Sincronización", message)
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Error obteniendo estadísticas: {e}")
+    
+    def export_detected_students(self):
+        """Exportar estudiantes detectados en clases"""
+        if not SYNC_MANAGER_AVAILABLE or not self.sync_manager:
+            messagebox.showerror("Error", "Sistema de sincronización no disponible")
+            return
+        
+        try:
+            file_path = filedialog.asksaveasfilename(
+                title="Exportar Estudiantes Detectados",
+                defaultextension=".json",
+                filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
+            )
+            
+            if file_path:
+                success = self.sync_manager.export_detected_students(file_path)
+                if success:
+                    messagebox.showinfo("Éxito", f"Estudiantes detectados exportados a: {file_path}")
+                    self.log_message(f"Estudiantes detectados exportados a: {file_path}")
+                else:
+                    messagebox.showerror("Error", "Error exportando estudiantes detectados")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error exportando estudiantes detectados: {e}")
