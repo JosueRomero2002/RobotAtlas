@@ -55,8 +55,8 @@ const int HIGH_IZQ_MAX = 90;
 
 
 
-const int BRAZO_DER_MIN = 30;
-const int BRAZO_DER_MAX = 55;
+const int BRAZO_DER_MIN = 0;
+const int BRAZO_DER_MAX = 30;
 const int FRENTE_DER_MIN = 70;
 const int FRENTE_DER_MAX = 110;
 const int HIGH_DER_MIN = 70;
@@ -83,6 +83,7 @@ void setup() {
   Serial.begin(115200);       // Monitor serie del MEGA (PC)
   Serial1.begin(UNO_BAUD);    // Hacia el UNO (TX1=18, RX1=19)
   Serial2.begin(ESP32_BAUD);  // Hacia el ESP32 (TX2=16, RX2=17)
+
 
   // Inicializar servos
   servos.begin();
@@ -469,10 +470,10 @@ bool validarBrazos(int bi, int fi, int hi, int bd, int fd, int hd, int pd) {
     Serial.println("ERROR: High izquierdo fuera de rango");
     return false;
   }
-  if (bd < BRAZO_DER_MIN || bd > BRAZO_DER_MAX) {
-    Serial.println("ERROR: Brazo derecho fuera de rango");
-    return false;
-  }
+  // if (bd < BRAZO_DER_MIN || bd > BRAZO_DER_MAX) {
+  //   Serial.println("ERROR: Brazo derecho fuera de rango");
+  //   return false;
+  // }
   if (fd < FRENTE_DER_MIN || fd > FRENTE_DER_MAX) {
     Serial.println("ERROR: Frente derecho fuera de rango");
     return false;

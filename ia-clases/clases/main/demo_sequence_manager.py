@@ -26,7 +26,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -88,7 +88,7 @@ def evaluate_student_answer(question, answer, context, student_name):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": """Eres ADAI, un profesor robot amigable que evalúa respuestas de estudiantes sobre robótica médica. 
+                {"role": "system", "content": """Eres ADAI, un profesor robot amigable que evalúa respuestas de estudiantes sobre quimica. 
                 
 INSTRUCCIONES IMPORTANTES:
 - NO uses asteriscos, guiones, viñetas, ni formato especial
@@ -645,7 +645,7 @@ def show_final_exam_qr(qr_image_path, display_time=20):
                    cv2.FONT_HERSHEY_SIMPLEX, main_font_scale, text_color, main_thickness)
         
         # Instrucción secundaria
-        sub_instruction = "Demuestra lo que aprendiste sobre robotica medica"
+        sub_instruction = "Demuestra lo que aprendiste sobre quimica"
         sub_font_scale = 0.8
         sub_thickness = 2
         (sub_w, sub_h), _ = cv2.getTextSize(sub_instruction, cv2.FONT_HERSHEY_SIMPLEX, sub_font_scale, sub_thickness)
@@ -4167,10 +4167,10 @@ def main():
         speak_with_animation(engine, "Perfecto. Ahora comenzaremos con la presentación sobre robots médicos.")
 
          # Explicar diapositivas con preguntas aleatorias
-        if (1 == 1):
-        # if explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_users,
-        #                                        hand_raised_counter, current_slide_num, exit_flag, 
-        #                                        known_faces, current_hand_raiser):
+        # if (1 == 1):
+        if explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_users,
+                                               hand_raised_counter, current_slide_num, exit_flag, 
+                                               known_faces, current_hand_raiser):
             
             
             # Explicar diapositivas con secuencias ESP32

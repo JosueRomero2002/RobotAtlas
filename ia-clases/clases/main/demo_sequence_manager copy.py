@@ -26,7 +26,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -88,7 +88,7 @@ def evaluate_student_answer(question, answer, context, student_name):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": """Eres ADAI, un profesor robot amigable que evalúa respuestas de estudiantes sobre robótica médica. 
+                {"role": "system", "content": """Eres ADAI, un profesor robot amigable que evalúa respuestas de estudiantes sobre quimica. 
                 
 INSTRUCCIONES IMPORTANTES:
 - NO uses asteriscos, guiones, viñetas, ni formato especial
@@ -645,7 +645,7 @@ def show_final_exam_qr(qr_image_path, display_time=20):
                    cv2.FONT_HERSHEY_SIMPLEX, main_font_scale, text_color, main_thickness)
         
         # Instrucción secundaria
-        sub_instruction = "Demuestra lo que aprendiste sobre robotica medica"
+        sub_instruction = "Demuestra lo que aprendiste sobre quimica"
         sub_font_scale = 0.8
         sub_thickness = 2
         (sub_w, sub_h), _ = cv2.getTextSize(sub_instruction, cv2.FONT_HERSHEY_SIMPLEX, sub_font_scale, sub_thickness)
@@ -940,20 +940,20 @@ def speak_with_animation(engine, text):
     engine.startLoop(False)
     engine.say(text)
 
-    while engine.isBusy():
-        engine.iterate()
-        mouth_state = random.choice([1, 2])
-        face_img = draw_fun_face(600, 400, mouth_state)
-        cv2.imshow("ADAI Robot Face", face_img)
-        if cv2.waitKey(50) & 0xFF == 27:  # ESC
-            break
+    # while engine.isBusy():
+    #     engine.iterate()
+    #     mouth_state = random.choice([1, 2])
+    #     face_img = draw_fun_face(600, 400, mouth_state)
+    #     cv2.imshow("ADAI Robot Face", face_img)
+    #     if cv2.waitKey(50) & 0xFF == 27:  # ESC
+    #         break
 
     engine.endLoop()
 
-    # Boca cerrada
-    final_face = draw_fun_face(600, 400, 0)
-    cv2.imshow("ADAI Robot Face", final_face)
-    cv2.waitKey(300)
+    # # Boca cerrada
+    # final_face = draw_fun_face(600, 400, 0)
+    # cv2.imshow("ADAI Robot Face", final_face)
+    # cv2.waitKey(300)
 
 # ============================
 #   MOSTRAR PDF EN OPENCV
@@ -4115,8 +4115,8 @@ def main():
         print("="*50)
         
         # Crear ventana para la cara animada
-        cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("ADAI Robot Face", 600, 400)
+        # cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow("ADAI Robot Face", 600, 400)
 
         hand_raised_counter = multiprocessing.Value('i', 0)
         current_slide_num   = multiprocessing.Value('i', 1)

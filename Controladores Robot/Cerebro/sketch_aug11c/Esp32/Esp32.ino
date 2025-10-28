@@ -34,7 +34,7 @@ bool unoConectado = false;
 int posActualBrazos[7] = {10, 80, 80, 40, 90, 80, 45};
 String nombresBrazos[7] = {"Brazo Izq", "Frente Izq", "High Izq", "Brazo Der", "Frente Der", "High Der", "Pollo Der"};
 // Rangos seguros según MEGA: BI(10-30), FI(60-120), HI(70-90), BD(30-55), FD(70-110), HD(70-90), PD(0-90)
-int limitesBrazos[7][2] = {{10, 30}, {60, 120}, {70, 90}, {30, 55}, {70, 110}, {70, 90}, {0, 90}};
+int limitesBrazos[7][2] = {{10, 30}, {60, 120}, {70, 90}, {0, 30}, {70, 110}, {70, 90}, {0, 90}};
 
 // Posiciones actuales de las manos
 int posActualManos[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // 5 dedos mano derecha + 5 dedos mano izquierda
@@ -61,7 +61,7 @@ String nombresCuello[3] = {"Lateral", "Inferior", "Superior"};
 int limitesCuello[3][2] = {{120, 160}, {60, 130}, {109, 110}};
 
 // Posiciones de descanso (según MEGA)         //
-const int POS_DESCANSO_BRAZOS[7] = {10, 80, 80, 55, 70, 80, 45}; // BI, FI, HI, BD, FD, HD, PD
+const int POS_DESCANSO_BRAZOS[7] = {10, 80, 80, 0, 70, 80, 45}; // BI, FI, HI, BD, FD, HD, PD
 const int POS_DESCANSO_CUELLO[3] = {155, 95, 110}; // L, I, S
 
 // Configuración de seguridad
@@ -362,7 +362,7 @@ void controlarBrazos(int bi, int fi, int hi, int bd, int fd, int hd, int pd) {
   if (!validarMovimiento("brazo_izq", bi, 10, 30) ||
       !validarMovimiento("frente_izq", fi, 60, 120) ||
       !validarMovimiento("high_izq", hi, 70, 90) ||
-      !validarMovimiento("brazo_der", bd, 30, 55) ||
+      !validarMovimiento("brazo_der", bd, 0, 30) ||
       !validarMovimiento("frente_der", fd, 70, 110) ||
       !validarMovimiento("high_der", hd, 70, 90) ||
       !validarMovimiento("pollo_der", pd, 0, 90)) return;
@@ -944,7 +944,7 @@ void handleRoot() {
   html += "</div>";
   html += "<div class='control-group'>";
   html += "<h4>Brazo Derecho</h4>";
-  html += "<label>Brazo:</label><input id=web_bd type=number value=40 min=30 max=55>";
+  html += "<label>Brazo:</label><input id=web_bd type=number value=40 min=0 max=30>";
   html += "<label>Frente:</label><input id=web_fd type=number value=90 min=70 max=110>";
   html += "<label>High:</label><input id=web_hd type=number value=80 min=70 max=90>";
   html += "<label>Pollo:</label><input id=web_pd type=number value=45 min=0 max=90>";

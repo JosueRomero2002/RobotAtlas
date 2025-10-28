@@ -89,6 +89,226 @@
       }
     },
     {
+      "name": "Clase_1_Espanol_5to_clase.py",
+      "folder": "Clase_1_Espanol_5to_clase",
+      "file_path": "clases\\Clase_1_Espanol_5to_clase\\Clase_1_Espanol_5to_clase.py",
+      "folder_path": "clases\\Clase_1_Espanol_5to_clase",
+      "modified": "2025-10-27T09:29:01.111877",
+      "size": 10536,
+      "title": "Clase 1 Espanol 5to",
+      "subject": "Espanol Quinto Grado",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T09:16:08.890200",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_1_Espanol_5to_clase.py",
+            "path": "clases\\Clase_1_Espanol_5to_clase\\Clase_1_Espanol_5to_clase.py",
+            "size": 10536,
+            "modified": "2025-10-27T09:29:01.111877"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_1_Espanol_5to_clase\\class_config.json",
+            "size": 303,
+            "modified": "2025-10-27T12:20:40.108887"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 1 Espanol 5to",
+        "subject": "Espanol Quinto Grado",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T09:16:08.890200",
+        "main_file": "Clase_1_Espanol_5to_clase.py",
+        "folder_name": "Clase_1_Espanol_5to_clase"
+      }
+    },
+    {
+      "name": "Clase_1_Estudios_Sociales_clase.py",
+      "folder": "Clase_1_Estudios_Sociales_clase",
+      "file_path": "clases\\Clase_1_Estudios_Sociales_clase\\Clase_1_Estudios_Sociales_clase.py",
+      "folder_path": "clases\\Clase_1_Estudios_Sociales_clase",
+      "modified": "2025-10-27T11:38:11.037121",
+      "size": 9381,
+      "title": "Clase 1 Estudios Sociales",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T11:38:11.038115",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_1_Estudios_Sociales_clase.py",
+            "path": "clases\\Clase_1_Estudios_Sociales_clase\\Clase_1_Estudios_Sociales_clase.py",
+            "size": 9381,
+            "modified": "2025-10-27T11:38:11.037121"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_1_Estudios_Sociales_clase\\class_config.json",
+            "size": 316,
+            "modified": "2025-10-27T11:38:11.038115"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 1 Estudios Sociales",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T11:38:11.038115",
+        "main_file": "Clase_1_Estudios_Sociales_clase.py",
+        "folder_name": "Clase_1_Estudios_Sociales_clase"
+      }
+    },
+    {
+      "name": "Clase_2_Español_Quinto_Grado_clase.py",
+      "folder": "Clase_2_Español_Quinto_Grado_clase",
+      "file_path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
+      "folder_path": "clases\\Clase_2_Español_Quinto_Grado_clase",
+      "modified": "2025-10-27T11:33:56.608470",
+      "size": 9399,
+      "title": "Clase 2 Español Quinto Grado",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T11:33:56.609471",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_2_Español_Quinto_Grado_clase.py",
+            "path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
+            "size": 9399,
+            "modified": "2025-10-27T11:33:56.608470"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_2_Español_Quinto_Grado_clase\\class_config.json",
+            "size": 328,
+            "modified": "2025-10-27T11:33:56.609471"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 2 Español Quinto Grado",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T11:33:56.609471",
+        "main_file": "Clase_2_Español_Quinto_Grado_clase.py",
+        "folder_name": "Clase_2_Español_Quinto_Grado_clase"
+      }
+    },
+    {
+      "name": "Clase_2_Español_Sexto_Grado_clase.py",
+      "folder": "Clase_2_Español_Sexto_Grado_clase",
+      "file_path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
+      "folder_path": "clases\\Clase_2_Español_Sexto_Grado_clase",
+      "modified": "2025-10-27T11:33:22.860058",
+      "size": 9395,
+      "title": "Clase 2 Español Sexto Grado",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T11:33:22.861063",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_2_Español_Sexto_Grado_clase.py",
+            "path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
+            "size": 9395,
+            "modified": "2025-10-27T11:33:22.860058"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_2_Español_Sexto_Grado_clase\\class_config.json",
+            "size": 325,
+            "modified": "2025-10-27T11:33:22.861063"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 2 Español Sexto Grado",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T11:33:22.861063",
+        "main_file": "Clase_2_Español_Sexto_Grado_clase.py",
+        "folder_name": "Clase_2_Español_Sexto_Grado_clase"
+      }
+    },
+    {
+      "name": "Clase_2_Estudios_Sociales_clase.py",
+      "folder": "Clase_2_Estudios_Sociales_clase",
+      "file_path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
+      "folder_path": "clases\\Clase_2_Estudios_Sociales_clase",
+      "modified": "2025-10-27T11:34:58.840029",
+      "size": 9381,
+      "title": "Clase 2 Estudios Sociales",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T11:34:58.840029",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_2_Estudios_Sociales_clase.py",
+            "path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
+            "size": 9381,
+            "modified": "2025-10-27T11:34:58.840029"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_2_Estudios_Sociales_clase\\class_config.json",
+            "size": 316,
+            "modified": "2025-10-27T11:34:58.841030"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 2 Estudios Sociales",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T11:34:58.840029",
+        "main_file": "Clase_2_Estudios_Sociales_clase.py",
+        "folder_name": "Clase_2_Estudios_Sociales_clase"
+      }
+    },
+    {
       "name": "DD_clase.py",
       "folder": "DD_clase",
       "file_path": "clases\\DD_clase\\DD_clase.py",
@@ -357,8 +577,8 @@
       "folder": "main",
       "file_path": "clases\\main\\demo_sequence_manager copy.py",
       "folder_path": "clases\\main",
-      "modified": "2025-09-19T16:43:59.319856",
-      "size": 189713,
+      "modified": "2025-10-26T15:41:23.235560",
+      "size": 189721,
       "title": "main.py",
       "subject": "Robótica",
       "description": "Clase para TESTING",
@@ -369,14 +589,14 @@
           {
             "name": "demo_sequence_manager copy.py",
             "path": "clases\\main\\demo_sequence_manager copy.py",
-            "size": 189713,
-            "modified": "2025-09-19T16:43:59.319856"
+            "size": 189721,
+            "modified": "2025-10-26T15:41:23.235560"
           },
           {
             "name": "demo_sequence_manager.py",
             "path": "clases\\main\\demo_sequence_manager.py",
-            "size": 185469,
-            "modified": "2025-10-03T15:46:42.075635"
+            "size": 185447,
+            "modified": "2025-10-21T14:16:59.001453"
           },
           {
             "name": "main.py",
@@ -681,5 +901,5 @@
       }
     }
   ],
-  "last_scan": "2025-10-11T15:32:16.879910"
+  "last_scan": "2025-10-28T11:27:07.253471"
 }
