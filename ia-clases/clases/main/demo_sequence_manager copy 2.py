@@ -32,77 +32,8 @@ client = openai.OpenAI(api_key="sk-proj-lF0RpkVr9YRoV6TiWFpQywD1kPMlTXci8Cd_1_aJ
 script_dir = os.path.dirname(os.path.abspath(__file__))
 faces_dir = os.path.join(script_dir, "faces")
 if not os.path.exists(faces_dir):
-    os.makedirs(faces_dir)
-
-# Teacher request file path for communication between robot_gui and class
-TEACHER_REQUEST_FILE = os.path.join(script_dir, "teacher_request.json")
-
-# ======================
-#  TEACHER REQUEST FILE FUNCTIONS
-# ======================
-def check_teacher_request():
-    """
-    Verifica si hay una solicitud de profesora desde robot_gui
-    Returns:
-        tuple: (has_request, request_type) o (False, None)
-    """
-    try:
-        if os.path.exists(TEACHER_REQUEST_FILE):
-            with open(TEACHER_REQUEST_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                if data.get('active', False):
-                    return True, data.get('request_type', 'general')
-        return False, None
-    except Exception as e:
-        print(f"Error checking teacher request file: {e}")
-        return False, None
-
-def check_class_paused():
-    """
-    Verifica si la clase está pausada
-    Returns:
-        bool: True si está pausada, False si no
-    """
-    try:
-        if os.path.exists(TEACHER_REQUEST_FILE):
-            with open(TEACHER_REQUEST_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                return data.get('is_paused', False)
-        return False
-    except Exception as e:
-        print(f"Error checking class paused state: {e}")
-        return False
-
-def wait_for_resume(engine):
-    """
-    Espera hasta que la profesora reanude la clase
-    """
-    try:
-        print("⏸️ Clase pausada por profesora. Esperando reanudación...")
-        speak_with_animation(engine, "Clase pausada. Esperando instrucciones de la profesora.")
-        
-        # Esperar en loop hasta que is_paused sea False
-        while check_class_paused():
-            time.sleep(0.5)  # Verificar cada medio segundo
-        
-        print("▶️ Clase reanudada por profesora")
-        speak_with_animation(engine, "Reanudando la clase.")
-        
-    except Exception as e:
-        print(f"Error waiting for resume: {e}")
-        speak_with_animation(engine, "Continuando con la clase.")
-
-def clear_teacher_request():
-    """
-    Limpia la solicitud de profesora después de procesarla
-    """
-    try:
-        if os.path.exists(TEACHER_REQUEST_FILE):
-            with open(TEACHER_REQUEST_FILE, 'w', encoding='utf-8') as f:
-                json.dump({'active': False, 'request_type': '', 'is_paused': False}, f)
-    except Exception as e:
-        print(f"Error clearing teacher request: {e}")
-
+    os.makedirs(faces_dir)\
+    
 # ======================
 #  UI/ANIMATION FLAGS
 # ======================
@@ -153,9 +84,6 @@ QUESTION_BANK_CHEM = [
 ]
 
 
-# Secuencia por defecto para preguntas de verificación
-VERIFICATION_SEQUENCE_NAME = "QuestionsMovement"
-
 def evaluate_student_answer(question, answer, context, student_name):
     """
     Función específica para evaluar respuestas de estudiantes
@@ -203,132 +131,6 @@ Da una respuesta natural y educativa como profesor. Si la respuesta es incorrect
             return f"Gracias por tu respuesta, {student_name}. Continuemos con la clase."
 
 # ======================
-#  FUNCIÓN PARA MANEJAR SOLICITUDES DE PROFESORA
-# ======================
-def process_teacher_request(engine, pdf_text, question_manager=None):
-    """
-    Procesa la solicitud de la profesora:
-    - Pausa la clase
-    - Escucha la solicitud
-    - Responde según el tipo de solicitud
-    """
-    try:
-        print("📚 Procesando solicitud de profesora...")
-        
-        # Leer el tipo de solicitud desde el archivo
-        has_request, request_type = check_teacher_request()
-        
-        # Procesar solicitudes especiales (repeat_question, new_question) SIN preguntar qué quiere
-        if request_type == 'repeat_question':
-            # Solicitud de repetir pregunta - EJECUCIÓN DIRECTA
-            if question_manager and question_manager.last_question and question_manager.last_student:
-                speak_with_animation(engine, "Por supuesto profesora. Voy a repetir la última pregunta.")
-                
-                # Repetir la pregunta completa usando el método del gestor
-                question_manager.repeat_last_question(engine, pdf_text, VERIFICATION_SEQUENCE_NAME)
-            else:
-                speak_with_animation(engine, "Lo siento profesora, no hay una pregunta previa para repetir.")
-            
-            # Limpiar el archivo de solicitud
-            clear_teacher_request()
-            return True
-                
-        elif request_type == 'new_question':
-            # Solicitud de hacer una nueva pregunta - EJECUCIÓN DIRECTA
-            if question_manager:
-                speak_with_animation(engine, "Por supuesto profesora. Voy a hacer una nueva pregunta.")
-                
-                # Hacer una pregunta aleatoria completa
-                question_manager.conduct_random_question(engine, pdf_text, VERIFICATION_SEQUENCE_NAME)
-            else:
-                speak_with_animation(engine, "Lo siento profesora, no puedo hacer una pregunta en este momento.")
-            
-            # Limpiar el archivo de solicitud
-            clear_teacher_request()
-            return True
-        
-        # Para solicitudes generales y ejemplos, SÍ preguntamos qué quiere
-        # Respuesta del robot
-        speak_with_animation(engine, "Si profesora, cual es su solicitud")
-        
-        # Escuchar la solicitud
-        print("🎤 Esperando solicitud de la profesora...")
-        request = listen(timeout=15)  # Timeout más largo para solicitudes
-        
-        # Procesar respuesta
-        if request and request not in ["error_capture", "error_google", "error_unknown", "error_general", "timeout", ""]:
-            print(f"💬 Solicitud de profesora: {request}")
-            
-            # Procesar según tipo
-            if request_type == 'examples':
-                # Solicitud de más ejemplos
-                speak_with_animation(engine, "Por supuesto profesora. Voy a proporcionar ejemplos adicionales sobre el tema.")
-                # Aquí puedes agregar lógica para dar ejemplos del material
-                speak_with_animation(engine, "Deseas que continúe con más ejemplos o prefieres que retome la explicación normal")
-                
-            else:
-                # Solicitud general - usar OpenAI para procesar
-                try:
-                    # Usar OpenAI para entender y responder la solicitud
-                    response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
-                        messages=[
-                            {"role": "system", "content": """Eres ADAI, un asistente docente amigable que ayuda a profesoras.
-                            IMPORTANTE: NO uses asteriscos, guiones, viñetas, ni formato especial
-                            NO uses emojis ni símbolos especiales  
-                            Habla de manera natural y profesional
-                            Máximo 3 oraciones
-                            NO uses palabras como "retroalimentación", "corrección"
-                            Responde a la solicitud de la profesora de manera útil y educativa"""},
-                            {"role": "user", "content": f"La profesora solicitó: {request}\n\nContexto del material: {pdf_text[:1000]}...\n\nResponde de manera útil a esta solicitud."}
-                        ]
-                    )
-                    answer = response.choices[0].message.content
-                    answer = answer.replace("*", "").replace("**", "").replace("***", "")
-                    answer = answer.replace("- ", "").replace("• ", "")
-                    answer = answer.strip()
-                    
-                    speak_with_animation(engine, answer)
-                    
-                    # Confirmación
-                    speak_with_animation(engine, "¿Deseas que continúe con la clase?")
-                    
-                except Exception as e:
-                    print(f"❌ Error procesando solicitud con OpenAI: {e}")
-                    speak_with_animation(engine, "Entendido profesora. ¿Deseas que continúe con la clase?")
-            
-        else:
-            # No se obtuvo solicitud válida
-            print(f"⚠️ No se obtuvo solicitud válida de la profesora")
-            speak_with_animation(engine, "No pude escuchar tu solicitud profesora. ¿Deseas que continúe con la clase?")
-        
-        # Esperar confirmación
-        confirmation = listen(timeout=10)
-        
-        if confirmation and confirmation not in ["error_capture", "error_google", "error_unknown", "error_general", "timeout", ""]:
-            if "sí" in confirmation.lower() or "si" in confirmation.lower() or "continuar" in confirmation.lower():
-                speak_with_animation(engine, "Perfecto. Continuemos con la clase.")
-            else:
-                # Procesar más solicitudes
-                speak_with_animation(engine, "Muy bien. ¿Tienes alguna otra solicitud?")
-                additional_request = listen(timeout=10)
-                
-                if additional_request and additional_request not in ["error_capture", "error_google", "error_unknown", "error_general", "timeout", ""]:
-                    speak_with_animation(engine, "Entendido. Continuemos con la clase.")
-                else:
-                    speak_with_animation(engine, "Continuemos con la clase.")
-        
-        # Limpiar el archivo de solicitud
-        clear_teacher_request()
-        return True
-        
-    except Exception as e:
-        print(f"❌ Error procesando solicitud de profesora: {e}")
-        speak_with_animation(engine, "Hubo un problema. Continuemos con la clase.")
-        clear_teacher_request()
-        return True
-
-# ======================
 #  CLASE CONTROLADOR DE PREGUNTAS
 # ======================
 class RandomQuestionManager:
@@ -352,10 +154,6 @@ class RandomQuestionManager:
         # Estadísticas
         self.total_questions_asked = 0
         self.questions_per_student = {student: 0 for student in students}
-        
-        # Última pregunta hecha para repetir
-        self.last_question = None
-        self.last_student = None
         
         print(f"🎯 Gestor de preguntas inicializado:")
         print(f"   - {len(self.students)} estudiantes registrados")
@@ -431,7 +229,7 @@ class RandomQuestionManager:
         print(f"❓ Pregunta seleccionada: {selected_question[:50]}...")
         return selected_question
     
-    def conduct_random_question(self, engine, pdf_text, sequence_name=None):
+    def conduct_random_question(self, engine, pdf_text):
         """
         Conduce una pregunta aleatoria completa - VERSIÓN TRADICIONAL
         
@@ -447,21 +245,9 @@ class RandomQuestionManager:
                 print("⚠️ No se pudo realizar pregunta aleatoria")
                 return False
             
-            # Guardar la pregunta para poder repetirla
-            self.last_question = question
-            self.last_student = student_name
-            
             # Anunciar pregunta aleatoria
             announcement = f"Momento de verificación de aprendizaje. {student_name}, tienes una pregunta especial."
             speak_with_animation(engine, announcement)
-            
-            # Iniciar secuencia de verificación en paralelo (si está configurada)
-            try:
-                seq_to_run = sequence_name if sequence_name else VERIFICATION_SEQUENCE_NAME
-                if seq_to_run:
-                    threading.Thread(target=execute_esp32_sequence, args=(seq_to_run,), daemon=True).start()
-            except Exception as e:
-                print(f"❌ No se pudo iniciar secuencia de verificación: {e}")
             
             # Hacer la pregunta
             speak_with_animation(engine, question)
@@ -510,85 +296,6 @@ class RandomQuestionManager:
             
         except Exception as e:
             print(f"❌ Error en pregunta aleatoria: {e}")
-            speak_with_animation(engine, "Continuemos con la clase.")
-            return False
-    
-    def repeat_last_question(self, engine, pdf_text, sequence_name=None):
-        """
-        Repite la última pregunta que se hizo a un estudiante
-        
-        Returns:
-            bool: True si se completó exitosamente, False si hubo error
-        """
-        try:
-            if not self.last_question or not self.last_student:
-                print("⚠️ No hay pregunta previa para repetir")
-                return False
-            
-            question = self.last_question
-            student_name = self.last_student
-            
-            print(f"🔁 Repitiendo pregunta para {student_name}: {question[:50]}...")
-            
-            # Anunciar pregunta
-            announcement = f"Momento de verificación de aprendizaje. {student_name}, tienes una pregunta especial."
-            speak_with_animation(engine, announcement)
-            
-            # Iniciar secuencia de verificación en paralelo (si está configurada)
-            try:
-                seq_to_run = sequence_name if sequence_name else VERIFICATION_SEQUENCE_NAME
-                if seq_to_run:
-                    threading.Thread(target=execute_esp32_sequence, args=(seq_to_run,), daemon=True).start()
-            except Exception as e:
-                print(f"❌ No se pudo iniciar secuencia de verificación: {e}")
-            
-            # Hacer la pregunta
-            speak_with_animation(engine, question)
-            
-            # Escuchar respuesta
-            print(f"🎤 Esperando respuesta de {student_name}...")
-            answer = listen(timeout=15)
-            
-            # Procesar respuesta
-            if answer and answer not in ["error_capture", "error_google", "error_unknown", "error_general", "timeout", ""]:
-                print(f"💬 Respuesta de {student_name}: {answer}")
-                
-                # Registrar en historial
-                self.student_question_history[student_name].append({
-                    'question': question,
-                    'answer': answer,
-                    'slide_number': None,
-                    'repeated': True
-                })
-                self.questions_per_student[student_name] += 1
-                self.total_questions_asked += 1
-                
-                # Evaluar respuesta con OpenAI
-                try:
-                    evaluation = evaluate_student_answer(question, answer, pdf_text, student_name)
-                    
-                    # Dar retroalimentación
-                    speak_with_animation(engine, evaluation)
-                    
-                    # Mensaje de continuación basado en la evaluación
-                    if "excelente" in evaluation.lower() or "correcta" in evaluation.lower():
-                        speak_with_animation(engine, f"¡Muy bien, {student_name}! Continuemos con la clase.")
-                    else:
-                        speak_with_animation(engine, f"Gracias por tu respuesta, {student_name}. Continuemos.")
-                    
-                except Exception as e:
-                    print(f"❌ Error evaluando respuesta: {e}")
-                    speak_with_animation(engine, f"Gracias por tu respuesta, {student_name}. Continuemos con la clase.")
-                
-            else:
-                # No se obtuvo respuesta válida
-                print(f"⚠️ No se obtuvo respuesta válida de {student_name}")
-                speak_with_animation(engine, f"No hay problema, {student_name}. Continuemos con la clase.")
-            
-            return True
-            
-        except Exception as e:
-            print(f"❌ Error repitiendo pregunta: {e}")
             speak_with_animation(engine, "Continuemos con la clase.")
             return False
     
@@ -2133,18 +1840,6 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                     process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
                     continue
                 
-                # Verificar solicitudes de profesora
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
-                    continue
-                
-                # Verificar si la clase está pausada
-                if check_class_paused():
-                    wait_for_resume(engine)
-                    continue
-                
                 page = doc[slide_num]
                 # Mostrar la imagen de la diapositiva
                 page_img = show_pdf_page_in_opencv(page)
@@ -2156,7 +1851,7 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
 
                 if page_text.strip():
                     prompt = f"""
-                    El siguiente texto es de una diapositiva de clase. 
+                    El siguiente texto es de una diapositiva de clase sobre robótica. 
                     No resumas simplemente el contenido, sino explícalo como lo haría un profesor 
                     entusiasta en clase pero hacerlo CONCISO máximo (4-5 frases),
                     añadiendo contexto y haciéndolo interesante y conversacional:
@@ -2201,18 +1896,6 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                         process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
                         continue
                     
-                    # Verificar solicitudes de profesora durante explicación
-                    has_request, request_type = check_teacher_request()
-                    if has_request:
-                        print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
-                        continue
-                    
-                    # Verificar si la clase está pausada
-                    if check_class_paused():
-                        wait_for_resume(engine)
-                        continue
-                    
                     if exit_flag.value != 0:
                         print("🛑 Señal de salida detectada")
                         return False
@@ -2226,13 +1909,6 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                 # Pequeña pausa
                 for _ in range(5):
                     if hand_raised_counter.value > 0 or exit_flag.value != 0:
-                        break
-                    has_request, _ = check_teacher_request()
-                    if has_request:
-                        break
-                    # Verificar pausa
-                    if check_class_paused():
-                        wait_for_resume(engine)
                         break
                     time.sleep(0.2)
                 
@@ -2252,28 +1928,22 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                     time.sleep(1.0)
                     
                     # Realizar pregunta aleatoria
-                    question_manager.conduct_random_question(engine, pdf_text, sequence_name=VERIFICATION_SEQUENCE_NAME)
+                    question_manager.conduct_random_question(engine, pdf_text)
                     
                     # Pausa después de la pregunta antes de continuar
                     time.sleep(1.0)
 
                        # Realizar pregunta aleatoria
-                    question_manager.conduct_random_question(engine, pdf_text, sequence_name=VERIFICATION_SEQUENCE_NAME)
+                    question_manager.conduct_random_question(engine, pdf_text)
                     
                     # Pausa después de la pregunta antes de continuar
                     time.sleep(1.0)
 
                        # Realizar pregunta aleatoria
-                    question_manager.conduct_random_question(engine, pdf_text, sequence_name=VERIFICATION_SEQUENCE_NAME)
+                    question_manager.conduct_random_question(engine, pdf_text)
                     
                     # Pausa después de la pregunta antes de continuar
                     time.sleep(1.0)
-                    
-                    # Verificar si hubo solicitud de profesora durante las preguntas
-                    has_request, request_type = check_teacher_request()
-                    if has_request:
-                        print(f"📚 Solicitud de profesora detectada durante preguntas")
-                        process_teacher_request(engine, pdf_text, question_manager)
                     
                     # Anunciar continuación
                     if slide_num < total_slides:
@@ -3814,8 +3484,6 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
     Args:
         sequence_mapping: Diccionario que mapea número de diapositiva -> nombre de secuencia
                          Ejemplo: {1: "saludo", 3: "gesto_paz", 5: "hablar"}
-        teacher_request_flag: Flag de multiprocessing para solicitudes de profesora
-        teacher_request_type: Array de multiprocessing para tipo de solicitud
     """
     try:
         print("🎬 Iniciando explicación con secuencias ESP32...")
@@ -3848,18 +3516,6 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 if hand_raised_counter.value > 0:
                     print(f"✋ Manos levantadas detectadas: {hand_raised_counter.value}")
                     process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                # Verificar solicitudes de profesora
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
-                    continue
-                
-                # Verificar si la clase está pausada
-                if check_class_paused():
-                    wait_for_resume(engine)
                     continue
                 
                 page = doc[slide_num]
@@ -3918,18 +3574,6 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                         process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
                         continue
                     
-                    # Verificar solicitudes de profesora durante explicación
-                    has_request, request_type = check_teacher_request()
-                    if has_request:
-                        print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
-                        continue
-                    
-                    # Verificar si la clase está pausada
-                    if check_class_paused():
-                        wait_for_resume(engine)
-                        continue
-                    
                     if exit_flag.value != 0:
                         print("🛑 Señal de salida detectada")
                         return False
@@ -3940,31 +3584,41 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     
                     time.sleep(0.2)
                 
-                # La secuencia ya se inició en paralelo, no bloquear aquí
+                # *** EJECUTAR SECUENCIA ESP32 DESPUÉS DE LA DIAPOSITIVA ***
+                current_slide_number = slide_num + 1
+                if current_slide_number in sequence_mapping:
+                    sequence_name = sequence_mapping[current_slide_number]
+                    print(f"\n🤖 === EJECUTANDO SECUENCIA ESP32 (después de diapositiva {current_slide_number}) ===")
+                    print(f"🎬 Secuencia: {sequence_name}")
+                    
+                    # Anunciar la secuencia
+                    speak_with_animation(engine, f"Ahora ejecutaré una secuencia de movimientos del robot.")
+                    time.sleep(1.0)
+                    
+                    # Ejecutar la secuencia
+                    success = execute_esp32_sequence(sequence_name)
+                    
+                    if success:
+                        print(f"✅ Secuencia '{sequence_name}' ejecutada exitosamente")
+                        speak_with_animation(engine, "Secuencia completada.")
+                    else:
+                        print(f"❌ Error ejecutando secuencia '{sequence_name}'")
+                        speak_with_animation(engine, "Hubo un problema con la secuencia, continuemos.")
+                    
+                    # Pausa después de la secuencia
+                    time.sleep(2.0)
+                    
+                    print(f"🤖 === FIN DE SECUENCIA ESP32 ===\n")
                 
                 # Pequeña pausa
                 for _ in range(5):
                     if hand_raised_counter.value > 0 or exit_flag.value != 0:
-                        break
-                    has_request, _ = check_teacher_request()
-                    if has_request:
-                        break
-                    # Verificar pausa
-                    if check_class_paused():
-                        wait_for_resume(engine)
                         break
                     time.sleep(0.2)
                 
                 if hand_raised_counter.value > 0:
                     print(f"✋ Manos levantadas tras la diapositiva: {hand_raised_counter.value}")
                     process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                # Verificar solicitudes de profesora tras la diapositiva
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
                     continue
                 
                 slide_num += 1
@@ -4289,8 +3943,6 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
     Args:
         sequence_mapping: Diccionario que mapea número de diapositiva -> nombre de secuencia
                          Ejemplo: {1: "saludo", 3: "gesto_paz", 5: "hablar"}
-        teacher_request_flag: Flag de multiprocessing para solicitudes de profesora
-        teacher_request_type: Array de multiprocessing para tipo de solicitud
     """
     try:
         print("🎬 Iniciando explicación con secuencias ESP32...")
@@ -4323,18 +3975,6 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 if hand_raised_counter.value > 0:
                     print(f"✋ Manos levantadas detectadas: {hand_raised_counter.value}")
                     process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                # Verificar solicitudes de profesora
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
-                    continue
-                
-                # Verificar si la clase está pausada
-                if check_class_paused():
-                    wait_for_resume(engine)
                     continue
                 
                 page = doc[slide_num]
@@ -4414,7 +4054,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     print(f"🎬 Secuencia: {sequence_name}")
                     
                     # Anunciar la secuencia
-                    # speak_with_animation(engine, f"Ahora ejecutaré una secuencia de movimientos del robot.")
+                    speak_with_animation(engine, f"Ahora ejecutaré una secuencia de movimientos del robot.")
                     time.sleep(1.0)
                     
                     # Ejecutar la secuencia
@@ -4436,21 +4076,11 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 for _ in range(5):
                     if hand_raised_counter.value > 0 or exit_flag.value != 0:
                         break
-                    has_request, _ = check_teacher_request()
-                    if has_request:
-                        break
                     time.sleep(0.2)
                 
                 if hand_raised_counter.value > 0:
                     print(f"✋ Manos levantadas tras la diapositiva: {hand_raised_counter.value}")
                     process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                # Verificar solicitudes de profesora tras la diapositiva
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
                     continue
                 
                 slide_num += 1
@@ -4504,9 +4134,6 @@ def main():
         if not engine:
             print("❌ No se pudo inicializar el motor TTS")
             return
-
-        # Limpiar archivo de solicitudes de profesora al iniciar
-        clear_teacher_request()
 
         # Saludo inicial
         speak_with_animation(engine, "Hola, soy ADAI, tu Asistente Docente Androide de Ingeniería.")
@@ -4619,243 +4246,6 @@ def main():
         
         cv2.destroyAllWindows()
         print("🔚 Fin")
-
-def explain_slides_with_sequences_and_questions(engine, pdf_path, pdf_text, current_users,
-                                               hand_raised_counter, current_slide_num, exit_flag, 
-                                               known_faces, current_hand_raiser, sequence_mapping=None):
-    """
-    Explicación de diapositivas con secuencias ESP32 EN PARALELO y preguntas aleatorias cada 3 slides
-    
-    Args:
-        sequence_mapping: Diccionario que mapea número de diapositiva -> nombre de secuencia
-                         Ejemplo: {1: "saludo", 3: "gesto_paz", 5: "hablar"}
-        teacher_request_flag: Flag de multiprocessing para solicitudes de profesora
-        teacher_request_type: Array de multiprocessing para tipo de solicitud
-    """
-    try:
-        print("🎬 Iniciando explicación con secuencias ESP32 EN PARALELO y preguntas aleatorias...")
-        
-        # Mapeo de secuencias por defecto si no se proporciona
-        if sequence_mapping is None:
-            sequence_mapping = {
-                1: "saludo_inicial",
-                3: "gesto_paz", 
-                5: "hablar_clase",
-                7: "gesto_ok",
-                9: "despedida"
-            }
-        
-        print(f"📋 Mapeo de secuencias: {sequence_mapping}")
-        
-        # Inicializar gestor de preguntas
-        question_manager = RandomQuestionManager(current_users)
-
-        # Crear ventana "Presentacion" para mostrar cada página
-        cv2.namedWindow("Presentacion", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("Presentacion", 800, 600)
-
-        with fitz.open(pdf_path) as doc:
-            total_slides = len(doc)
-            slide_num = 0
-            
-            while slide_num < total_slides and exit_flag.value == 0:
-                current_slide_num.value = slide_num + 1
-                print(f"📝 Explicando diapositiva {current_slide_num.value} de {total_slides}")
-                
-                # Verificar manos levantadas antes de continuar
-                if hand_raised_counter.value > 0:
-                    print(f"✋ Manos levantadas detectadas: {hand_raised_counter.value}")
-                    process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                page = doc[slide_num]
-                # Mostrar la imagen de la diapositiva
-                page_img = show_pdf_page_in_opencv(page)
-                cv2.imshow("Presentacion", page_img)
-                cv2.waitKey(50)
-
-                # *** INICIAR SECUENCIA ESP32 EN PARALELO AL MOSTRAR LA DIAPOSITIVA ***
-                current_slide_number = slide_num + 1
-                if current_slide_number in sequence_mapping:
-                    sequence_name = sequence_mapping[current_slide_number]
-                    print(f"\n🤖 === INICIANDO SECUENCIA ESP32 EN PARALELO (diapositiva {current_slide_number}) ===")
-                    print(f"🎬 Secuencia: {sequence_name}")
-                    try:
-                        seq_thread = threading.Thread(target=execute_esp32_sequence, args=(sequence_name,), daemon=True)
-                        seq_thread.start()
-                        print(f"✅ Secuencia '{sequence_name}' iniciada en paralelo")
-                    except Exception as e:
-                        print(f"❌ No se pudo iniciar la secuencia en paralelo: {e}")
-
-                # Obtener texto y generar explicación
-                page_text = page.get_text()
-
-                if page_text.strip():
-                    prompt = f"""
-                    El siguiente texto es de una diapositiva de clase sobre robótica. 
-                    No resumas simplemente el contenido, sino explícalo como lo haría un profesor 
-                    entusiasta en clase pero hacerlo CONCISO máximo (4-5 frases),
-                    añadiendo contexto y haciéndolo interesante y conversacional:
-                    
-                    Contenido:
-                    {page_text}
-                    """
-                    try:
-                        response = client.chat.completions.create(
-                            model="gpt-3.5-turbo",
-                            messages=[
-                                {"role": "system", "content": """Eres ADAI, Asistente Docente Androide de Ingeniería. 
-                                    IMPORTANTE: NO uses emojis, símbolos especiales, ni caracteres no alfabéticos en tus respuestas 
-                                    ya que serán leídas en voz alta por un sintetizador de voz. 
-                                    Usa solo texto simple, claro y profesional. Sé entusiasta pero con palabras, no con símbolos."""},
-                                {"role": "user", "content": prompt}
-                            ]
-                        )
-                        explanation = response.choices[0].message.content
-                    except Exception as e:
-                        print(f"❌ Error en OpenAI: {e}")
-                        explanation = summarize_text(page_text)
-                else:
-                    # Si no hay texto en la página
-                    image_path = os.path.join(script_dir, f"page{slide_num + 1}.png")
-                    page.get_pixmap().save(image_path)
-                    explanation = interpret_image(image_path)
-                
-                # Mensaje inicial
-                slide_info = f"Diapositiva {slide_num + 1}: "
-                speak_with_animation(engine, slide_info)
-
-                # Explicación en frases
-                sentences = []
-                for part in explanation.split("."):
-                    if part.strip():
-                        sentences.append(part.strip() + ".")
-
-                for i, sentence in enumerate(sentences):
-                    if hand_raised_counter.value > 0:
-                        print(f"✋ Manos levantadas detectadas: {hand_raised_counter.value}")
-                        process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                        continue
-                    
-                    # Verificar solicitudes de profesora durante explicación
-                    has_request, request_type = check_teacher_request()
-                    if has_request:
-                        print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
-                        continue
-                    
-                    # Verificar si la clase está pausada
-                    if check_class_paused():
-                        wait_for_resume(engine)
-                        continue
-                    
-                    if exit_flag.value != 0:
-                        print("🛑 Señal de salida detectada")
-                        return False
-                    
-                    if sentence.strip():
-                        print(f"🗣️ Fragmento {i+1}/{len(sentences)}: {sentence[:30]}...")
-                        speak_with_animation(engine, sentence)
-                    
-                    time.sleep(0.2)
-                
-                # NOTA: Secuencia ya se inició en paralelo al inicio de la diapositiva
-                
-                # Pequeña pausa
-                for _ in range(5):
-                    if hand_raised_counter.value > 0 or exit_flag.value != 0:
-                        break
-                    has_request, _ = check_teacher_request()
-                    if has_request:
-                        break
-                    # Verificar pausa
-                    if check_class_paused():
-                        wait_for_resume(engine)
-                        break
-                    time.sleep(0.2)
-                
-                if hand_raised_counter.value > 0:
-                    print(f"✋ Manos levantadas tras la diapositiva: {hand_raised_counter.value}")
-                    process_question(engine, current_users, known_faces, pdf_text, hand_raised_counter, current_hand_raiser)
-                    continue
-                
-                # Verificar solicitudes de profesora tras la diapositiva
-                has_request, request_type = check_teacher_request()
-                if has_request:
-                    print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
-                    continue
-                
-                slide_num += 1
-                
-                # *** PREGUNTA ALEATORIA CADA 3 DIAPOSITIVAS ***
-                if slide_num % 3 == 0 and slide_num < total_slides:
-                    print(f"\n❓ === PREGUNTA ALEATORIA (cada 3 diapositivas) ===")
-                    print(f"📊 Diapositiva actual: {slide_num}")
-                    
-                    # Seleccionar estudiante y pregunta aleatoria
-                    student_name, student_index = question_manager.select_random_student()
-                    question = question_manager.select_random_question()
-                    
-                    if question and student_name:
-                        print(f"🎯 Estudiante seleccionado: {student_name}")
-                        print(f"🎯 Pregunta seleccionada: {question}")
-                        
-                        # Guardar la pregunta para poder repetirla
-                        question_manager.last_question = question
-                        question_manager.last_student = student_name
-                        
-                        # Iniciar secuencia de verificación en paralelo (si está configurada)
-                        try:
-                            if VERIFICATION_SEQUENCE_NAME:
-                                threading.Thread(target=execute_esp32_sequence, args=(VERIFICATION_SEQUENCE_NAME,), daemon=True).start()
-                                print(f"🤖 Secuencia de verificación '{VERIFICATION_SEQUENCE_NAME}' iniciada en paralelo")
-                        except Exception as e:
-                            print(f"❌ No se pudo iniciar secuencia de verificación: {e}")
-                        
-                        # Hacer la pregunta
-                        speak_with_animation(engine, f"Momento de verificación de aprendizaje. {student_name}, tienes una pregunta especial.")
-                        speak_with_animation(engine, question)
-                        
-                        # Esperar respuesta
-                        print(f"🎤 Esperando respuesta de {student_name}...")
-                        response_text = listen(timeout=15)
-                        
-                        if response_text and response_text.strip() and response_text not in ["error_capture", "error_google", "error_unknown", "error_general", "timeout", ""]:
-                            print(f"💬 Respuesta de {student_name}: {response_text}")
-                            
-                            # Evaluar respuesta con el nombre del estudiante
-                            evaluation = evaluate_student_answer(question, response_text, pdf_text, student_name)
-                            print(f"📝 Evaluación: {evaluation}")
-                            
-                            # Dar feedback
-                            speak_with_animation(engine, evaluation)
-                            
-                            # Mensaje de continuación
-                            if "excelente" in evaluation.lower() or "correcta" in evaluation.lower():
-                                speak_with_animation(engine, f"¡Muy bien, {student_name}! Continuemos con la clase.")
-                            else:
-                                speak_with_animation(engine, f"Gracias por tu respuesta, {student_name}. Continuemos.")
-                        else:
-                            print(f"⏰ Tiempo agotado o sin respuesta de {student_name}")
-                            speak_with_animation(engine, f"No hay problema, {student_name}. Continuemos con la clase.")
-                    else:
-                        print("⚠️ No se pudo realizar pregunta aleatoria")
-                        speak_with_animation(engine, "Continuemos con la clase.")
-                        
-                    print(f"❓ === FIN DE PREGUNTA ALEATORIA ===\n")
-                    
-                    # Pausa después de la pregunta
-                    time.sleep(2.0)
-        
-        print("✅ Explicación con secuencias y preguntas completada")
-        return True
-        
-    except Exception as e:
-        print(f"❌ Error en explicación con secuencias y preguntas: {e}")
-        import traceback
-        traceback.print_exc()
-        return False
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

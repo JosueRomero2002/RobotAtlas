@@ -50,6 +50,13 @@ export function Navbar({ activeRoute, onRouteChange }) {
       </view>
       
       <view 
+        className={`footer-nav-item ${activeRoute === 'teacher' ? 'active' : ''}`}
+        bindtap={() => handleRouteChange('teacher')}
+      >
+        <text className="nav-icon">🎓</text>
+      </view>
+      
+      <view 
         className={`footer-nav-item ${activeRoute === 'manualconfig' ? 'active' : ''}`}
         bindtap={() => handleRouteChange('manualconfig')}
       >

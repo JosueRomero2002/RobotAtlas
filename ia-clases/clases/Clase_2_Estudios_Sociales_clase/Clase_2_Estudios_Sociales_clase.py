@@ -40,6 +40,7 @@ try:
         show_diagnostic_qr, show_final_exam_qr,
         show_pdf_page_in_opencv, extract_text_from_pdf, 
         explain_slides_with_random_questions, explain_slides_with_sequences,
+        explain_slides_with_sequences_and_questions,
         RandomQuestionManager, evaluate_student_answer, process_question,
         execute_esp32_sequence, summarize_text, ask_openai, QUESTION_BANK
     )
@@ -53,13 +54,32 @@ except ImportError as e:
 # ======================
 #  BANCO DE PREGUNTAS PERSONALIZADAS
 # ======================
-CUSTOM_QUESTION_BANK = ['La neutralización ocurre cuando un ácido y una base reaccionan. Verdadero o falso?', 'El bicarbonato de sodio es una sustancia básica. Verdadero o falso?', 'El vinagre contiene ácido acético. Verdadero o falso?', 'La col morada puede actuar como indicador de pH. Verdadero o falso?', 'La reacción entre ácido y bicarbonato libera oxígeno. Verdadero o falso?', 'El pH neutro corresponde aproximadamente al valor 7. Verdadero o falso?', 'La fenolftaleína se vuelve rosa en medio ácido. Verdadero o falso?']
-
+CUSTOM_QUESTION_BANK = [
+'Los valores cívicos nos enseñan a comportarnos correctamente dentro de una comunidad. Verdadero o falso?',
+'La palabra “cívico” proviene de “civilización”. Verdadero o falso?',
+'Cumplir con los deberes y respetar los derechos de los demás son ejemplos de valores cívicos. Verdadero o falso?',
+'La honestidad y la solidaridad son ejemplos de valores cívicos. Verdadero o falso?',
+'Los valores cívicos solo se aprenden en los libros, no con acciones. Verdadero o falso?',
+'Practicar los valores cívicos ayuda a tener un país más ordenado y seguro. Verdadero o falso?',
+'El respeto consiste en aceptar a los demás aunque piensen diferente. Verdadero o falso?',
+'La responsabilidad implica cumplir con nuestras obligaciones y promesas. Verdadero o falso?',
+'Ser honesto significa copiar en los exámenes para no perder puntos. Verdadero o falso?',
+'La solidaridad se demuestra ayudando a quien lo necesita. Verdadero o falso?',
+'El amor a la patria incluye cuidar los símbolos nacionales. Verdadero o falso?',
+'La tolerancia significa aceptar las diferencias y convivir en armonía. Verdadero o falso?',
+'La cooperación consiste en trabajar juntos para alcanzar metas comunes. Verdadero o falso?',
+'Una buena convivencia escolar se basa en el respeto y el diálogo. Verdadero o falso?',
+'En una escuela con buena convivencia, los conflictos se resuelven con peleas. Verdadero o falso?',
+'Pedir perdón cuando nos equivocamos es una muestra de buena convivencia. Verdadero o falso?',
+'Practicar la empatía y la cortesía mejora la convivencia escolar. Verdadero o falso?',
+'Cumplir las reglas del aula y mantener el orden son formas de practicar valores cívicos. Verdadero o falso?',
+'Los valores se enseñan principalmente con el ejemplo y las acciones diarias. Verdadero o falso?'
+]
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
         print("🚀 Iniciando clase: Clase 2 Estudios Sociales")
-        print("📚 Materia: Robots Médicos")
+        print("📚 Materia: Estudios Sociales")
         
         # Definir rutas de archivos
         diagnostic_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
@@ -123,7 +143,7 @@ def main():
         print("="*50)
         
         speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 2 Estudios Sociales")
-        speak_with_animation(engine, f"Vamos a aprender sobre Robots Médicos")
+        speak_with_animation(engine, f"Vamos a aprender sobre Estudios Sociales")
         
         # FASE 3: Contenido Principal
         print("\n" + "="*50)
@@ -131,36 +151,51 @@ def main():
         print("="*50)
         
         if class_pdf and os.path.exists(class_pdf):
-            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Robots Médicos.")
+            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Estudios Sociales.")
             
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
+                # Definir mapeo de secuencias ESP32 por número de diapositiva
+                sequence_mapping = {
+                    1: "ClaseMove",        # Después de la diapositiva 1
+                    2: "CuelloMove",
+                    3: "ClaseMove",        # Después de la diapositiva 3
+                    4: "CuelloMove",
+                    5: "ClaseMove",
+                    6: "CuelloMove",
+                    7: "ClaseMove",
+                    8: "CuelloMove",
+                    9: "ClaseMove",
+                }
+                
+                print("🎬 Usando explicación con secuencias ESP32 EN PARALELO y preguntas aleatorias")
+                
                 # Usar preguntas personalizadas si están disponibles
                 if CUSTOM_QUESTION_BANK:
-                    print("🎯 Usando preguntas personalizadas")
+                    print("🎯 Usando preguntas personalizadas con secuencias")
                     # Temporalmente reemplazar QUESTION_BANK con preguntas personalizadas
                     original_question_bank = QUESTION_BANK.copy()
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
                     
-                    # Explicar diapositivas con preguntas personalizadas
-                    explain_slides_with_random_questions(
+                    # Explicar diapositivas con preguntas personalizadas y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
                     
                     # Restaurar QUESTION_BANK original
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(original_question_bank)
                 else:
-                    print("🎯 Usando preguntas por defecto")
-                    # Explicar diapositivas con preguntas aleatorias por defecto
-                    explain_slides_with_random_questions(
+                    print("🎯 Usando preguntas por defecto con secuencias")
+                    # Explicar diapositivas con preguntas aleatorias por defecto y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
             else:
                 print("❌ No se pudo leer el PDF")

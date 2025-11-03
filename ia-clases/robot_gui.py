@@ -240,6 +240,10 @@ class MobileAPIHandler(BaseHTTPRequestHandler):
                 response = self.handle_execute_preset(data)
             elif path == '/api/robot/emergency':
                 response = self.handle_emergency_stop()
+            elif path == '/api/teacher/request':
+                response = self.handle_teacher_request(data)
+            elif path == '/api/teacher/pause':
+                response = self.handle_class_pause(data)
             else:
                 self.send_error(404, "Endpoint not found")
                 self.robot_gui.increment_api_stat('failed_requests')
@@ -517,6 +521,97 @@ class MobileAPIHandler(BaseHTTPRequestHandler):
             return {"success": True, "message": "Emergency stop executed"}
             
         except Exception as e:
+            return {"success": False, "error": str(e)}
+    
+    def handle_teacher_request(self, data):
+        """Handle teacher request to pause class and listen for request"""
+        try:
+            request_type = data.get('request_type', 'general')
+            
+            # Log the teacher request
+            print(f"📚 Teacher request received: {request_type}")
+            self.robot_gui.log_mobile_message(f"Teacher request: {request_type}")
+            
+            # Write request to shared file for the class to read
+            # The file should be in classes/main/ directory
+            try:
+                # Try to find the classes/main directory
+                current_file = os.path.abspath(__file__)
+                classes_main_dir = os.path.join(os.path.dirname(current_file), "clases", "main")
+                teacher_request_file = os.path.join(classes_main_dir, "teacher_request.json")
+                
+                # Write the request to the file
+                with open(teacher_request_file, 'w', encoding='utf-8') as f:
+                    json.dump({
+                        'active': True,
+                        'request_type': request_type,
+                        'timestamp': time.time()
+                    }, f)
+                
+                print(f"✅ Teacher request written to: {teacher_request_file}")
+            except Exception as e:
+                print(f"⚠️ Could not write teacher request file: {e}")
+            
+            # Send speech request to robot using TTS
+            if hasattr(self.robot_gui, 'tts_engine'):
+                speech_text = "Si profesora, cual es su solicitud"
+                self.robot_gui.tts_engine.say(speech_text)
+                self.robot_gui.tts_engine.runAndWait()
+            else:
+                print("Robot says: Si profesora, cual es su solicitud")
+            
+            # If specific request types are needed, handle them
+            if request_type == 'examples':
+                # Additional handling for examples request could go here
+                pass
+            elif request_type == 'repeat_question':
+                # Additional handling for repeat question could go here
+                pass
+            
+            return {"success": True, "message": f"Teacher request '{request_type}' processed"}
+            
+        except Exception as e:
+            print(f"Error handling teacher request: {e}")
+            return {"success": False, "error": str(e)}
+    
+    def handle_class_pause(self, data):
+        """Handle class pause/resume request"""
+        try:
+            is_paused = data.get('is_paused', True)  # Default to pause if not specified
+            
+            # Log the pause state change
+            action = "pausada" if is_paused else "reanudada"
+            print(f"⏸️ Clase {action} por profesora")
+            self.robot_gui.log_mobile_message(f"Class {action} by teacher")
+            
+            # Write pause state to shared file for the class to read
+            try:
+                # Try to find the classes/main directory
+                current_file = os.path.abspath(__file__)
+                classes_main_dir = os.path.join(os.path.dirname(current_file), "clases", "main")
+                teacher_request_file = os.path.join(classes_main_dir, "teacher_request.json")
+                
+                # Read current file state if it exists
+                file_data = {'active': False, 'request_type': '', 'is_paused': False}
+                if os.path.exists(teacher_request_file):
+                    with open(teacher_request_file, 'r', encoding='utf-8') as f:
+                        file_data = json.load(f)
+                
+                # Update pause state
+                file_data['is_paused'] = is_paused
+                
+                # Write the updated state to the file
+                with open(teacher_request_file, 'w', encoding='utf-8') as f:
+                    json.dump(file_data, f)
+                
+                print(f"✅ Clase {action}. Estado guardado en: {teacher_request_file}")
+            except Exception as e:
+                print(f"⚠️ Could not write class pause state file: {e}")
+            
+            return {"success": True, "message": f"Clase {action}"}
+            
+        except Exception as e:
+            print(f"Error handling class pause: {e}")
             return {"success": False, "error": str(e)}
     
     def execute_class_movements(self, movements):

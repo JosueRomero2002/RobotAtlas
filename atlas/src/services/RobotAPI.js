@@ -626,6 +626,30 @@ class RobotAPI {
       name: 'Cuello Aleatorio'
     });
   }
+
+  /**
+   * Handle teacher request - Pause class and listen for teacher's request
+   * @param {string} requestType - Type of request: 'general', 'examples', 'repeat_question'
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async handleTeacherRequest(requestType = 'general') {
+    return await this.makeRequest('/teacher/request', {
+      method: 'POST',
+      body: JSON.stringify({ request_type: requestType })
+    });
+  }
+
+  /**
+   * Pause or resume class
+   * @param {boolean} isPaused - True to pause, false to resume
+   * @returns {Promise<Object>} Result of the operation
+   */
+  async pauseClass(isPaused = true) {
+    return await this.makeRequest('/teacher/pause', {
+      method: 'POST',
+      body: JSON.stringify({ is_paused: isPaused })
+    });
+  }
 }
 
 // Create singleton instance

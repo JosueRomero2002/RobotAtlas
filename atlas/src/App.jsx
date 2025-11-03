@@ -8,6 +8,7 @@ import { ControlScreen } from './components/ControlScreen'
 import { RobotControlScreen } from './components/RobotControlScreen'
 import { ManualConfigScreen } from './components/ManualConfigScreen'
 import { ConfigDebugScreen } from './components/ConfigDebugScreen'
+import { TeacherControlScreen } from './components/TeacherControlScreen'
 import { GlobalStateProvider } from './services/GlobalStateProvider'
 
 import './App.css'
@@ -42,6 +43,8 @@ export function App(props) {
         return <ManualConfigScreen />
       case 'debug':
         return <ConfigDebugScreen />
+      case 'teacher':
+        return <TeacherControlScreen />
       default:
         return <HomeScreen />
     }

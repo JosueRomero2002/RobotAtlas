@@ -2191,3 +2191,275 @@ text {
     gap: 2px;
   }
 }
+
+/* ===== TEACHER CONTROL SCREEN STYLES ===== */
+
+.teacher-control-content {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.teacher-control-header {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.teacher-control-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.teacher-control-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  display: block;
+}
+
+/* Connection Status */
+.connection-status {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.status-indicator.connected {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.status-indicator.disconnected {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.status-icon {
+  font-size: 24px;
+}
+
+.status-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Control Buttons */
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.teacher-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.teacher-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.teacher-button:hover::before {
+  left: 100%;
+}
+
+.teacher-button.primary {
+  background: linear-gradient(135deg, rgba(255, 100, 72, 0.8), rgba(239, 155, 255, 0.6));
+  border-color: rgba(255, 100, 72, 0.5);
+  box-shadow: 0 8px 32px rgba(255, 100, 72, 0.3);
+}
+
+.teacher-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 100, 72, 0.4);
+}
+
+.teacher-button.secondary {
+  flex: 1;
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.teacher-button.secondary:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+.teacher-button.pause {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(251, 191, 36, 0.6));
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
+}
+
+.teacher-button.pause:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(245, 158, 11, 0.4);
+}
+
+.teacher-button.resume {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(74, 222, 128, 0.6));
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+}
+
+.teacher-button.resume:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(34, 197, 94, 0.4);
+}
+
+.teacher-button.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.button-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.button-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.button-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.secondary-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+/* Info Card */
+.info-card {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.info-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.info-text {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+/* Message Display */
+.message-display {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.message-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .teacher-control-title {
+    font-size: 24px;
+  }
+  
+  .teacher-button {
+    padding: 24px 16px;
+  }
+  
+  .button-icon {
+    font-size: 36px;
+  }
+  
+  .button-text {
+    font-size: 16px;
+  }
+  
+  .secondary-buttons {
+    flex-direction: column;
+  }
+  
+  .message-display {
+    left: 20px;
+    right: 20px;
+    transform: none;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

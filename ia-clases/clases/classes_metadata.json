@@ -93,8 +93,8 @@
       "folder": "Clase_1_Espanol_5to_clase",
       "file_path": "clases\\Clase_1_Espanol_5to_clase\\Clase_1_Espanol_5to_clase.py",
       "folder_path": "clases\\Clase_1_Espanol_5to_clase",
-      "modified": "2025-10-27T09:29:01.111877",
-      "size": 10536,
+      "modified": "2025-10-30T10:07:24.922741",
+      "size": 11379,
       "title": "Clase 1 Espanol 5to",
       "subject": "Espanol Quinto Grado",
       "description": "Una clase sobre robots en medicina",
@@ -105,8 +105,8 @@
           {
             "name": "Clase_1_Espanol_5to_clase.py",
             "path": "clases\\Clase_1_Espanol_5to_clase\\Clase_1_Espanol_5to_clase.py",
-            "size": 10536,
-            "modified": "2025-10-27T09:29:01.111877"
+            "size": 11379,
+            "modified": "2025-10-30T10:07:24.922741"
           }
         ],
         "images": [],
@@ -133,12 +133,56 @@
       }
     },
     {
+      "name": "Clase_1_Español_Sexto_Grado_clase.py",
+      "folder": "Clase_1_Español_Sexto_Grado_clase",
+      "file_path": "clases\\Clase_1_Español_Sexto_Grado_clase\\Clase_1_Español_Sexto_Grado_clase.py",
+      "folder_path": "clases\\Clase_1_Español_Sexto_Grado_clase",
+      "modified": "2025-10-30T10:13:25.925948",
+      "size": 11100,
+      "title": "Clase 1 Español Sexto Grado",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-29T06:26:01.074445",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_1_Español_Sexto_Grado_clase.py",
+            "path": "clases\\Clase_1_Español_Sexto_Grado_clase\\Clase_1_Español_Sexto_Grado_clase.py",
+            "size": 11100,
+            "modified": "2025-10-30T10:13:25.925948"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_1_Español_Sexto_Grado_clase\\class_config.json",
+            "size": 325,
+            "modified": "2025-10-29T06:26:01.074446"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 1 Español Sexto Grado",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-29T06:26:01.074445",
+        "main_file": "Clase_1_Español_Sexto_Grado_clase.py",
+        "folder_name": "Clase_1_Español_Sexto_Grado_clase"
+      }
+    },
+    {
       "name": "Clase_1_Estudios_Sociales_clase.py",
       "folder": "Clase_1_Estudios_Sociales_clase",
       "file_path": "clases\\Clase_1_Estudios_Sociales_clase\\Clase_1_Estudios_Sociales_clase.py",
       "folder_path": "clases\\Clase_1_Estudios_Sociales_clase",
-      "modified": "2025-10-27T11:38:11.037121",
-      "size": 9381,
+      "modified": "2025-10-30T11:16:02.628112",
+      "size": 11332,
       "title": "Clase 1 Estudios Sociales",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -149,8 +193,8 @@
           {
             "name": "Clase_1_Estudios_Sociales_clase.py",
             "path": "clases\\Clase_1_Estudios_Sociales_clase\\Clase_1_Estudios_Sociales_clase.py",
-            "size": 9381,
-            "modified": "2025-10-27T11:38:11.037121"
+            "size": 11332,
+            "modified": "2025-10-30T11:16:02.628112"
           }
         ],
         "images": [],
@@ -181,8 +225,8 @@
       "folder": "Clase_2_Español_Quinto_Grado_clase",
       "file_path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
       "folder_path": "clases\\Clase_2_Español_Quinto_Grado_clase",
-      "modified": "2025-10-27T11:33:56.608470",
-      "size": 9399,
+      "modified": "2025-11-01T12:58:44.844028",
+      "size": 11026,
       "title": "Clase 2 Español Quinto Grado",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -193,8 +237,8 @@
           {
             "name": "Clase_2_Español_Quinto_Grado_clase.py",
             "path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
-            "size": 9399,
-            "modified": "2025-10-27T11:33:56.608470"
+            "size": 11026,
+            "modified": "2025-11-01T12:58:44.844028"
           }
         ],
         "images": [],
@@ -225,8 +269,8 @@
       "folder": "Clase_2_Español_Sexto_Grado_clase",
       "file_path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
       "folder_path": "clases\\Clase_2_Español_Sexto_Grado_clase",
-      "modified": "2025-10-27T11:33:22.860058",
-      "size": 9395,
+      "modified": "2025-11-01T12:58:56.604862",
+      "size": 11004,
       "title": "Clase 2 Español Sexto Grado",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -237,8 +281,8 @@
           {
             "name": "Clase_2_Español_Sexto_Grado_clase.py",
             "path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
-            "size": 9395,
-            "modified": "2025-10-27T11:33:22.860058"
+            "size": 11004,
+            "modified": "2025-11-01T12:58:56.604862"
           }
         ],
         "images": [],
@@ -269,8 +313,8 @@
       "folder": "Clase_2_Estudios_Sociales_clase",
       "file_path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
       "folder_path": "clases\\Clase_2_Estudios_Sociales_clase",
-      "modified": "2025-10-27T11:34:58.840029",
-      "size": 9381,
+      "modified": "2025-11-01T13:01:13.587131",
+      "size": 11572,
       "title": "Clase 2 Estudios Sociales",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -281,8 +325,8 @@
           {
             "name": "Clase_2_Estudios_Sociales_clase.py",
             "path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
-            "size": 9381,
-            "modified": "2025-10-27T11:34:58.840029"
+            "size": 11572,
+            "modified": "2025-11-01T13:01:13.587131"
           }
         ],
         "images": [],
@@ -573,12 +617,12 @@
       }
     },
     {
-      "name": "demo_sequence_manager copy.py",
+      "name": "demo_sequence_manager copy 2.py",
       "folder": "main",
-      "file_path": "clases\\main\\demo_sequence_manager copy.py",
+      "file_path": "clases\\main\\demo_sequence_manager copy 2.py",
       "folder_path": "clases\\main",
-      "modified": "2025-10-26T15:41:23.235560",
-      "size": 189721,
+      "modified": "2025-10-29T07:06:01.155731",
+      "size": 185717,
       "title": "main.py",
       "subject": "Robótica",
       "description": "Clase para TESTING",
@@ -586,6 +630,12 @@
       "created_at": "2025-08-30T17:34:22.572390",
       "resources": {
         "files": [
+          {
+            "name": "demo_sequence_manager copy 2.py",
+            "path": "clases\\main\\demo_sequence_manager copy 2.py",
+            "size": 185717,
+            "modified": "2025-10-29T07:06:01.155731"
+          },
           {
             "name": "demo_sequence_manager copy.py",
             "path": "clases\\main\\demo_sequence_manager copy.py",
@@ -595,14 +645,14 @@
           {
             "name": "demo_sequence_manager.py",
             "path": "clases\\main\\demo_sequence_manager.py",
-            "size": 185447,
-            "modified": "2025-10-21T14:16:59.001453"
+            "size": 215969,
+            "modified": "2025-11-01T17:02:15.375816"
           },
           {
             "name": "main.py",
             "path": "clases\\main\\main.py",
             "size": 151598,
-            "modified": "2025-09-16T14:02:11.602047"
+            "modified": "2025-10-29T06:34:44.322995"
           },
           {
             "name": "main_modular.py",
@@ -621,6 +671,12 @@
             "path": "clases\\main\\class_config.json",
             "size": 270,
             "modified": "2025-09-07T18:57:30.667485"
+          },
+          {
+            "name": "teacher_request.json",
+            "path": "clases\\main\\teacher_request.json",
+            "size": 84,
+            "modified": "2025-11-01T17:09:07.631439"
           }
         ]
       },
@@ -901,5 +957,5 @@
       }
     }
   ],
-  "last_scan": "2025-10-28T11:56:40.294856"
+  "last_scan": "2025-11-01T17:09:10.567795"
 }

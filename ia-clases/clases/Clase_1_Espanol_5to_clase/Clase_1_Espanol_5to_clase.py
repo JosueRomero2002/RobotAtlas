@@ -40,6 +40,7 @@ try:
         show_diagnostic_qr, show_final_exam_qr,
         show_pdf_page_in_opencv, extract_text_from_pdf, 
         explain_slides_with_random_questions, explain_slides_with_sequences,
+        explain_slides_with_sequences_and_questions,
         RandomQuestionManager, evaluate_student_answer, process_question,
         execute_esp32_sequence, summarize_text, ask_openai, QUESTION_BANK
     )
@@ -89,8 +90,8 @@ def main():
             return
         
         # Crear ventana para la cara animada
-        cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("ADAI Robot Face", 600, 400)
+        # cv2.namedWindow("ADAI Robot Face", cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow("ADAI Robot Face", 600, 400)
         
         # Verificar cámara
         if not verify_camera_for_iriun():
@@ -127,7 +128,7 @@ def main():
         print("="*50)
         
         if diagnostic_qr and os.path.exists(diagnostic_qr):
-            speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
+            # speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
             show_diagnostic_qr(diagnostic_qr, display_time=40)
         else:
             print(f"⚠️ No se encontró QR diagnóstico: C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg")
@@ -152,31 +153,46 @@ def main():
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
+                # Definir mapeo de secuencias ESP32 por número de diapositiva
+                sequence_mapping = {
+                    1: "HandClassMove",    # Después de la diapositiva 1
+                    2: "OpenHand",
+                    3: "HandClassMove",    # Después de la diapositiva 3
+                    4: "OpenHand",
+                    5: "HandClassMove",
+                    6: "OpenHand",
+                    7: "HandClassMove",
+                    8: "OpenHand",
+                    9: "HandClassMove",
+                }
+                
+                print("🎬 Usando explicación con secuencias ESP32 EN PARALELO y preguntas aleatorias")
+                
                 # Usar preguntas personalizadas si están disponibles
                 if CUSTOM_QUESTION_BANK:
-                    print("🎯 Usando preguntas personalizadas")
+                    print("🎯 Usando preguntas personalizadas con secuencias")
                     # Temporalmente reemplazar QUESTION_BANK con preguntas personalizadas
                     original_question_bank = QUESTION_BANK.copy()
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
                     
-                    # Explicar diapositivas con preguntas personalizadas
-                    explain_slides_with_random_questions(
+                    # Explicar diapositivas con preguntas personalizadas y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
                     
                     # Restaurar QUESTION_BANK original
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(original_question_bank)
                 else:
-                    print("🎯 Usando preguntas por defecto")
-                    # Explicar diapositivas con preguntas aleatorias por defecto
-                    explain_slides_with_random_questions(
+                    print("🎯 Usando preguntas por defecto con secuencias")
+                    # Explicar diapositivas con preguntas aleatorias por defecto y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
             else:
                 print("❌ No se pudo leer el PDF")
@@ -184,20 +200,19 @@ def main():
             print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase 1 español 5to grado.pdf")
             speak_with_animation(engine, "Continuaremos sin presentación de PDF.")
         
+        
         # FASE 4: Examen Final
         print("\n" + "="*60)
         print("🎓 FASE FINAL: EXAMEN")
         print("="*60)
         
         if final_exam_qr and os.path.exists(final_exam_qr):
-            speak_with_animation(engine, "Excelente trabajo. Ahora es momento del examen final.")
-            speak_with_animation(engine, "Por favor, escanea el código QR que aparecerá en pantalla.")
+            speak_with_animation(engine, "Excelente trabajo. Ahora es momento de una encuesta escrita.")
+            speak_with_animation(engine, "Por favor, completen la encuesta proporcionada por su profesor.")
             
-            show_final_exam_qr(final_exam_qr, display_time=40)
-            
-            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en el examen!")
+            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en la encuesta!")
         else:
-            print(f"⚠️ No se encontró QR examen: C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg")
+            print(f"⚠️ No se encontró encuesta: C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización

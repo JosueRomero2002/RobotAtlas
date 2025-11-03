@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Clase 2 Español Sexto Grado
+Clase 1 Español Sexto Grado
 Materia: Robots Médicos
-Generado por ADAI Class Builder el 2025-10-27 11:31:35
+Generado por ADAI Class Builder el 2025-10-29 06:25:59
 
 Clase automática usando demo_sequence_manager
 """
@@ -55,28 +55,28 @@ except ImportError as e:
 #  BANCO DE PREGUNTAS PERSONALIZADAS
 # ======================
 CUSTOM_QUESTION_BANK = [
-'La lectura permite acceder tanto a información real como a escenarios imaginarios. Verdadero o falso?',
-'La lectura silenciosa consiste en pronunciar las palabras en voz baja. Verdadero o falso?',
-'La lectura silenciosa mejora la ortografía y la comprensión lectora. Verdadero o falso?',
-'En la lectura silenciosa, el ritmo de lectura lo controla el lector. Verdadero o falso?',
-'La lectura silenciosa se practica generalmente por obligación y bajo evaluación. Verdadero o falso?',
-'La lectura en voz alta consiste en leer de forma oral, pronunciando las palabras. Verdadero o falso?',
-'La lectura en voz alta ayuda a retener mejor las palabras gracias a la pronunciación verbal. Verdadero o falso?',
-'La lectura en voz alta mejora la entonación y el uso correcto de los signos de puntuación. Verdadero o falso?',
-'Leer en voz alta no influye en la fluidez ni en la claridad al hablar. Verdadero o falso?',
-'La lectura en voz alta desarrolla la habilidad de hacer pausas y modular el tono de voz. Verdadero o falso?',
-'La lectura silenciosa estimula la creatividad y el pensamiento crítico. Verdadero o falso?',
-'La lectura en voz alta permite interpretar mejor los signos de puntuación. Verdadero o falso?'
+'La función apelativa busca convencer al receptor. Verdadero o falso?',
+'Los recursos publicitarios se usan únicamente para informar al público. Verdadero o falso?',
+'El juego de palabras busca producir sensaciones o emociones en el receptor. Verdadero o falso?',
+'Los eslóganes suelen ser frases largas y explicativas. Verdadero o falso?',
+'Un ejemplo de eslogan es "frescura y limpieza que perdura". Verdadero o falso?',
+'Las exageraciones enfatizan las cualidades de un producto o servicio. Verdadero o falso?',
+'El uso de verbos en modo imperativo invita a la acción. Verdadero o falso?',
+'"Compra", "prueba" y "saborea" son ejemplos de imperativos usados en publicidad. Verdadero o falso?',
+'El tuteo y el voseo crean una conexión con el público joven. Verdadero o falso?',
+'El uso de "usted" es más común cuando se busca un tono formal. Verdadero o falso?',
+'El tuteo se considera un recurso publicitario poco efectivo para jóvenes. Verdadero o falso?',
+'Los recursos publicitarios buscan inclinar las preferencias de los consumidores. Verdadero o falso?'
 ]
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
-        print("🚀 Iniciando clase: Clase 2 Español Sexto Grado")
-        print("📚 Materia: Español Sexto Grado")
+        print("🚀 Iniciando clase: Clase 1 Español Sexto Grado")
+        print("📚 Materia: Robots Médicos")
         
         # Definir rutas de archivos
         diagnostic_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
-        class_pdf = "C:/Users/josue/Downloads/Clase 2 español 6to grado.pdf"
+        class_pdf = "C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf"
         final_exam_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
         
         # Inicializar TTS
@@ -124,7 +124,7 @@ def main():
         print("="*50)
         
         if diagnostic_qr and os.path.exists(diagnostic_qr):
-            speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
+            # speak_with_animation(engine, "Vamos a comenzar con una evaluación diagnóstica.")
             show_diagnostic_qr(diagnostic_qr, display_time=40)
         else:
             print(f"⚠️ No se encontró QR diagnóstico: C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg")
@@ -135,7 +135,7 @@ def main():
         print("🤖 FASE 2: INICIO DE CLASE")
         print("="*50)
         
-        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 2 Español Sexto Grado")
+        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 1 Español Sexto Grado")
         speak_with_animation(engine, f"Vamos a aprender sobre Español Sexto Grado")
         
         # FASE 3: Contenido Principal
@@ -144,25 +144,25 @@ def main():
         print("="*50)
         
         if class_pdf and os.path.exists(class_pdf):
-            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Español Sexto Grado.")
+            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Español")
             
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
                 # Definir mapeo de secuencias ESP32 por número de diapositiva
                 sequence_mapping = {
-                    1: "ClaseMove",        # Después de la diapositiva 1
-                    2: "CuelloMove",
-                    3: "ClaseMove",        # Después de la diapositiva 3
-                    4: "CuelloMove",
-                    5: "ClaseMove",
-                    6: "CuelloMove",
+                    1: "ClaseMove",    # Después de la diapositiva 1
+                    2: "ClaseMove",
+                    3: "ClaseCuello",         # Después de la diapositiva 3
+                    4: "ClaseMove",
+                    5: "ClaseCuello",
+                    6: "ClaseMove",
                     7: "ClaseMove",
-                    8: "CuelloMove",
+                    8: "ClaseCuello",
                     9: "ClaseMove",
                 }
                 
-                print("🎬 Usando explicación con secuencias ESP32 EN PARALELO y preguntas aleatorias")
+                print("🎬 Usando explicación con secuencias ESP32 y preguntas aleatorias")
                 
                 # Usar preguntas personalizadas si están disponibles
                 if CUSTOM_QUESTION_BANK:
@@ -172,19 +172,25 @@ def main():
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
                     
-                    # Explicar diapositivas con preguntas personalizadas y secuencias EN PARALELO
+                    # Explicar diapositivas con preguntas personalizadas y secuencias
                     explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
                         known_faces, current_hand_raiser, sequence_mapping
                     )
+                    # explain_slides_with_random_questions(
+                    #     engine, class_pdf, pdf_text, current_users,
+                    #     hand_raised_counter, current_slide_num, exit_flag, 
+                    #     known_faces, current_hand_raiser
+                    # )
+                    
                     
                     # Restaurar QUESTION_BANK original
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(original_question_bank)
                 else:
                     print("🎯 Usando preguntas por defecto con secuencias")
-                    # Explicar diapositivas con preguntas aleatorias por defecto y secuencias EN PARALELO
+                    # Explicar diapositivas con preguntas aleatorias por defecto y secuencias
                     explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
@@ -193,7 +199,7 @@ def main():
             else:
                 print("❌ No se pudo leer el PDF")
         else:
-            print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase 2 español 6to grado.pdf")
+            print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf")
             speak_with_animation(engine, "Continuaremos sin presentación de PDF.")
         
         # FASE 4: Examen Final
@@ -202,18 +208,16 @@ def main():
         print("="*60)
         
         if final_exam_qr and os.path.exists(final_exam_qr):
-            speak_with_animation(engine, "Excelente trabajo. Ahora es momento del examen final.")
-            speak_with_animation(engine, "Por favor, escanea el código QR que aparecerá en pantalla.")
+            speak_with_animation(engine, "Excelente trabajo. Ahora es momento de una encuesta escrita.")
+            speak_with_animation(engine, "Por favor, completen la encuesta proporcionada por su profesor.")
             
-            show_final_exam_qr(final_exam_qr, display_time=40)
-            
-            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en el examen!")
+            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en la encuesta!")
         else:
-            print(f"⚠️ No se encontró QR examen: C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg")
+            print(f"⚠️ No se encontró encuesta: C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización
-        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 2 Español Sexto Grado. ¡Hasta la próxima!")
+        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 1 Español Sexto Grado. ¡Hasta la próxima! ¡Que tengan un excelente día!")
         
         # Limpiar recursos
         print("🛑 Finalizando clase")

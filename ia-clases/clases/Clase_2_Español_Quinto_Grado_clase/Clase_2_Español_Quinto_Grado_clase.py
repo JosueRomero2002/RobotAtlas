@@ -40,6 +40,7 @@ try:
         show_diagnostic_qr, show_final_exam_qr,
         show_pdf_page_in_opencv, extract_text_from_pdf, 
         explain_slides_with_random_questions, explain_slides_with_sequences,
+        explain_slides_with_sequences_and_questions,
         RandomQuestionManager, evaluate_student_answer, process_question,
         execute_esp32_sequence, summarize_text, ask_openai, QUESTION_BANK
     )
@@ -53,13 +54,25 @@ except ImportError as e:
 # ======================
 #  BANCO DE PREGUNTAS PERSONALIZADAS
 # ======================
-CUSTOM_QUESTION_BANK = ['La neutralización ocurre cuando un ácido y una base reaccionan. Verdadero o falso?', 'El bicarbonato de sodio es una sustancia básica. Verdadero o falso?', 'El vinagre contiene ácido acético. Verdadero o falso?', 'La col morada puede actuar como indicador de pH. Verdadero o falso?', 'La reacción entre ácido y bicarbonato libera oxígeno. Verdadero o falso?', 'El pH neutro corresponde aproximadamente al valor 7. Verdadero o falso?', 'La fenolftaleína se vuelve rosa en medio ácido. Verdadero o falso?']
-
+CUSTOM_QUESTION_BANK = [
+'Las mayúsculas se usan siempre en todas las letras de una palabra. Verdadero o falso?',
+'La primera letra de un párrafo y la que sigue a un punto deben escribirse con mayúscula. Verdadero o falso?',
+'Los nombres propios como Mario, José o Silvia se escriben con mayúscula. Verdadero o falso?',
+'Los apodos y seudónimos también se escriben con mayúscula. Verdadero o falso?',
+'La primera palabra de un título de libro o película se escribe con mayúscula. Verdadero o falso?',
+'Después de dos puntos, cuando se cita textualmente algo, se escribe con mayúscula. Verdadero o falso?',
+'Los nombres de instituciones como “Mayo Bilingual School” se escriben con mayúscula. Verdadero o falso?',
+'Las siglas como ONU o FIFA se escriben con letras minúsculas. Verdadero o falso?',
+'Las abreviaturas como Dr. o Sra. deben escribirse con mayúscula inicial. Verdadero o falso?',
+'El uso de mayúsculas no se aplica en nombres de lugares como Tegucigalpa. Verdadero o falso?',
+'En el texto “Dos compañeros excepcionales”, Pedro Hernández explicó el uso correcto de las mayúsculas. Verdadero o falso?',
+'Las mayúsculas se relacionan con los signos de puntuación como el punto y los dos puntos. Verdadero o falso?'
+]
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
         print("🚀 Iniciando clase: Clase 2 Español Quinto Grado")
-        print("📚 Materia: Robots Médicos")
+        print("📚 Materia: Español Quinto Grado")
         
         # Definir rutas de archivos
         diagnostic_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
@@ -123,7 +136,7 @@ def main():
         print("="*50)
         
         speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 2 Español Quinto Grado")
-        speak_with_animation(engine, f"Vamos a aprender sobre Robots Médicos")
+        speak_with_animation(engine, f"Vamos a aprender sobre Español Quinto Grado")
         
         # FASE 3: Contenido Principal
         print("\n" + "="*50)
@@ -131,36 +144,51 @@ def main():
         print("="*50)
         
         if class_pdf and os.path.exists(class_pdf):
-            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Robots Médicos.")
+            speak_with_animation(engine, f"Ahora comenzaremos con la presentación sobre Español Quinto Grado.")
             
             # Extraer texto del PDF
             pdf_text = extract_text_from_pdf(class_pdf)
             if pdf_text:
+                # Definir mapeo de secuencias ESP32 por número de diapositiva
+                sequence_mapping = {
+                    1: "HandClassMove",    # Después de la diapositiva 1
+                    2: "OpenHand",
+                    3: "HandClassMove",    # Después de la diapositiva 3
+                    4: "OpenHand",
+                    5: "HandClassMove",
+                    6: "OpenHand",
+                    7: "HandClassMove",
+                    8: "OpenHand",
+                    9: "HandClassMove",
+                }
+                
+                print("🎬 Usando explicación con secuencias ESP32 EN PARALELO y preguntas aleatorias")
+                
                 # Usar preguntas personalizadas si están disponibles
                 if CUSTOM_QUESTION_BANK:
-                    print("🎯 Usando preguntas personalizadas")
+                    print("🎯 Usando preguntas personalizadas con secuencias")
                     # Temporalmente reemplazar QUESTION_BANK con preguntas personalizadas
                     original_question_bank = QUESTION_BANK.copy()
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(CUSTOM_QUESTION_BANK)
                     
-                    # Explicar diapositivas con preguntas personalizadas
-                    explain_slides_with_random_questions(
+                    # Explicar diapositivas con preguntas personalizadas y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
                     
                     # Restaurar QUESTION_BANK original
                     QUESTION_BANK.clear()
                     QUESTION_BANK.extend(original_question_bank)
                 else:
-                    print("🎯 Usando preguntas por defecto")
-                    # Explicar diapositivas con preguntas aleatorias por defecto
-                    explain_slides_with_random_questions(
+                    print("🎯 Usando preguntas por defecto con secuencias")
+                    # Explicar diapositivas con preguntas aleatorias por defecto y secuencias EN PARALELO
+                    explain_slides_with_sequences_and_questions(
                         engine, class_pdf, pdf_text, current_users,
                         hand_raised_counter, current_slide_num, exit_flag, 
-                        known_faces, current_hand_raiser
+                        known_faces, current_hand_raiser, sequence_mapping
                     )
             else:
                 print("❌ No se pudo leer el PDF")
