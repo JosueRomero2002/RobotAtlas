@@ -1,8 +1,7 @@
 #!/bin/bash
 # ============================================
-# Script de Setup para Linux/Mac
+# Script para configurar Python 3.12
 # RobotAtlas - Sistema de Control de Robot
-# Requiere Python 3.12
 # ============================================
 
 # Desactivar cualquier venv que esté activo
@@ -13,57 +12,27 @@ fi
 
 echo ""
 echo "============================================"
-echo "  RobotAtlas - Configuración del Proyecto"
+echo "  Configuración de Python 3.12"
 echo "============================================"
 echo ""
 
-# Función para encontrar Python 3.12
-find_python312() {
-    # Intentar diferentes nombres comunes
-    for py in python3.12 python3.11 python3.10 python3; do
-        if command -v $py &> /dev/null; then
-            PYTHON_VERSION=$($py --version 2>&1 | grep -oE '[0-9]+\.[0-9]+')
-            PYTHON_MAJOR=$(echo $PYTHON_VERSION | cut -d'.' -f1)
-            PYTHON_MINOR=$(echo $PYTHON_VERSION | cut -d'.' -f2)
-            
-            # Preferir Python 3.12, pero aceptar 3.10+
-            if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 10 ]; then
-                echo $py
-                return 0
-            fi
-        fi
-    done
-    return 1
-}
-
-# Buscar Python
-PYTHON_CMD=$(find_python312)
-
-if [ -z "$PYTHON_CMD" ]; then
-    echo "[ERROR] Python 3.10 o superior no está instalado"
+# Verificar si Python 3.12 está instalado
+if command -v python3.12 &> /dev/null; then
+    echo "[OK] Python 3.12 detectado"
+    python3.12 --version
+else
+    echo "[ERROR] Python 3.12 no está instalado"
     echo ""
-    echo "Por favor instala Python 3.12:"
+    echo "Por favor ejecuta primero:"
     echo "  macOS: brew install python@3.12"
     echo "  Linux: sudo apt-get install python3.12 python3.12-venv"
     echo ""
     exit 1
 fi
 
-PYTHON_VERSION=$($PYTHON_CMD --version 2>&1)
-echo "[OK] Python detectado: $PYTHON_VERSION"
-echo ""
-
-# Verificar que pip esté disponible
-if ! $PYTHON_CMD -m pip --version &> /dev/null; then
-    echo "[INFO] Instalando pip..."
-    $PYTHON_CMD -m ensurepip --upgrade
-fi
-
-echo "[OK] pip detectado"
-echo ""
-
 # Verificar e instalar dependencias del sistema (macOS)
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo ""
     echo "[INFO] Verificando dependencias del sistema para macOS..."
     
     # Verificar CMake (necesario para dlib)
@@ -89,28 +58,28 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     else
         echo "[OK] PortAudio detectado"
     fi
-    echo ""
 fi
 
-# Eliminar venv antiguo si existe (para forzar recreación con Python correcto)
+echo ""
+echo "[INFO] Eliminando entorno virtual antiguo..."
 if [ -d "venv" ]; then
-    echo "[INFO] Eliminando entorno virtual antiguo..."
     rm -rf venv
     echo "[OK] Entorno virtual antiguo eliminado"
+else
+    echo "[INFO] No hay entorno virtual antiguo"
 fi
 
-# Crear nuevo entorno virtual
-echo "[INFO] Creando entorno virtual con $PYTHON_CMD..."
-if ! $PYTHON_CMD -m venv venv; then
+echo ""
+echo "[INFO] Creando nuevo entorno virtual con Python 3.12..."
+if ! python3.12 -m venv venv; then
     echo "[ERROR] No se pudo crear el entorno virtual"
-    echo "Asegúrate de que $PYTHON_CMD está instalado correctamente"
+    echo "Asegúrate de que python3.12 está instalado correctamente"
     exit 1
 fi
 
-echo "[OK] Entorno virtual creado"
-echo ""
+echo "[OK] Entorno virtual creado con Python 3.12"
 
-# Activar entorno virtual
+echo ""
 echo "[INFO] Activando entorno virtual..."
 if [ ! -f "venv/bin/activate" ]; then
     echo "[ERROR] No se pudo encontrar el script de activación del venv"
@@ -119,8 +88,8 @@ fi
 
 source venv/bin/activate
 
-# Verificar versión de Python en el venv
-echo "[INFO] Verificando Python en el entorno virtual..."
+echo ""
+echo "[INFO] Verificando versión de Python en el venv..."
 if ! command -v python &> /dev/null; then
     echo "[ERROR] Python no está disponible en el entorno virtual"
     exit 1
@@ -137,15 +106,15 @@ if ! python -c "import tkinter" 2>/dev/null; then
     echo "En macOS, Python instalado con Homebrew no incluye tkinter por defecto."
     echo ""
     echo "Soluciones:"
-    echo "  1. Reinstalar Python con soporte de tkinter:"
+    echo "  1. Instalar python-tk:"
+    echo "     brew install python-tk@3.12"
+    echo ""
+    echo "  2. O reinstalar Python con soporte de tkinter:"
     echo "     brew uninstall python@3.12"
     echo "     brew install python@3.12 python-tk@3.12"
     echo ""
-    echo "  2. O usar el Python del sistema (si está disponible):"
+    echo "  3. O usar el Python del sistema (si está disponible):"
     echo "     /usr/bin/python3 -m venv venv"
-    echo ""
-    echo "  3. O instalar python-tk:"
-    echo "     brew install python-tk@3.12"
     echo ""
     exit 1
 else
@@ -153,12 +122,11 @@ else
 fi
 echo ""
 
-# Actualizar pip
 echo "[INFO] Actualizando pip..."
 pip install --upgrade pip setuptools wheel
 echo ""
 
-# Instalar dependencias en lotes para mejor manejo de errores
+# Instalar dependencias en lotes
 echo "[INFO] Instalando dependencias desde requirements.txt..."
 echo "Esto puede tardar varios minutos..."
 echo ""
