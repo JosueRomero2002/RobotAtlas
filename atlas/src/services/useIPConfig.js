@@ -272,7 +272,7 @@ export function useIPInput() {
    * Set example values
    */
   const setExampleValues = useCallback(() => {
-    handleIPChange('192.168.100.6')
+    handleIPChange('10.61.95.163')
     handlePortChange('8080')
     setMessage('📝 Ejemplo establecido - Modifica si es necesario')
   }, [handleIPChange, handlePortChange])
@@ -327,7 +327,7 @@ export function useQuickIPUpdate() {
      */
     setDevIP: () => {
       console.log('useQuickIPUpdate: Setting dev IP')
-      return updateIPConfig('192.168.100.6', '8080')
+      return updateIPConfig('10.61.95.163', '8080')
     },
 
     /**

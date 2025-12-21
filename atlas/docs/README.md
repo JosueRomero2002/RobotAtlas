@@ -19,7 +19,7 @@ npm run dev
 2. **EASIEST**: Tap the **🚀** (rocket) icon for Quick Setup
 3. **OR** Tap the **🔧** (wrench) icon for detailed configuration
 4. **OR** Tap the **⚡** (lightning) icon for advanced testing
-5. Enter your computer's IP address (e.g., `192.168.100.6`)
+5. Enter your computer's IP address (e.g., `10.61.95.163`)
 6. The app will save configuration and test connection automatically
 
 ### 4. Start the Robot Server
@@ -61,7 +61,7 @@ python robot_gui.py
 The app supports connecting to the robot server from any device on the same network:
 
 - **Same Computer**: Use `localhost` as the host
-- **Local Network**: Use your computer's IP address (e.g., `192.168.100.6`)
+- **Local Network**: Use your computer's IP address (e.g., `10.61.95.163`)
 - **Custom Ports**: Configure any port that matches the robot server
 
 ### Finding Your IP Address

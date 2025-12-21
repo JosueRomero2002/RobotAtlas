@@ -26,7 +26,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="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")
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -163,7 +163,8 @@ def evaluate_student_answer(question, answer, context, student_name):
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+                # model="gpt-3.5-turbo",
+                model="gpt-4.1-2025-04-14",
             messages=[
                 {"role": "system", "content": """Eres ADAI, un profesor robot amigable que evalúa respuestas de estudiantes sobre quimica. 
                 
@@ -182,7 +183,7 @@ Su respuesta fue: "{answer}"
 
 Contexto del material de clase: {context[:1000]}...
 
-Da una respuesta natural y educativa como profesor. Si la respuesta es incorrecta o es "no sé", corrige de manera amable pero sin usar palabras técnicas como "retroalimentación"."""}
+Da una respuesta natural y educativa como profesor. Si la respuesta es correcta, felicita al estudiante. Si la respuesta es incorrecta o es "no sé", corrige de manera amable pero sin usar palabras técnicas como "retroalimentación"."""}
             ]
         )
         
@@ -291,11 +292,11 @@ def process_teacher_request(engine, pdf_text, question_manager=None):
                     speak_with_animation(engine, answer)
                     
                     # Confirmación
-                    speak_with_animation(engine, "¿Deseas que continúe con la clase?")
+                    speak_with_animation(engine, "Continuare con la clase, en caso de otra solicitud, puede solicitar por medio de la app")
                     
                 except Exception as e:
                     print(f"❌ Error procesando solicitud con OpenAI: {e}")
-                    speak_with_animation(engine, "Entendido profesora. ¿Deseas que continúe con la clase?")
+                    speak_with_animation(engine, "Entendido profesora.Continuare con la clase, en caso de otra solicitud, puede solicitar por medio de la app")
             
         else:
             # No se obtuvo solicitud válida
@@ -626,9 +627,11 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
         window_width = 1000
         window_height = 700
         
-        # Crear ventana
-        cv2.namedWindow("Evaluación Diagnóstica", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("Evaluación Diagnóstica", window_width, window_height)
+        # Crear ventana en pantalla completa y siempre al frente
+        window_name = "Evaluación Diagnóstica"
+        cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
         
         # Colores elegantes
         bg_color = (245, 245, 245)  # Gris muy claro
@@ -797,7 +800,7 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
                              progress_color, -1)
             
             # === INSTRUCCIÓN DE ESCAPE ===
-            escape_text = "Presiona 'Q' para continuar"
+            escape_text = "ESC: Salir pantalla completa | Q: Continuar"
             escape_font_scale = 0.6
             escape_thickness = 1
             (escape_w, escape_h), _ = cv2.getTextSize(escape_text, cv2.FONT_HERSHEY_SIMPLEX, escape_font_scale, escape_thickness)
@@ -811,7 +814,11 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
             
             # Verificar teclas y tiempo
             key = cv2.waitKey(1000) & 0xFF
-            if key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
+            if key == 27:  # ESC key - salir de pantalla completa
+                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
+                cv2.resizeWindow(window_name, window_width, window_height)
+                print("⌨️ ESC presionado - Saliendo de pantalla completa")
+            elif key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
                 break
         
         # Animación de cierre suave
@@ -854,9 +861,11 @@ def show_final_exam_qr(qr_image_path, display_time=20):
         window_width = 1000
         window_height = 700
         
-        # Crear ventana
-        cv2.namedWindow("Examen Final", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("Examen Final", window_width, window_height)
+        # Crear ventana en pantalla completa y siempre al frente
+        window_name = "Examen Final"
+        cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
         
         # Colores para examen final (más serios/académicos)
         bg_color = (240, 248, 255)  # Alice blue - más formal
@@ -1045,7 +1054,7 @@ def show_final_exam_qr(qr_image_path, display_time=20):
                              progress_color, -1)
             
             # === INSTRUCCIÓN DE ESCAPE ===
-            escape_text = "Presiona 'Q' para finalizar la clase"
+            escape_text = "ESC: Salir pantalla completa | Q: Finalizar clase"
             escape_font_scale = 0.6
             escape_thickness = 1
             (escape_w, escape_h), _ = cv2.getTextSize(escape_text, cv2.FONT_HERSHEY_SIMPLEX, escape_font_scale, escape_thickness)
@@ -1059,7 +1068,11 @@ def show_final_exam_qr(qr_image_path, display_time=20):
             
             # Verificar teclas y tiempo
             key = cv2.waitKey(1000) & 0xFF
-            if key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
+            if key == 27:  # ESC key - salir de pantalla completa
+                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
+                cv2.resizeWindow(window_name, window_width, window_height)
+                print("⌨️ ESC presionado - Saliendo de pantalla completa")
+            elif key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
                 break
         
         # Animación de cierre suave
@@ -1277,6 +1290,54 @@ def show_pdf_page_in_opencv(page):
     else:
         raise ValueError(f"Número de canales no soportado: {mode}")
     return img_bgr
+
+
+def setup_fullscreen_window(window_name="Presentacion"):
+    """
+    Configura una ventana de OpenCV para que sea pantalla completa y siempre al frente.
+    """
+    try:
+        # Crear ventana con nombre específico
+        cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        
+        # Configurar para pantalla completa
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        
+        # Configurar para estar siempre al frente
+        cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
+        
+        print(f"✅ Ventana '{window_name}' configurada en pantalla completa")
+    except Exception as e:
+        print(f"⚠️ Error configurando ventana en pantalla completa: {e}")
+
+
+def show_pdf_fullscreen(page_img, window_name="Presentacion"):
+    """
+    Muestra una imagen de PDF en pantalla completa y al frente.
+    Presiona ESC para salir de pantalla completa.
+    """
+    try:
+        # Configurar ventana si no existe (solo la primera vez)
+        setup_fullscreen_window(window_name)
+        
+        # Mostrar imagen
+        cv2.imshow(window_name, page_img)
+        
+        # Esperar tecla y verificar si es ESC
+        key = cv2.waitKey(50) & 0xFF
+        if key == 27:  # ESC key
+            # Salir de pantalla completa
+            cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
+            cv2.resizeWindow(window_name, 1024, 768)
+            print("⌨️ ESC presionado - Saliendo de pantalla completa")
+            # Mostrar la imagen nuevamente en modo ventana
+            cv2.imshow(window_name, page_img)
+            cv2.waitKey(50)
+    except Exception as e:
+        print(f"⚠️ Error mostrando PDF: {e}")
+        # Fallback a mostrar normal
+        cv2.imshow(window_name, page_img)
+        cv2.waitKey(50)
 
 
 # ============================
@@ -2137,7 +2198,7 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 # Verificar si la clase está pausada
@@ -2146,10 +2207,9 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                     continue
                 
                 page = doc[slide_num]
-                # Mostrar la imagen de la diapositiva
+                # Mostrar la imagen de la diapositiva en pantalla completa
                 page_img = show_pdf_page_in_opencv(page)
-                cv2.imshow("Presentacion", page_img)
-                cv2.waitKey(50)
+                show_pdf_fullscreen(page_img, "Presentacion")
 
                 # Obtener texto y generar explicación
                 page_text = page.get_text()
@@ -2205,7 +2265,7 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                     has_request, request_type = check_teacher_request()
                     if has_request:
                         print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
+                        process_teacher_request(engine, pdf_text)
                         continue
                     
                     # Verificar si la clase está pausada
@@ -2273,7 +2333,7 @@ def explain_slides_with_random_questions(engine, pdf_path, pdf_text, current_use
                     has_request, request_type = check_teacher_request()
                     if has_request:
                         print(f"📚 Solicitud de profesora detectada durante preguntas")
-                        process_teacher_request(engine, pdf_text, question_manager)
+                        process_teacher_request(engine, pdf_text)
                     
                     # Anunciar continuación
                     if slide_num < total_slides:
@@ -3854,7 +3914,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 # Verificar si la clase está pausada
@@ -3863,10 +3923,9 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     continue
                 
                 page = doc[slide_num]
-                # Mostrar la imagen de la diapositiva
+                # Mostrar la imagen de la diapositiva en pantalla completa
                 page_img = show_pdf_page_in_opencv(page)
-                cv2.imshow("Presentacion", page_img)
-                cv2.waitKey(50)
+                show_pdf_fullscreen(page_img, "Presentacion")
 
                 # Obtener texto y generar explicación
                 page_text = page.get_text()
@@ -3922,7 +3981,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     has_request, request_type = check_teacher_request()
                     if has_request:
                         print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
+                        process_teacher_request(engine, pdf_text)
                         continue
                     
                     # Verificar si la clase está pausada
@@ -3964,7 +4023,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 slide_num += 1
@@ -4329,7 +4388,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 # Verificar si la clase está pausada
@@ -4338,10 +4397,22 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     continue
                 
                 page = doc[slide_num]
-                # Mostrar la imagen de la diapositiva
+                # Mostrar la imagen de la diapositiva en pantalla completa
                 page_img = show_pdf_page_in_opencv(page)
-                cv2.imshow("Presentacion", page_img)
-                cv2.waitKey(50)
+                show_pdf_fullscreen(page_img, "Presentacion")
+
+                # *** INICIAR SECUENCIA ESP32 EN PARALELO AL INICIO DE LA DIAPOSITIVA ***
+                current_slide_number = slide_num + 1
+                if current_slide_number in sequence_mapping:
+                    sequence_name = sequence_mapping[current_slide_number]
+                    print(f"\n🤖 === INICIANDO SECUENCIA ESP32 EN PARALELO (diapositiva {current_slide_number}) ===")
+                    print(f"🎬 Secuencia: {sequence_name}")
+                    try:
+                        seq_thread = threading.Thread(target=execute_esp32_sequence, args=(sequence_name,), daemon=True)
+                        seq_thread.start()
+                        print(f"✅ Secuencia '{sequence_name}' iniciada en paralelo con la explicación")
+                    except Exception as e:
+                        print(f"❌ No se pudo iniciar la secuencia en paralelo: {e}")
 
                 # Obtener texto y generar explicación
                 page_text = page.get_text()
@@ -4406,29 +4477,20 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                     
                     time.sleep(0.2)
                 
-                # *** EJECUTAR SECUENCIA ESP32 DESPUÉS DE LA DIAPOSITIVA ***
-                current_slide_number = slide_num + 1
-                if current_slide_number in sequence_mapping:
-                    sequence_name = sequence_mapping[current_slide_number]
+                # La secuencia ya se ejecutó al inicio en paralelo, no hacer nada aquí
                     print(f"\n�� === EJECUTANDO SECUENCIA ESP32 (después de diapositiva {current_slide_number}) ===")
                     print(f"🎬 Secuencia: {sequence_name}")
                     
-                    # Anunciar la secuencia
-                    # speak_with_animation(engine, f"Ahora ejecutaré una secuencia de movimientos del robot.")
-                    time.sleep(1.0)
+                    # Ejecutar la secuencia EN PARALELO (no bloquear la explicación)
+                    try:
+                        seq_thread = threading.Thread(target=execute_esp32_sequence, args=(sequence_name,), daemon=True)
+                        seq_thread.start()
+                        success = True
+                    except Exception as e:
+                        print(f"❌ Error iniciando secuencia en paralelo: {e}")
+                        success = False
                     
-                    # Ejecutar la secuencia
-                    success = execute_esp32_sequence(sequence_name)
-                    
-                    if success:
-                        print(f"✅ Secuencia '{sequence_name}' ejecutada exitosamente")
-                        speak_with_animation(engine, "Secuencia completada.")
-                    else:
-                        print(f"❌ Error ejecutando secuencia '{sequence_name}'")
-                        speak_with_animation(engine, "Hubo un problema con la secuencia, continuemos.")
-                    
-                    # Pausa después de la secuencia
-                    time.sleep(2.0)
+                    # La secuencia se ejecutará en paralelo mientras se explica
                     
                     print(f"�� === FIN DE SECUENCIA ESP32 ===\n")
                 
@@ -4450,7 +4512,7 @@ def explain_slides_with_sequences(engine, pdf_path, pdf_text, current_users,
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 slide_num += 1
@@ -4669,10 +4731,9 @@ def explain_slides_with_sequences_and_questions(engine, pdf_path, pdf_text, curr
                     continue
                 
                 page = doc[slide_num]
-                # Mostrar la imagen de la diapositiva
+                # Mostrar la imagen de la diapositiva en pantalla completa
                 page_img = show_pdf_page_in_opencv(page)
-                cv2.imshow("Presentacion", page_img)
-                cv2.waitKey(50)
+                show_pdf_fullscreen(page_img, "Presentacion")
 
                 # *** INICIAR SECUENCIA ESP32 EN PARALELO AL MOSTRAR LA DIAPOSITIVA ***
                 current_slide_number = slide_num + 1
@@ -4741,7 +4802,7 @@ def explain_slides_with_sequences_and_questions(engine, pdf_path, pdf_text, curr
                     has_request, request_type = check_teacher_request()
                     if has_request:
                         print(f"📚 Solicitud de profesora detectada")
-                        process_teacher_request(engine, pdf_text, question_manager)
+                        process_teacher_request(engine, pdf_text)
                         continue
                     
                     # Verificar si la clase está pausada
@@ -4783,7 +4844,7 @@ def explain_slides_with_sequences_and_questions(engine, pdf_path, pdf_text, curr
                 has_request, request_type = check_teacher_request()
                 if has_request:
                     print(f"📚 Solicitud de profesora detectada tras diapositiva")
-                    process_teacher_request(engine, pdf_text, question_manager)
+                    process_teacher_request(engine, pdf_text)
                     continue
                 
                 slide_num += 1

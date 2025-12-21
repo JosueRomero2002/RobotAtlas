@@ -609,14 +609,29 @@ class ClassManager:
             bool: True si se inició la ejecución correctamente
         """
         try:
-            # Usar lock para evitar condiciones de carrera
+            # Check if already executing - if so, stop it first
+            process_to_stop = None
             with self.execution_lock:
-                # Check if already executing
                 if self.class_execution_active:
-                    print("⚠️ Ya hay una clase ejecutándose")
-                    if self.on_class_error:
-                        self.on_class_error("Ya hay una clase ejecutándose")
-                    return False
+                    print("⚠️ Ya hay una clase ejecutándose - deteniendo...")
+                    # Store current process to stop
+                    process_to_stop = self.current_process
+                    self.stop_execution_flag = True
+                    
+            # Stop previous execution outside the lock
+            if process_to_stop:
+                try:
+                    process_to_stop.terminate()
+                    process_to_stop.wait(timeout=2)
+                except:
+                    try:
+                        process_to_stop.kill()
+                    except:
+                        pass
+                
+                # Wait for cleanup
+                import time
+                time.sleep(0.5)
             
             class_info = self.get_class_by_name(class_name)
             if not class_info:

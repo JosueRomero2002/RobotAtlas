@@ -54,6 +54,10 @@ const int MUNECA_DESCANSO = 90;       // Posición central
 void setup() {
   Serial.begin(9600);
   
+  // Inicializar I2C (requerido para Adafruit_PWMServoDriver)
+  Wire.begin();
+  delay(100);
+  
   // Inicializar servos
   servos.begin();
   servos.setPWMFreq(60);
@@ -77,9 +81,12 @@ void loop() {
   if (Serial.available()) {
     String linea = Serial.readStringUntil('\n');
     linea.trim();
- Serial.println(linea);
     
+    // Solo procesar si hay contenido
+    if (linea.length() > 0) {
+      Serial.println(linea);
      procesarComando(linea);
+    }
   }
 
   // Ping periódico

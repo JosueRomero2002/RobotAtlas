@@ -14,7 +14,7 @@
 ```javascript
 // ✅ FUNCIONA - Establecimiento programático
 bindtap={() => {
-  setHost('192.168.100.6')  // Estado React se actualiza
+  setHost('10.61.95.163')  // Estado React se actualiza
   setPort('8080')
 }}
 
@@ -48,7 +48,7 @@ onInput={(e) => {
 ```javascript
 const handleSave = () => {
   // Leer directamente del DOM
-  const hostInput = document.querySelector('input[placeholder="Ej: 192.168.100.6"]')
+  const hostInput = document.querySelector('input[placeholder="Ej: 10.61.95.163"]')
   const domHost = hostInput ? hostInput.value : ''
   
   // Usar valor DOM como fallback
@@ -104,7 +104,7 @@ const captureValues = () => {
 ```javascript
 // En lugar de input manual, usar botones
 const setCommonIPs = () => {
-  setHost('192.168.100.6')  // Funciona
+  setHost('10.61.95.163')  // Funciona
 }
 ```
 
@@ -148,8 +148,8 @@ const handleSave = () => {
 onInput event: 1
 onInput event: 19  
 onInput event: 192
-onInput event: 192.168.100.6
-// Estado debería actualizarse a "192.168.100.6"
+onInput event: 10.61.95.163
+// Estado debería actualizarse a "10.61.95.163"
 ```
 
 #### **Comportamiento Real (ReactLynx)**
@@ -157,14 +157,14 @@ onInput event: 192.168.100.6
 onInput event: 1
 onInput event: 19
 onInput event: 192
-onInput event: 192.168.100.6
+onInput event: 10.61.95.163
 // Estado permanece vacío ""
 ```
 
 #### **Solución Manual (Funciona)**
 ```javascript
-Valores capturados: { hostValue: "192.168.100.6", portValue: "8080" }
-Guardando: { trimmedHost: "192.168.100.6", trimmedPort: "8080" }
+Valores capturados: { hostValue: "10.61.95.163", portValue: "8080" }
+Guardando: { trimmedHost: "10.61.95.163", trimmedPort: "8080" }
 ```
 
 ### **Reporte del Bug**

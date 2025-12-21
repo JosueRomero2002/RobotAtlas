@@ -108,8 +108,8 @@ El servidor se inicia automáticamente cuando abres `robot_gui.py`. La tab muest
 
 ### Ejemplos de Logs
 ```
-[14:30:25] GET /api/status - 192.168.100.6
-[14:30:26] POST /api/robot/move - 192.168.100.6
+[14:30:25] GET /api/status - 10.61.95.163
+[14:30:26] POST /api/robot/move - 10.61.95.163
 [14:30:27] ERROR POST /api/class/start: Class not found
 [14:31:00] Servidor reiniciado exitosamente
 ```

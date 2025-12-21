@@ -15,7 +15,7 @@ class ConfigManager {
     };
 
     this.DEFAULT_CONFIG = {
-      host: '192.168.100.6',
+      host: '10.61.95.163',
       port: '8080',
       connectionStatus: 'disconnected',
       lastConnected: null,

@@ -53,14 +53,14 @@ Look for these console messages:
 
 ```javascript
 // Should see these when saving:
-setServerConfig called with: { host: "192.168.100.6", port: "8080" }
-Setting robotAPI_host: 192.168.100.6
+setServerConfig called with: { host: "10.61.95.163", port: "8080" }
+Setting robotAPI_host: 10.61.95.163
 Setting robotAPI_port: 8080
-Verified robotAPI_host: 192.168.100.6
+Verified robotAPI_host: 10.61.95.163
 Verified robotAPI_port: 8080
-Robot API configuration updated: http://192.168.100.6:8080/api
+Robot API configuration updated: http://10.61.95.163:8080/api
 Storage save results: { hostSaved: true, portSaved: true }
-Current config after update: { host: "192.168.100.6", port: "8080", baseURL: "http://192.168.100.6:8080/api" }
+Current config after update: { host: "10.61.95.163", port: "8080", baseURL: "http://10.61.95.163:8080/api" }
 ```
 
 #### **Step 2: Use ConfigTestScreen**

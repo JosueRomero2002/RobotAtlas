@@ -225,8 +225,8 @@
       "folder": "Clase_2_Español_Quinto_Grado_clase",
       "file_path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
       "folder_path": "clases\\Clase_2_Español_Quinto_Grado_clase",
-      "modified": "2025-11-01T12:58:44.844028",
-      "size": 11026,
+      "modified": "2025-11-06T10:07:01.347468",
+      "size": 10980,
       "title": "Clase 2 Español Quinto Grado",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -237,8 +237,8 @@
           {
             "name": "Clase_2_Español_Quinto_Grado_clase.py",
             "path": "clases\\Clase_2_Español_Quinto_Grado_clase\\Clase_2_Español_Quinto_Grado_clase.py",
-            "size": 11026,
-            "modified": "2025-11-01T12:58:44.844028"
+            "size": 10980,
+            "modified": "2025-11-06T10:07:01.347468"
           }
         ],
         "images": [],
@@ -269,8 +269,8 @@
       "folder": "Clase_2_Español_Sexto_Grado_clase",
       "file_path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
       "folder_path": "clases\\Clase_2_Español_Sexto_Grado_clase",
-      "modified": "2025-11-01T12:58:56.604862",
-      "size": 11004,
+      "modified": "2025-11-06T10:07:18.269310",
+      "size": 10959,
       "title": "Clase 2 Español Sexto Grado",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -281,8 +281,8 @@
           {
             "name": "Clase_2_Español_Sexto_Grado_clase.py",
             "path": "clases\\Clase_2_Español_Sexto_Grado_clase\\Clase_2_Español_Sexto_Grado_clase.py",
-            "size": 11004,
-            "modified": "2025-11-01T12:58:56.604862"
+            "size": 10959,
+            "modified": "2025-11-06T10:07:18.269310"
           }
         ],
         "images": [],
@@ -313,8 +313,8 @@
       "folder": "Clase_2_Estudios_Sociales_clase",
       "file_path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
       "folder_path": "clases\\Clase_2_Estudios_Sociales_clase",
-      "modified": "2025-11-01T13:01:13.587131",
-      "size": 11572,
+      "modified": "2025-11-06T08:14:16.019787",
+      "size": 11553,
       "title": "Clase 2 Estudios Sociales",
       "subject": "Robots Médicos",
       "description": "Una clase sobre robots en medicina",
@@ -325,8 +325,8 @@
           {
             "name": "Clase_2_Estudios_Sociales_clase.py",
             "path": "clases\\Clase_2_Estudios_Sociales_clase\\Clase_2_Estudios_Sociales_clase.py",
-            "size": 11572,
-            "modified": "2025-11-01T13:01:13.587131"
+            "size": 11553,
+            "modified": "2025-11-06T08:14:16.019787"
           }
         ],
         "images": [],
@@ -344,6 +344,50 @@
       },
       "config": {
         "title": "Clase 2 Estudios Sociales",
+        "subject": "Robots Médicos",
+        "description": "Una clase sobre robots en medicina",
+        "duration": "45 minutos",
+        "created_at": "2025-10-27T11:34:58.840029",
+        "main_file": "Clase_2_Estudios_Sociales_clase.py",
+        "folder_name": "Clase_2_Estudios_Sociales_clase"
+      }
+    },
+    {
+      "name": "Clase_3_Estudios_Sociales_clase.py",
+      "folder": "Clase_3_Estudios_Sociales_clase",
+      "file_path": "clases\\Clase_3_Estudios_Sociales_clase\\Clase_3_Estudios_Sociales_clase.py",
+      "folder_path": "clases\\Clase_3_Estudios_Sociales_clase",
+      "modified": "2025-11-13T10:18:42.811855",
+      "size": 11636,
+      "title": "Clase 3 Estudios Sociales",
+      "subject": "Robots Médicos",
+      "description": "Una clase sobre robots en medicina",
+      "duration": "45 minutos",
+      "created_at": "2025-10-27T11:34:58.840029",
+      "resources": {
+        "files": [
+          {
+            "name": "Clase_3_Estudios_Sociales_clase.py",
+            "path": "clases\\Clase_3_Estudios_Sociales_clase\\Clase_3_Estudios_Sociales_clase.py",
+            "size": 11636,
+            "modified": "2025-11-13T10:18:42.811855"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": [
+          {
+            "name": "class_config.json",
+            "path": "clases\\Clase_3_Estudios_Sociales_clase\\class_config.json",
+            "size": 316,
+            "modified": "2025-11-07T10:03:47.516090"
+          }
+        ]
+      },
+      "config": {
+        "title": "Clase 3 Estudios Sociales",
         "subject": "Robots Médicos",
         "description": "Una clase sobre robots en medicina",
         "duration": "45 minutos",
@@ -395,6 +439,35 @@
         "main_file": "DD_clase.py",
         "folder_name": "DD_clase"
       }
+    },
+    {
+      "name": "Defensa_Tesis.py",
+      "folder": "Defensa_Tesis",
+      "file_path": "clases\\Defensa_Tesis\\Defensa_Tesis.py",
+      "folder_path": "clases\\Defensa_Tesis",
+      "modified": "2025-11-28T12:30:40.902716",
+      "size": 7487,
+      "title": "Defensa Tesis",
+      "subject": "Robótica",
+      "description": "Clase: Defensa_Tesis",
+      "duration": "45 minutos",
+      "created_at": "2025-11-28T11:12:26.433459",
+      "resources": {
+        "files": [
+          {
+            "name": "Defensa_Tesis.py",
+            "path": "clases\\Defensa_Tesis\\Defensa_Tesis.py",
+            "size": 7487,
+            "modified": "2025-11-28T12:30:40.902716"
+          }
+        ],
+        "images": [],
+        "pdfs": [],
+        "qrs": [],
+        "demo": [],
+        "other": []
+      },
+      "config": {}
     },
     {
       "name": "GG_clase.py",
@@ -621,7 +694,7 @@
       "folder": "main",
       "file_path": "clases\\main\\demo_sequence_manager copy 2.py",
       "folder_path": "clases\\main",
-      "modified": "2025-10-29T07:06:01.155731",
+      "modified": "2025-11-03T11:09:59.294237",
       "size": 185717,
       "title": "main.py",
       "subject": "Robótica",
@@ -634,7 +707,7 @@
             "name": "demo_sequence_manager copy 2.py",
             "path": "clases\\main\\demo_sequence_manager copy 2.py",
             "size": 185717,
-            "modified": "2025-10-29T07:06:01.155731"
+            "modified": "2025-11-03T11:09:59.294237"
           },
           {
             "name": "demo_sequence_manager copy.py",
@@ -645,8 +718,8 @@
           {
             "name": "demo_sequence_manager.py",
             "path": "clases\\main\\demo_sequence_manager.py",
-            "size": 215969,
-            "modified": "2025-11-01T17:02:15.375816"
+            "size": 219211,
+            "modified": "2025-11-28T14:13:03.423240"
           },
           {
             "name": "main.py",
@@ -675,8 +748,8 @@
           {
             "name": "teacher_request.json",
             "path": "clases\\main\\teacher_request.json",
-            "size": 84,
-            "modified": "2025-11-01T17:09:07.631439"
+            "size": 57,
+            "modified": "2025-11-28T15:45:49.966995"
           }
         ]
       },
@@ -957,5 +1030,5 @@
       }
     }
   ],
-  "last_scan": "2025-11-01T17:09:10.567795"
+  "last_scan": "2025-11-28T17:50:23.074545"
 }

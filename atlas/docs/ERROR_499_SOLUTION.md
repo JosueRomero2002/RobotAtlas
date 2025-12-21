@@ -51,13 +51,13 @@ self.api_server = MobileAPIServer(self, host='0.0.0.0', port=self.api_port)
 #### **En robot_gui.py**
 ```
 Estado del Servidor: Ejecutándose
-IP Local: 192.168.100.6
-URL del Servidor: http://192.168.100.6:8080/api
+IP Local: 10.61.95.163
+URL del Servidor: http://10.61.95.163:8080/api
 ```
 
 #### **En App Móvil**
 ```
-Host: 192.168.100.6
+Host: 10.61.95.163
 Port: 8080
 ```
 
@@ -94,7 +94,7 @@ netstat -an | grep :8080
 curl http://localhost:8080/api/status
 
 # Desde otro dispositivo en la red
-curl http://192.168.100.6:8080/api/status
+curl http://10.61.95.163:8080/api/status
 ```
 
 ### **🔍 Logs de Debugging**

@@ -201,19 +201,18 @@ def main():
         print("🎓 FASE FINAL: EXAMEN")
         print("="*60)
         
+          
         if final_exam_qr and os.path.exists(final_exam_qr):
-            speak_with_animation(engine, "Excelente trabajo. Ahora es momento del examen final.")
-            speak_with_animation(engine, "Por favor, escanea el código QR que aparecerá en pantalla.")
+            speak_with_animation(engine, "Excelente trabajo. Ahora es momento de una encuesta escrita.")
+            speak_with_animation(engine, "Por favor, completen la encuesta proporcionada por su profesor.")
             
-            show_final_exam_qr(final_exam_qr, display_time=40)
-            
-            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en el examen!")
+            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en la encuesta!")
         else:
-            print(f"⚠️ No se encontró QR examen: C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg")
+            print(f"⚠️ No se encontró encuesta: C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización
-        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 2 Español Quinto Grado. ¡Hasta la próxima!")
+        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 1 Estudios Sociales. ¡Hasta la próxima!")
         
         # Limpiar recursos
         print("🛑 Finalizando clase")

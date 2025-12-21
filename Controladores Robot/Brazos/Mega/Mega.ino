@@ -84,6 +84,9 @@ void setup() {
   Serial1.begin(UNO_BAUD);    // Hacia el UNO (TX1=18, RX1=19)
   Serial2.begin(ESP32_BAUD);  // Hacia el ESP32 (TX2=16, RX2=17)
 
+  // Inicializar I2C (requerido para Adafruit_PWMServoDriver)
+  Wire.begin();
+  delay(100);
 
   // Inicializar servos
   servos.begin();

@@ -52,7 +52,7 @@ export function ManualConfigScreen() {
 
   const handleSave = () => {
     // Capturar valores directamente del DOM (solución al bug de ReactLynx)
-    const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+    const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
     const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
     
     const domHost = hostInput ? hostInput.value : inputIP
@@ -149,7 +149,7 @@ export function ManualConfigScreen() {
 
   const handleQuickUpdate = () => {
     // Capturar valores directamente del DOM (solución al bug de ReactLynx)
-    const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+    const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
     const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
     
     const domHost = hostInput ? hostInput.value : inputIP
@@ -281,7 +281,7 @@ export function ManualConfigScreen() {
           <input
             type="text"
             value={inputIP}
-            placeholder="Ejemplo: 192.168.100.6"
+            placeholder="Ejemplo: 10.61.95.163"
             style={{
               width: '100%',
               padding: '15px',
@@ -339,7 +339,7 @@ export function ManualConfigScreen() {
             }}
           >
             <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
-              📝 Poner Ejemplo (192.168.100.6:8080)
+              📝 Poner Ejemplo (10.61.95.163:8080)
             </text>
           </view>
 
@@ -435,7 +435,7 @@ export function ManualConfigScreen() {
             }}
             bindtap={() => {
               // Capturar valores actuales del DOM para mostrar al usuario
-              const hostInput = document.querySelector('input[placeholder="Ejemplo: 192.168.100.6"]')
+              const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
               const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
               
               const domHost = hostInput ? hostInput.value : 'No capturado'
@@ -460,12 +460,12 @@ export function ManualConfigScreen() {
             }}
             bindtap={() => {
               setDevIP()
-              setIPMessage('🚀 IP de desarrollo establecida: 192.168.100.6:8080')
+              setIPMessage('🚀 IP de desarrollo establecida: 10.61.95.163:8080')
               console.log('🔍 DEBUG: IP de desarrollo establecida')
             }}
           >
             <text style={{ color: 'white', fontSize: '16px', fontWeight: 'bold' }}>
-              🚀 IP Desarrollo (192.168.100.6:8080)
+              🚀 IP Desarrollo (10.61.95.163:8080)
             </text>
           </view>
 

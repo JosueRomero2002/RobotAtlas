@@ -1363,6 +1363,11 @@ class RobotGUI:
             # Notificar a la app móvil si está disponible
             if hasattr(self, 'mobile_app_tab') and self.mobile_app_tab:
                 self.mobile_app_tab.log_mobile_message(f"Clase ejecutada: {class_info.get('title', 'Unknown')}")
+            
+            # Reiniciar botones en Classes Manager Tab
+            if hasattr(self, 'classes_manager_tab') and self.classes_manager_tab:
+                # Usar root.after para actualizar la UI de manera segura
+                self.root.after(0, self.reset_class_buttons_after_completion)
         except Exception as e:
             print(f"Error en callback de clase ejecutada: {e}")
     
@@ -1375,6 +1380,11 @@ class RobotGUI:
             # Notificar a la app móvil si está disponible
             if hasattr(self, 'mobile_app_tab') and self.mobile_app_tab:
                 self.mobile_app_tab.log_mobile_message(f"Error en clase: {error_msg}")
+            
+            # Reiniciar botones en Classes Manager Tab
+            if hasattr(self, 'classes_manager_tab') and self.classes_manager_tab:
+                # Usar root.after para actualizar la UI de manera segura
+                self.root.after(0, self.reset_class_buttons_after_completion)
         except Exception as e:
             print(f"Error en callback de error de clase: {e}")
     
@@ -1387,6 +1397,11 @@ class RobotGUI:
             # Notificar a la app móvil si está disponible
             if hasattr(self, 'mobile_app_tab') and self.mobile_app_tab:
                 self.mobile_app_tab.log_mobile_message(f"Clase detenida: {class_info.get('title', 'Unknown')}")
+            
+            # Reiniciar botones en Classes Manager Tab
+            if hasattr(self, 'classes_manager_tab') and self.classes_manager_tab:
+                # Usar root.after para actualizar la UI de manera segura
+                self.root.after(0, self.reset_class_buttons_after_completion)
         except Exception as e:
             print(f"Error en callback de detención de clase: {e}")
     
@@ -1409,6 +1424,28 @@ class RobotGUI:
                 )
         except Exception as e:
             print(f"Error actualizando estado de clase: {e}")
+    
+    def reset_class_buttons_after_completion(self):
+        """Reiniciar botones después de que una clase se completa, detiene o tiene error"""
+        try:
+            print("🔄 Reiniciando botones de control de clases...")
+            
+            # Actualizar Classes Manager Tab
+            if hasattr(self, 'classes_manager_tab') and self.classes_manager_tab:
+                self.classes_manager_tab.is_class_running = False
+                self.classes_manager_tab.current_class_name = None
+                self.classes_manager_tab.update_control_buttons(False)
+                self.classes_manager_tab.clear_progress_display()
+                print("✅ Botones de Classes Manager Tab reiniciados")
+            
+            # Actualizar Class Controller Tab si existe
+            if hasattr(self, 'class_controller_tab') and self.class_controller_tab:
+                if hasattr(self.class_controller_tab, 'on_class_completed'):
+                    self.class_controller_tab.on_class_completed()
+                    print("✅ Botones de Class Controller Tab reiniciados")
+            
+        except Exception as e:
+            print(f"Error reiniciando botones: {e}")
     
     def log_esp32_command_from_class(self, command, parameters=None, response=None):
         """Registrar comando ESP32 desde una clase en ejecución"""

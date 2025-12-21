@@ -269,8 +269,9 @@ class ClassesManagerTab(BaseTab):
         """Update control buttons based on class execution state"""
         try:
             if class_running:
-                # Class is running - enable pause, resume, stop
-                self.execute_btn.config(state="disabled")
+                # Class is running - keep execute enabled to allow starting another class
+                # Enable pause, resume, stop
+                self.execute_btn.config(state="normal")  # Siempre habilitado
                 self.pause_btn.config(state="normal")
                 self.resume_btn.config(state="normal")
                 self.stop_btn.config(state="normal")
@@ -293,10 +294,37 @@ class ClassesManagerTab(BaseTab):
             class_name = self.selected_class.get('name')
             class_title = self.selected_class.get('title', 'Clase')
             
-            # Confirm execution
-            if not messagebox.askyesno("Confirmar Ejecución", 
-                                     f"¿Ejecutar la clase '{class_title}'?"):
-                return
+            # Check if there's already a class running
+            if self.is_class_running and self.current_class_name:
+                # Ask if user wants to stop current class and start new one
+                response = messagebox.askyesnocancel(
+                    "Clase en Ejecución", 
+                    f"Ya hay una clase ejecutándose: '{self.current_class_name}'\n\n"
+                    f"¿Deseas detener la clase actual e iniciar '{class_title}'?\n\n"
+                    f"• Sí: Detener clase actual e iniciar nueva\n"
+                    f"• No: Cancelar y mantener clase actual\n"
+                    f"• Cancelar: No hacer nada"
+                )
+                
+                if response is None:  # Cancel
+                    return
+                elif response:  # Yes - stop current and start new
+                    self.update_status(f"⏹️ Deteniendo clase actual...")
+                    if hasattr(self.parent_gui, 'class_manager') and self.parent_gui.class_manager:
+                        self.parent_gui.class_manager.stop_class_execution()
+                        # Wait a bit for the class to stop
+                        import time
+                        time.sleep(1)
+                    self.is_class_running = False
+                    self.current_class_name = None
+                    self.clear_progress_display()
+                else:  # No - cancel
+                    return
+            else:
+                # No class running, confirm execution normally
+                if not messagebox.askyesno("Confirmar Ejecución", 
+                                         f"¿Ejecutar la clase '{class_title}'?"):
+                    return
             
             self.update_status(f"🚀 Ejecutando {class_title}...")
             
@@ -468,9 +496,8 @@ class ClassesManagerTab(BaseTab):
             
             self.details_text.insert(1.0, details)
             
-            # Enable action buttons if class is not running
-            if not self.is_class_running:
-                self.execute_btn.config(state="normal")
+            # Enable action buttons - execute always enabled now
+            self.execute_btn.config(state="normal")
             self.delete_btn.config(state="normal")
             
         except Exception as e:
@@ -479,8 +506,7 @@ class ClassesManagerTab(BaseTab):
     def clear_details(self):
         """Clear class details"""
         self.details_text.delete(1.0, tk.END)
-        if not self.is_class_running:
-            self.execute_btn.config(state="disabled")
+        # Don't disable execute button - it should always be available
         self.delete_btn.config(state="disabled")
     
     def delete_selected_class(self):

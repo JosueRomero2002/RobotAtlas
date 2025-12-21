@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Clase 2 Estudios Sociales
+Clase 3 Estudios Sociales
 Materia: Robots Médicos
 Generado por ADAI Class Builder el 2025-10-27 11:34:56
 
@@ -55,35 +55,32 @@ except ImportError as e:
 #  BANCO DE PREGUNTAS PERSONALIZADAS
 # ======================
 CUSTOM_QUESTION_BANK = [
-'Los valores cívicos nos enseñan a comportarnos correctamente dentro de una comunidad. Verdadero o falso?',
-'La palabra “cívico” proviene de “civilización”. Verdadero o falso?',
-'Cumplir con los deberes y respetar los derechos de los demás son ejemplos de valores cívicos. Verdadero o falso?',
-'La honestidad y la solidaridad son ejemplos de valores cívicos. Verdadero o falso?',
-'Los valores cívicos solo se aprenden en los libros, no con acciones. Verdadero o falso?',
-'Practicar los valores cívicos ayuda a tener un país más ordenado y seguro. Verdadero o falso?',
-'El respeto consiste en aceptar a los demás aunque piensen diferente. Verdadero o falso?',
-'La responsabilidad implica cumplir con nuestras obligaciones y promesas. Verdadero o falso?',
-'Ser honesto significa copiar en los exámenes para no perder puntos. Verdadero o falso?',
-'La solidaridad se demuestra ayudando a quien lo necesita. Verdadero o falso?',
-'El amor a la patria incluye cuidar los símbolos nacionales. Verdadero o falso?',
-'La tolerancia significa aceptar las diferencias y convivir en armonía. Verdadero o falso?',
-'La cooperación consiste en trabajar juntos para alcanzar metas comunes. Verdadero o falso?',
-'Una buena convivencia escolar se basa en el respeto y el diálogo. Verdadero o falso?',
-'En una escuela con buena convivencia, los conflictos se resuelven con peleas. Verdadero o falso?',
-'Pedir perdón cuando nos equivocamos es una muestra de buena convivencia. Verdadero o falso?',
-'Practicar la empatía y la cortesía mejora la convivencia escolar. Verdadero o falso?',
-'Cumplir las reglas del aula y mantener el orden son formas de practicar valores cívicos. Verdadero o falso?',
-'Los valores se enseñan principalmente con el ejemplo y las acciones diarias. Verdadero o falso?'
+'Los medios de comunicación permiten enviar y recibir información. Verdadero o falso?',
+'A través de los medios de comunicación podemos conocer lo que pasa en el mundo. Verdadero o falso?',
+'Los medios impresos son los más recientes y usan internet para funcionar. Verdadero o falso?',
+'Los periódicos y las revistas son ejemplos de medios impresos. Verdadero o falso?',
+'Una ventaja de los medios impresos es que no necesitan electricidad para leerse. Verdadero o falso?',
+'Los medios audiovisuales combinan imágenes, sonidos y movimiento. Verdadero o falso?',
+'El cine y la televisión son ejemplos de medios audiovisuales. Verdadero o falso?',
+'Una desventaja de los medios audiovisuales es que pueden transmitir información falsa. Verdadero o falso?',
+'Los medios digitales utilizan internet y dispositivos electrónicos como computadoras y teléfonos. Verdadero o falso?',
+'Las redes sociales y los sitios web son ejemplos de medios digitales. Verdadero o falso?',
+'Una ventaja de los medios digitales es la comunicación rápida y global. Verdadero o falso?',
+'El uso excesivo de medios digitales puede causar distracción o adicción. Verdadero o falso?',
+'Los medios de comunicación ayudan a construir una sociedad informada y participativa. Verdadero o falso?',
+'Los medios fomentan el respeto, la solidaridad y la empatía. Verdadero o falso?',
+'Usar bien los medios digitales significa publicar sin pensar en las consecuencias. Verdadero o falso?',
+'Los medios de comunicación actúan como puentes que conectan personas y conocimientos. Verdadero o falso?'
 ]
 def main():
     """Función principal que ejecuta la clase completa"""
     try:
-        print("🚀 Iniciando clase: Clase 2 Estudios Sociales")
+        print("🚀 Iniciando clase: Clase 3 Estudios Sociales")
         print("📚 Materia: Estudios Sociales")
         
         # Definir rutas de archivos
         diagnostic_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
-        class_pdf = "C:/Users/josue/Downloads/Clase 2 estudios sociales.pdf"
+        class_pdf = "C:/Users/josue/Downloads/Clase 3 estudios sociales.pdf"
         final_exam_qr = "C:/Users/josue/Desktop/CvLD1_ZUEAAmRG6.jpg"
         
         # Inicializar TTS
@@ -142,7 +139,7 @@ def main():
         print("🤖 FASE 2: INICIO DE CLASE")
         print("="*50)
         
-        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 2 Estudios Sociales")
+        speak_with_animation(engine, f"Hola, soy ADAI. Bienvenidos a la clase: Clase 3 Estudios Sociales")
         speak_with_animation(engine, f"Vamos a aprender sobre Estudios Sociales")
         
         # FASE 3: Contenido Principal
@@ -200,7 +197,7 @@ def main():
             else:
                 print("❌ No se pudo leer el PDF")
         else:
-            print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase 2 estudios sociales.pdf")
+            print(f"⚠️ No se encontró PDF: C:/Users/josue/Downloads/Clase 3 estudios sociales.pdf")
             speak_with_animation(engine, "Continuaremos sin presentación de PDF.")
         
         # FASE 4: Examen Final
@@ -214,11 +211,15 @@ def main():
             
             speak_with_animation(engine, "Perfecto. ¡Mucha suerte en la encuesta!")
         else:
-            print(f"⚠️ No se encontró encuesta: C:/Users/josue/Downloads/Clase 1 español 6to grado.pdf")
+            print(f"⚠️ No se encontró encuesta: C:/Users/josue/Downloads/Clase 3 estudios sociales.pdf")
+            speak_with_animation(engine, "Excelente trabajo. Ahora es momento de una encuesta escrita.")
+            speak_with_animation(engine, "Por favor, completen la encuesta proporcionada por su profesor.")
+            
+            speak_with_animation(engine, "Perfecto. ¡Mucha suerte en la encuesta!")
             speak_with_animation(engine, "La clase ha terminado.")
         
         # Finalización
-        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 1 Español Sexto Grado. ¡Hasta la próxima! ¡Que tengan un excelente día!")
+        speak_with_animation(engine, f"Gracias por participar en la clase: Clase 3 Estudios Sociales. ¡Hasta la próxima! ¡Que tengan un excelente día!")
         
         # Limpiar recursos
         print("🛑 Finalizando clase")

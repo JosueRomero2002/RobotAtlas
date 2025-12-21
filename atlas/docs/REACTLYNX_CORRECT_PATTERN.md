@@ -23,7 +23,7 @@ export function CorrectInputExample() {
       <input
         value={host}
         onInput={(e) => setHost(e.target.value)}
-        placeholder="192.168.100.6"
+        placeholder="10.61.95.163"
       />
       
       <input
@@ -69,7 +69,7 @@ const [port, setPort] = useState('')
   type="text"
   value={host}
   onInput={(e) => setHost(e.target.value)}
-  placeholder="e.g., 192.168.100.6 or localhost"
+  placeholder="e.g., 10.61.95.163 or localhost"
   className="config-input"
 />
 
