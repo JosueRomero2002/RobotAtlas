@@ -26,12 +26,12 @@ ReactLynx tiene un bug conocido donde los eventos `onInput` no funcionan correct
 **Estado que maneja**:
 ```javascript
 {
-  currentIP: '10.61.95.163',
+  currentIP: '10.136.166.163',
   currentPort: '8080',
   lastUpdated: '2024-01-15T10:30:00.000Z',
   updateHistory: [
     {
-      ip: '10.61.95.163',
+      ip: '10.136.166.163',
       port: '8080',
       timestamp: '2024-01-15T10:30:00.000Z',
       action: 'ip_port_updated'
@@ -81,7 +81,7 @@ ReactLynx tiene un bug conocido donde los eventos `onInput` no funcionan correct
 // ✅ Input de solo lectura que muestra el estado
 <input
   value={inputIP}
-  placeholder="Ejemplo: 10.61.95.163"
+  placeholder="Ejemplo: 10.136.166.163"
 />
 
 // ✅ Botones programáticos que sí funcionan
@@ -95,7 +95,7 @@ ReactLynx tiene un bug conocido donde los eventos `onInput` no funcionan correct
 ### 1. **Actualización Programática**
 ```javascript
 // Métodos que funcionan correctamente
-setExampleValues()     // 10.61.95.163:8080
+setExampleValues()     // 10.136.166.163:8080
 setStaticValues()      // 192.168.1.100:2233
 setDevIP()            // IP de desarrollo
 setHomeIP()           // IP de casa
@@ -122,7 +122,7 @@ setLocalhostIP()      // 127.0.0.1:8080
 ### 1. **Configuración Rápida**
 ```
 1. Usuario presiona "📝 Poner Ejemplo"
-2. Se establece 10.61.95.163:8080
+2. Se establece 10.136.166.163:8080
 3. Usuario presiona "⚡ Actualizar IP Inmediatamente"
 4. La configuración se aplica y persiste
 ```
@@ -138,7 +138,7 @@ setLocalhostIP()      // 127.0.0.1:8080
 ### 3. **Presets Rápidos**
 ```
 1. Usuario presiona "🚀 IP Desarrollo"
-2. Se establece automáticamente 10.61.95.163:8080
+2. Se establece automáticamente 10.136.166.163:8080
 3. La configuración se aplica inmediatamente
 ```
 
@@ -172,7 +172,7 @@ setLocalhostIP()      // 127.0.0.1:8080
 ### 1. **Desarrollo**
 ```javascript
 // Establecer IP de desarrollo rápidamente
-setDevIP() // 10.61.95.163:8080
+setDevIP() // 10.136.166.163:8080
 ```
 
 ### 2. **Producción**

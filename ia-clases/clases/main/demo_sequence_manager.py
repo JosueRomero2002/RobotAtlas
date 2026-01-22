@@ -19,6 +19,10 @@ import winsound
 import time
 import json
 import requests
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde archivo .env
+load_dotenv()
 
 # Set path to Tesseract executable for Windows
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -26,7 +30,11 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 # ======================
 #  CONFIGURACIÓN OPENAI
 # ======================
-client = openai.OpenAI(api_key="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")
+# Cargar API key desde variables de entorno
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+if not OPENAI_API_KEY:
+    print("⚠️ ADVERTENCIA: OPENAI_API_KEY no encontrada en variables de entorno")
+client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
 # Get absolute path for the current script's directory
 script_dir = os.path.dirname(os.path.abspath(__file__))

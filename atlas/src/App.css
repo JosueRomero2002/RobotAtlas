@@ -39,7 +39,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  padding-bottom: 80px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
   z-index: 2;
 }
 
@@ -49,6 +49,7 @@
   background: rgba(0, 0, 0, 0.95);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0;
+  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   justify-content: stretch;
   align-items: stretch;
@@ -57,7 +58,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: calc(60px + env(safe-area-inset-bottom));
+  min-height: calc(60px + env(safe-area-inset-bottom));
 }
 
 .footer-nav-item {
@@ -2395,7 +2397,7 @@ text {
 /* Message Display */
 .message-display {
   position: fixed;
-  bottom: 80px;
+  bottom: calc(80px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.95);

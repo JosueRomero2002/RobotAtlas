@@ -153,9 +153,9 @@ atlas/src/components/
 
 #### **Valores por Defecto**
 ```
-IP del Servidor: 10.61.95.163
+IP del Servidor: 10.136.166.163
 Puerto: 8080
-URL Completa: http://10.61.95.163:8080/api
+URL Completa: http://10.136.166.163:8080/api
 ```
 
 #### **Flujo de Configuración**

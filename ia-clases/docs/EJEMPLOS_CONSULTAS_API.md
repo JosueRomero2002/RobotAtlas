@@ -794,3 +794,5 @@ if success:
    - El servidor valida los datos antes de enviar al ESP32
 
 
+
+

@@ -83,7 +83,7 @@ def main():
     
     if len(sys.argv) < 2:
         print("Usage: python test_connection.py <IP_ADDRESS> [PORT]")
-        print("Example: python test_connection.py 10.61.95.163 8080")
+        print("Example: python test_connection.py 10.136.166.163 8080")
         print("\nMake sure robot_gui.py is running before testing!")
         return
     

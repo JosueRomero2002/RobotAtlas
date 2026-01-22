@@ -198,6 +198,11 @@ python -c "import numpy; print('✓ NumPy:', numpy.__version__)" || echo "✗ Nu
 python -c "import matplotlib; print('✓ Matplotlib:', matplotlib.__version__)" || echo "✗ Matplotlib no instalado"
 python -c "import mediapipe; print('✓ MediaPipe instalado')" || echo "✗ MediaPipe no instalado"
 python -c "import face_recognition; print('✓ Face Recognition instalado')" || echo "✗ Face Recognition no instalado"
+python -c "import pygame; print('✓ Pygame instalado')" || echo "✗ Pygame no instalado"
+python -c "import dotenv; print('✓ python-dotenv instalado')" || echo "✗ python-dotenv no instalado"
+python -c "import openai; print('✓ OpenAI instalado')" || echo "✗ OpenAI no instalado"
+python -c "import fitz; print('✓ PyMuPDF instalado')" || echo "✗ PyMuPDF no instalado"
+python -c "import requests; print('✓ Requests instalado')" || echo "✗ Requests no instalado"
 
 echo ""
 echo "============================================"

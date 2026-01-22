@@ -25,14 +25,14 @@ Usa la nueva tab **🔨 SimpleConfig**:
 
 1. **Tap en ícono 🔨**
 2. **Verifica el valor actual**: Muestra el valor exacto y su longitud
-3. **Ingresa IP completa**: Ejemplo `10.61.95.163`
+3. **Ingresa IP completa**: Ejemplo `10.136.166.163`
 4. **Logging detallado**: Revisa la consola para ver qué está pasando
 5. **Guarda y prueba**
 
 #### **🚀 Opción 2: QuickConfig Mejorada**
 Usa la tab **🚀 QuickConfig**:
 
-1. **Tap en "📝 Poner Ejemplo"** para autocompletar `10.61.95.163`
+1. **Tap en "📝 Poner Ejemplo"** para autocompletar `10.136.166.163`
 2. **Modifica solo el último número** según tu red
 3. **Usa "🚀 Save & Test Connection"**
 
@@ -73,7 +73,7 @@ localStorage.getItem('robotAPI_port')
 ### **Configuraciones de Ejemplo**
 
 #### **Red Doméstica Típica**
-- **Host**: `10.61.95.163` (o el IP de tu computadora)
+- **Host**: `10.136.166.163` (o el IP de tu computadora)
 - **Port**: `8080`
 
 #### **Red Corporativa**
@@ -102,7 +102,7 @@ Busca `inet` seguido de una dirección como `192.168.1.xxx`.
 
 #### **Verificar Conectividad**
 ```cmd
-ping 10.61.95.163
+ping 10.136.166.163
 ```
 Reemplaza con tu IP real.
 
@@ -111,14 +111,14 @@ Reemplaza con tu IP real.
 #### **Opción A: Usar Botones Predefinidos**
 En SimpleConfig:
 1. **Tap "📝 Poner Ejemplo"**
-2. **Se autocompleta con `10.61.95.163`**
+2. **Se autocompleta con `10.136.166.163`**
 3. **Modifica manualmente solo el último número**
 
 #### **Opción B: Configuración Manual en Código**
 Si nada funciona, temporalmente puedes editar:
 ```javascript
 // En RobotAPI.js, cambia los defaults:
-const DEFAULT_HOST = '10.61.95.163'; // Tu IP aquí
+const DEFAULT_HOST = '10.136.166.163'; // Tu IP aquí
 const DEFAULT_PORT = '8080';
 ```
 
@@ -149,11 +149,11 @@ const DEFAULT_PORT = '8080';
 Cuando todo funciona correctamente, deberías ver:
 ```javascript
 // En input:
-Input event: 10.61.95.163
+Input event: 10.136.166.163
 
 // En save:
 setServerConfig called with: {
-  host: "10.61.95.163", 
+  host: "10.136.166.163", 
   port: "8080",
   hostType: "string",
   portType: "string",
@@ -162,14 +162,14 @@ setServerConfig called with: {
 }
 
 // Storage:
-Setting robotAPI_host: 10.61.95.163
-Verified robotAPI_host: 10.61.95.163
+Setting robotAPI_host: 10.136.166.163
+Verified robotAPI_host: 10.136.166.163
 ```
 
 ### **Si Nada Funciona**
 
 #### **Solución Temporal**
-1. **Edita directamente**: `localStorage.setItem('robotAPI_host', '10.61.95.163')`
+1. **Edita directamente**: `localStorage.setItem('robotAPI_host', '10.136.166.163')`
 2. **Recarga la app**
 3. **Usa el ConfigTest para verificar**
 

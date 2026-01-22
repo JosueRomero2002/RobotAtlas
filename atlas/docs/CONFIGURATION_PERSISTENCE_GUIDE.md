@@ -29,7 +29,7 @@ ManualConfigScreen → RobotAPI → ConfigManager → localStorage
 #### **Datos Persistidos**
 ```javascript
 {
-  host: '10.61.95.163',
+  host: '10.136.166.163',
   port: '8080',
   connectionStatus: 'connected', // 'connected', 'disconnected', 'connecting', 'error'
   lastConnected: '2024-01-15T14:30:25.123Z',
@@ -58,7 +58,7 @@ ManualConfigScreen → RobotAPI → ConfigManager → localStorage
 const config = robotAPI.getServerConfig();
 
 // Establecer configuración
-const success = robotAPI.setServerConfig('10.61.95.163', '8080');
+const success = robotAPI.setServerConfig('10.136.166.163', '8080');
 
 // Obtener estado de conexión
 const status = robotAPI.getConnectionStatus();
@@ -93,7 +93,7 @@ const success = robotAPI.importConfiguration(jsonConfig);
 #### **localStorage Keys**
 ```javascript
 {
-  'robotAPI_host': '10.61.95.163',
+  'robotAPI_host': '10.136.166.163',
   'robotAPI_port': '8080',
   'connection_status': 'connected',
   'last_connected': '2024-01-15T14:30:25.123Z',

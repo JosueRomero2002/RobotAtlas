@@ -35,3 +35,5 @@ if [ $? -ne 0 ]; then
     echo ""
     echo "[ERROR] La aplicación se cerró con errores"
 fi
+
+

@@ -239,6 +239,11 @@ python -c "import matplotlib; print('OK Matplotlib:', matplotlib.__version__)" 2
 python -c "import tkinter; print('OK tkinter instalado')" 2>nul || echo "ERROR tkinter no instalado"
 python -c "import mediapipe; print('OK MediaPipe instalado')" 2>nul || echo "ERROR MediaPipe no instalado"
 python -c "import face_recognition; print('OK Face Recognition instalado')" 2>nul || echo "ERROR Face Recognition no instalado"
+python -c "import pygame; print('OK Pygame instalado')" 2>nul || echo "ERROR Pygame no instalado"
+python -c "import dotenv; print('OK python-dotenv instalado')" 2>nul || echo "ERROR python-dotenv no instalado"
+python -c "import openai; print('OK OpenAI instalado')" 2>nul || echo "ERROR OpenAI no instalado"
+python -c "import fitz; print('OK PyMuPDF instalado')" 2>nul || echo "ERROR PyMuPDF no instalado"
+python -c "import requests; print('OK Requests instalado')" 2>nul || echo "ERROR Requests no instalado"
 
 echo.
 echo ============================================
@@ -252,3 +257,5 @@ echo.
 echo O usa el script run.bat
 echo.
 pause
+
+

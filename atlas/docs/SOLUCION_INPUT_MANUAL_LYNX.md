@@ -13,7 +13,7 @@ La solución captura los valores directamente del DOM cuando el usuario presiona
 ```javascript
 const handleQuickUpdate = () => {
   // Capturar valores directamente del DOM (solución al bug de ReactLynx)
-  const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
+  const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.136.166.163"]')
   const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
   
   const domHost = hostInput ? hostInput.value : inputIP
@@ -37,7 +37,7 @@ const handleQuickUpdate = () => {
 
 ```javascript
 // Botones que funcionan al 100%
-setExampleValues()     // 10.61.95.163:8080
+setExampleValues()     // 10.136.166.163:8080
 setDevIP()            // IP de desarrollo
 setHomeIP()           // IP de casa
 setLocalhostIP()      // 127.0.0.1:8080
@@ -62,7 +62,7 @@ Nuevo botón "📋 Ver Valores Actuales en Inputs" que permite al usuario verifi
 
 ```javascript
 bindtap={() => {
-  const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
+  const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.136.166.163"]')
   const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
   
   const domHost = hostInput ? hostInput.value : 'No capturado'
@@ -76,7 +76,7 @@ bindtap={() => {
 
 ### **Para Usuarios que Prefieren Botones Rápidos:**
 ```
-1. Presiona "📝 Poner Ejemplo" → Se establece 10.61.95.163:8080
+1. Presiona "📝 Poner Ejemplo" → Se establece 10.136.166.163:8080
 2. Presiona "⚡ Actualizar IP Inmediatamente" → Se aplica la configuración
 3. Presiona "🚀 Probar Conexión" → Se verifica la conexión
 ```
@@ -91,7 +91,7 @@ bindtap={() => {
 
 ### **Para Configuraciones Comunes:**
 ```
-• "🚀 IP Desarrollo" → 10.61.95.163:8080 (inmediato)
+• "🚀 IP Desarrollo" → 10.136.166.163:8080 (inmediato)
 • "🏠 IP Casa" → 192.168.1.100:2233 (inmediato)
 • "💻 IP Localhost" → 127.0.0.1:8080 (inmediato)
 ```
@@ -123,7 +123,7 @@ bindtap={() => {
 ### **Captura del DOM**
 ```javascript
 // Selectores específicos para cada input
-const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.61.95.163"]')
+const hostInput = document.querySelector('input[placeholder="Ejemplo: 10.136.166.163"]')
 const portInput = document.querySelector('input[placeholder="Ejemplo: 8080"]')
 
 // Captura de valores con fallback
@@ -167,17 +167,17 @@ console.log('🔍 DEBUG: Valores del estado:', { inputIP, inputPort })
 ### **Caso 2: Usuario Usa Botones Rápidos**
 ```
 1. Usuario presiona "🚀 IP Desarrollo"
-2. Sistema establece inmediatamente 10.61.95.163:8080
+2. Sistema establece inmediatamente 10.136.166.163:8080
 3. Usuario presiona "🚀 Probar Conexión"
 4. Sistema verifica la conexión con la nueva IP
 ```
 
 ### **Caso 3: Usuario Modifica Valores de Ejemplo**
 ```
-1. Usuario presiona "📝 Poner Ejemplo" → 10.61.95.163:8080
-2. Usuario modifica manualmente a "10.61.95.163:8081"
+1. Usuario presiona "📝 Poner Ejemplo" → 10.136.166.163:8080
+2. Usuario modifica manualmente a "10.136.166.163:8081"
 3. Usuario presiona "⚡ Actualizar IP Inmediatamente"
-4. Sistema captura "10.61.95.163:8081" del DOM y aplica
+4. Sistema captura "10.136.166.163:8081" del DOM y aplica
 ```
 
 ## Testing y Validación

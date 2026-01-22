@@ -29,8 +29,8 @@ Se ha añadido una nueva sección en la tab **📱 Mobile App** de `robot_gui.py
 
 #### **Paso 2: Ver la IP**
 1. En la sección **"Información de Red"** verás:
-   - **IP Local**: Tu IP (ej: `10.61.95.163`)
-   - **URL del Servidor**: `http://10.61.95.163:8080/api`
+   - **IP Local**: Tu IP (ej: `10.136.166.163`)
+   - **URL del Servidor**: `http://10.136.166.163:8080/api`
 
 #### **Paso 3: Copiar la IP**
 1. **Tap "📋 Copiar IP"** - Copia solo la IP
@@ -38,7 +38,7 @@ Se ha añadido una nueva sección en la tab **📱 Mobile App** de `robot_gui.py
 
 #### **Paso 4: Usar en la App Móvil**
 1. En tu app móvil, usa la IP copiada
-2. Ejemplo: `10.61.95.163:8080`
+2. Ejemplo: `10.136.166.163:8080`
 
 ### **🔧 Funciones Disponibles**
 
@@ -86,9 +86,9 @@ def refresh_network_info():
 
 #### **Ejemplo de Configuración**
 ```
-IP del Servidor: 10.61.95.163
+IP del Servidor: 10.136.166.163
 Puerto: 8080
-URL Completa: http://10.61.95.163:8080/api
+URL Completa: http://10.136.166.163:8080/api
 ```
 
 ### **🔄 Actualización Automática**
@@ -128,8 +128,8 @@ URL Completa: http://10.61.95.163:8080/api
 
 #### **Ejemplo de Logs**
 ```
-[14:30:15] IP copiada al portapapeles: 10.61.95.163
-[14:30:20] Información de red actualizada - IP: 10.61.95.163
+[14:30:15] IP copiada al portapapeles: 10.136.166.163
+[14:30:20] Información de red actualizada - IP: 10.136.166.163
 [14:30:25] Dispositivo conectado: 192.168.100.15 - 14:30:25
 ```
 
