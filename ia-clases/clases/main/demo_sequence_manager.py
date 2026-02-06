@@ -635,10 +635,10 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
         window_width = 1000
         window_height = 700
         
-        # Crear ventana en pantalla completa y siempre al frente
+        # Crear ventana en modo normal (sin pantalla completa)
         window_name = "Evaluación Diagnóstica"
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.resizeWindow(window_name, window_width, window_height)
         cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
         
         # Colores elegantes
@@ -808,7 +808,7 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
                              progress_color, -1)
             
             # === INSTRUCCIÓN DE ESCAPE ===
-            escape_text = "ESC: Salir pantalla completa | Q: Continuar"
+            escape_text = "ESC o Q: Finalizar"
             escape_font_scale = 0.6
             escape_thickness = 1
             (escape_w, escape_h), _ = cv2.getTextSize(escape_text, cv2.FONT_HERSHEY_SIMPLEX, escape_font_scale, escape_thickness)
@@ -822,11 +822,9 @@ def show_diagnostic_qr(qr_image_path, display_time=15):
             
             # Verificar teclas y tiempo
             key = cv2.waitKey(1000) & 0xFF
-            if key == 27:  # ESC key - salir de pantalla completa
-                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
-                cv2.resizeWindow(window_name, window_width, window_height)
-                print("⌨️ ESC presionado - Saliendo de pantalla completa")
-            elif key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
+            if key == 27 or key == ord('q') or key == ord('Q') or elapsed_time >= display_time:  # ESC o Q para salir
+                if key == 27:
+                    print("⌨️ ESC presionado")
                 break
         
         # Animación de cierre suave
@@ -869,10 +867,10 @@ def show_final_exam_qr(qr_image_path, display_time=20):
         window_width = 1000
         window_height = 700
         
-        # Crear ventana en pantalla completa y siempre al frente
+        # Crear ventana en modo normal (sin pantalla completa)
         window_name = "Examen Final"
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.resizeWindow(window_name, window_width, window_height)
         cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
         
         # Colores para examen final (más serios/académicos)
@@ -1062,7 +1060,7 @@ def show_final_exam_qr(qr_image_path, display_time=20):
                              progress_color, -1)
             
             # === INSTRUCCIÓN DE ESCAPE ===
-            escape_text = "ESC: Salir pantalla completa | Q: Finalizar clase"
+            escape_text = "ESC o Q: Finalizar"
             escape_font_scale = 0.6
             escape_thickness = 1
             (escape_w, escape_h), _ = cv2.getTextSize(escape_text, cv2.FONT_HERSHEY_SIMPLEX, escape_font_scale, escape_thickness)
@@ -1076,11 +1074,9 @@ def show_final_exam_qr(qr_image_path, display_time=20):
             
             # Verificar teclas y tiempo
             key = cv2.waitKey(1000) & 0xFF
-            if key == 27:  # ESC key - salir de pantalla completa
-                cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
-                cv2.resizeWindow(window_name, window_width, window_height)
-                print("⌨️ ESC presionado - Saliendo de pantalla completa")
-            elif key == ord('q') or key == ord('Q') or elapsed_time >= display_time:
+            if key == 27 or key == ord('q') or key == ord('Q') or elapsed_time >= display_time:  # ESC o Q para salir
+                if key == 27:
+                    print("⌨️ ESC presionado")
                 break
         
         # Animación de cierre suave
@@ -1302,27 +1298,24 @@ def show_pdf_page_in_opencv(page):
 
 def setup_fullscreen_window(window_name="Presentacion"):
     """
-    Configura una ventana de OpenCV para que sea pantalla completa y siempre al frente.
+    Configura una ventana de OpenCV en modo ventana normal (sin pantalla completa).
     """
     try:
-        # Crear ventana con nombre específico
+        # Crear ventana con nombre específico - ventana normal, sin pantalla completa
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+        cv2.resizeWindow(window_name, 1024, 768)
         
-        # Configurar para pantalla completa
-        cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
-        
-        # Configurar para estar siempre al frente
+        # Opcional: mantener ventana al frente
         cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
         
-        print(f"✅ Ventana '{window_name}' configurada en pantalla completa")
+        print(f"✅ Ventana '{window_name}' configurada en modo ventana")
     except Exception as e:
-        print(f"⚠️ Error configurando ventana en pantalla completa: {e}")
+        print(f"⚠️ Error configurando ventana: {e}")
 
 
 def show_pdf_fullscreen(page_img, window_name="Presentacion"):
     """
-    Muestra una imagen de PDF en pantalla completa y al frente.
-    Presiona ESC para salir de pantalla completa.
+    Muestra una imagen de PDF en ventana normal (sin pantalla completa).
     """
     try:
         # Configurar ventana si no existe (solo la primera vez)
@@ -1330,17 +1323,7 @@ def show_pdf_fullscreen(page_img, window_name="Presentacion"):
         
         # Mostrar imagen
         cv2.imshow(window_name, page_img)
-        
-        # Esperar tecla y verificar si es ESC
-        key = cv2.waitKey(50) & 0xFF
-        if key == 27:  # ESC key
-            # Salir de pantalla completa
-            cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
-            cv2.resizeWindow(window_name, 1024, 768)
-            print("⌨️ ESC presionado - Saliendo de pantalla completa")
-            # Mostrar la imagen nuevamente en modo ventana
-            cv2.imshow(window_name, page_img)
-            cv2.waitKey(50)
+        cv2.waitKey(50)
     except Exception as e:
         print(f"⚠️ Error mostrando PDF: {e}")
         # Fallback a mostrar normal
